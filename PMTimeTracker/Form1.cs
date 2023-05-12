@@ -7,11 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Web.Script.Serialization; 
 
 namespace PMTimeTracker
 {
    public partial class TimeTracking : Form
    {
+      TrackerSaveLoad tracker = new TrackerSaveLoad();
+
       bool TimerActive = false;
       int accumulated_seconds = 0;
       int timeout = 60 * 60; // 1 hour
@@ -19,14 +22,17 @@ namespace PMTimeTracker
       private System.Windows.Forms.NotifyIcon notifyIcon1;
       public TimeTracking()
       {
+         //tracker.CreateOptions();
+
          notifyIcon1 = new System.Windows.Forms.NotifyIcon();
          notifyIcon1.Icon = new Icon("PMTracker.ico");
          notifyIcon1.Text = "PM Time Tracker";
          notifyIcon1.Visible = true;
          notifyIcon1.ContextMenuStrip = new ContextMenuStrip();
          notifyIcon1.ContextMenuStrip.Items.Add("Exit", null, Exit_Click);
-         notifyIcon1.ContextMenuStrip.Items.Add("Show", null, Show_Click);
          notifyIcon1.ContextMenuStrip.Items.Add("Hide", null, Hide_Click);
+         notifyIcon1.ContextMenuStrip.Items.Add("Show", null, Show_Click);
+         notifyIcon1.ContextMenuStrip.Items.Add("ShowPieChart", null, ShowPieChart_Click);
          notifyIcon1.Click += Show_Click;
 
          InitializeComponent();
@@ -35,14 +41,26 @@ namespace PMTimeTracker
       private void Form1_Load(object sender, EventArgs e)
       {
          myPieGraphic = DrawingPanel.CreateGraphics();
+         DrawingPanel.Location = new Point(0, 0); 
          DrawingPanel.Hide();
       }
 
       private void Exit_Click(object sender, EventArgs e)
       {
+         tracker.UpdateUserSave();
          Application.Exit();
       }
-
+      private void ShowPieChart_Click(object sender, EventArgs e)
+      {
+         try
+         {
+            DrawPieChart(tracker.PiePercent, tracker.PieColor);
+         }
+         catch (Exception ex)
+         {
+            MessageBox.Show(ex.Message);
+         }
+      }
       private void Hide_Click(object sender, EventArgs e)
       {
          this.Hide();
@@ -50,7 +68,6 @@ namespace PMTimeTracker
       private void Show_Click(object sender, EventArgs e)
       {
          this.Show();
-         DrawPieChart(myPiePercent, myPieColors);
       }
 
       private void Timer_Tick(object sender, EventArgs e)
@@ -89,7 +106,7 @@ namespace PMTimeTracker
 
          if (sum != 100)
          {
-            MessageBox.Show("Sum Do Not Add Up To 100.");
+            MessageBox.Show("Sum Do Not Add Up To 100. it is : " + sum);
          }
 
          //Check Here Number Of Values & Colors Are Same Or Not.They Must Be Same.
