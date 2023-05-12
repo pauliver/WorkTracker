@@ -32,7 +32,6 @@
          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TimeTracking));
          this.HideBtn = new System.Windows.Forms.Button();
          this.Timer = new System.Windows.Forms.Timer(this.components);
-         this.DrawingPanel = new System.Windows.Forms.Panel();
          this.ExpectedTime = new System.Windows.Forms.ProgressBar();
          this.StartTracking = new System.Windows.Forms.Button();
          this.StopTracking = new System.Windows.Forms.Button();
@@ -58,17 +57,6 @@
          // 
          this.Timer.Interval = 1000;
          this.Timer.Tick += new System.EventHandler(this.Timer_Tick);
-         // 
-         // DrawingPanel
-         // 
-         this.DrawingPanel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("DrawingPanel.BackgroundImage")));
-         this.DrawingPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-         this.DrawingPanel.ForeColor = System.Drawing.SystemColors.Window;
-         this.DrawingPanel.Location = new System.Drawing.Point(0, 0);
-         this.DrawingPanel.Name = "DrawingPanel";
-         this.DrawingPanel.Size = new System.Drawing.Size(637, 466);
-         this.DrawingPanel.TabIndex = 2;
-         this.DrawingPanel.DoubleClick += new System.EventHandler(this.DrawingPanel_Click);
          // 
          // ExpectedTime
          // 
@@ -131,7 +119,6 @@
          this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
          this.ClientSize = new System.Drawing.Size(634, 461);
          this.ControlBox = false;
-         this.Controls.Add(this.DrawingPanel);
          this.Controls.Add(this.OptionsView);
          this.Controls.Add(this.StopTracking);
          this.Controls.Add(this.StartTracking);
@@ -152,7 +139,6 @@
       #endregion
       private System.Windows.Forms.Button HideBtn;
       private System.Windows.Forms.Timer Timer;
-      private System.Windows.Forms.Panel DrawingPanel;
       private System.Windows.Forms.ProgressBar ExpectedTime;
       private System.Windows.Forms.Button StartTracking;
       private System.Windows.Forms.Button StopTracking;

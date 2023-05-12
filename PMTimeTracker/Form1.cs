@@ -35,7 +35,7 @@ namespace PMTimeTracker
          notifyIcon1.ContextMenuStrip.Items.Add("Exit", null, Exit_Click);
          notifyIcon1.ContextMenuStrip.Items.Add("Hide", null, Hide_Click);
          notifyIcon1.ContextMenuStrip.Items.Add("Show", null, Show_Click);
-         //notifyIcon1.ContextMenuStrip.Items.Add("ShowPieChart", null, ShowPieChart_Click);
+         notifyIcon1.ContextMenuStrip.Items.Add("ShowPieChart", null, ShowPieChart_Click);
          notifyIcon1.Click += Show_Click;
 
          InitializeComponent();
@@ -43,9 +43,6 @@ namespace PMTimeTracker
 
       private void Form1_Load(object sender, EventArgs e)
       {
-         myPieGraphic = DrawingPanel.CreateGraphics();
-         DrawingPanel.Location = new Point(0, 0);
-         DrawingPanel.Hide();
          OptionsView.Alignment = ListViewAlignment.SnapToGrid;
          OptionsView.AutoArrange = true;
          OptionsView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
@@ -70,8 +67,11 @@ namespace PMTimeTracker
       {
          try
          {
-            DrawingPanel.Show();
-            DrawPieChart(tracker.PiePercent, tracker.PieColor);
+            //DrawingPanel.Show();
+            PieChart chart = new PieChart();
+            chart.Show();
+            chart.TestPieChart();
+            //chart.DrawPieChart(tracker.PiePercent, tracker.PieColor);
          }
          catch (Exception ex)
          {
@@ -102,55 +102,6 @@ namespace PMTimeTracker
          }
       }
 
-      int[] myPiePercent = { 10, 20, 25, 5, 40 };
-      Color[] myPieColors = { Color.Red, Color.Black, Color.Blue, Color.Green, Color.Maroon };
-      Graphics myPieGraphic;
-
-      public void DrawPieChart(int[] myPiePerecents, Color[] myPieColors)
-      {
-         //myPieGraphic.Clear(Color.White);
-         DrawingPanel.Show();
-         Point myPieLocation = new Point(125, 50);
-
-         //Set Here Size Of The Chartâ€¦
-         Size myPieSize = new Size(400, 400);
-
-         //Check if sections add up to 100.
-         int sum = 0;
-         foreach (int percent_loopVariable in myPiePerecents)
-         {
-            sum += percent_loopVariable;
-         }
-
-         if (sum != 100)
-         {
-            Console.WriteLine("Sum Do Not Add Up To 100. it is : " + sum);
-         }
-
-         //Check Here Number Of Values & Colors Are Same Or Not.They Must Be Same.
-         if (myPiePerecents.Length != myPieColors.Length)
-         {
-            Console.WriteLine("There Must Be The Same Number Of Percents And Colors.");
-         }
-
-         int PiePercentTotal = 0;
-         for (int PiePercents = 0; PiePercents < myPiePerecents.Length; PiePercents++)
-         {
-            using (SolidBrush brush = new SolidBrush(myPieColors[PiePercents]))
-            {
-
-               //Here it Will Convert Each Value Into 360, So Total Into 360 & Then It Will Draw A Full Pie Chart.
-               myPieGraphic.FillPie(brush, new Rectangle(myPieLocation, myPieSize), Convert.ToSingle(PiePercentTotal * 360 / 100), Convert.ToSingle(myPiePerecents[PiePercents] * 360 / 100));
-            }
-
-            PiePercentTotal += myPiePerecents[PiePercents];
-         }
-      }
-
-      private void DrawingPanel_Click(object sender, EventArgs e)
-      {
-         DrawingPanel.Hide();
-      }
 
       private void StartTracking_Click(object sender, EventArgs e)
       {
