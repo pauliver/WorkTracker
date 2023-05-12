@@ -36,6 +36,7 @@
          this.progressBar1 = new System.Windows.Forms.ProgressBar();
          this.StartTracking = new System.Windows.Forms.Button();
          this.StopTracking = new System.Windows.Forms.Button();
+         this.OptionsView = new System.Windows.Forms.ListView();
          this.SuspendLayout();
          // 
          // HideBtn
@@ -90,6 +91,7 @@
          this.StartTracking.TabIndex = 5;
          this.StartTracking.Text = "TRACK TIME";
          this.StartTracking.UseVisualStyleBackColor = false;
+         this.StartTracking.Click += new System.EventHandler(this.StartTracking_Click);
          // 
          // StopTracking
          // 
@@ -106,6 +108,17 @@
          this.StopTracking.Text = "Stop Tracking";
          this.StopTracking.UseVisualStyleBackColor = false;
          // 
+         // OptionsView
+         // 
+         this.OptionsView.HideSelection = false;
+         this.OptionsView.Location = new System.Drawing.Point(5, 30);
+         this.OptionsView.Name = "OptionsView";
+         this.OptionsView.Size = new System.Drawing.Size(130, 309);
+         this.OptionsView.TabIndex = 7;
+         this.OptionsView.UseCompatibleStateImageBehavior = false;
+         this.OptionsView.View = System.Windows.Forms.View.List;
+         this.OptionsView.SelectedIndexChanged += new System.EventHandler(this.OptionsView_SelectedIndexChanged);
+         // 
          // TimeTracking
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -114,6 +127,7 @@
          this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
          this.ClientSize = new System.Drawing.Size(634, 461);
          this.ControlBox = false;
+         this.Controls.Add(this.OptionsView);
          this.Controls.Add(this.StopTracking);
          this.Controls.Add(this.StartTracking);
          this.Controls.Add(this.progressBar1);
@@ -138,6 +152,7 @@
       private System.Windows.Forms.ProgressBar progressBar1;
       private System.Windows.Forms.Button StartTracking;
       private System.Windows.Forms.Button StopTracking;
+      private System.Windows.Forms.ListView OptionsView;
    }
 }
 

@@ -18,13 +18,14 @@ namespace PMTimeTracker
       public int ExpectedSeconds { get; set; }
       public int MaxSeconds { get; set; }
       public bool ThirtyMinHardStop { get; set; }
+      public string ImagePath { get; set; }
    }
 
    public class TrackerSaveLoad
    {
-      List<TrackerDescription> TrackerDescriptions { get; set; }
+      public List<TrackerDescription> TrackerDescriptions { get; set; }
 
-      Dictionary<string, int> TimeSpent { get; set; }
+      public Dictionary<string, int> TimeSpent { get; set; }
 
       string optionsfilename = "config.json";
       string savedtimefile = "user.json";

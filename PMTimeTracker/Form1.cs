@@ -14,7 +14,7 @@ namespace PMTimeTracker
    public partial class TimeTracking : Form
    {
       TrackerSaveLoad tracker = new TrackerSaveLoad();
-
+      string currentlytracking = "nothing";
       bool TimerActive = false;
       int accumulated_seconds = 0;
       int timeout = 60 * 60; // 1 hour
@@ -41,8 +41,21 @@ namespace PMTimeTracker
       private void Form1_Load(object sender, EventArgs e)
       {
          myPieGraphic = DrawingPanel.CreateGraphics();
-         DrawingPanel.Location = new Point(0, 0); 
+         DrawingPanel.Location = new Point(0, 0);
          DrawingPanel.Hide();
+         OptionsView.Alignment = ListViewAlignment.SnapToGrid;
+         OptionsView.AutoArrange = true;
+         OptionsView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+         foreach (var item in tracker.TrackerDescriptions)
+         {
+            OptionsView.Items.Add(item.Task);
+         }
+         OptionsView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+         if (OptionsView.Items.Count > 0)
+         {
+            OptionsView.Items[0].Selected = true;
+            currentlytracking = OptionsView.Items[0].Text;
+         }
       }
 
       private void Exit_Click(object sender, EventArgs e)
@@ -133,6 +146,16 @@ namespace PMTimeTracker
       private void DrawingPanel_Click(object sender, EventArgs e)
       {
          DrawingPanel.Hide();
+      }
+
+      private void StartTracking_Click(object sender, EventArgs e)
+      {
+         currentlytracking = OptionsView.SelectedItems[0].Text;
+      }
+
+      private void OptionsView_SelectedIndexChanged(object sender, EventArgs e)
+      {
+         //currentlytracking = OptionsView.SelectedItems().Text;
       }
    }
 }
