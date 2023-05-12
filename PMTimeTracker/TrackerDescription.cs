@@ -25,6 +25,18 @@ namespace PMTimeTracker
    {
       public List<TrackerDescription> TrackerDescriptions { get; set; }
 
+      public TrackerDescription GetTrackerDescriptionbyTask(string task)
+      {
+         foreach (TrackerDescription tracker in TrackerDescriptions)
+         {
+            if (tracker.Task == task)
+            {
+               return tracker;
+            }
+         }
+         return null;
+      }
+
       public Dictionary<string, int> TimeSpent { get; set; }
 
       string optionsfilename = "config.json";
@@ -34,11 +46,11 @@ namespace PMTimeTracker
       {
          get
          {
-            int runningtotal = 0;
+            float runningtotal = 0.0f;
             var totals = new List<int>();
             foreach (var item in TrackerDescriptions)
             {
-               if(TimeSpent.ContainsKey(item.Task))
+               if (TimeSpent.ContainsKey(item.Task))
                {
                   int value = TimeSpent[item.Task];
                   totals.Add(value);
@@ -50,19 +62,27 @@ namespace PMTimeTracker
                }
             }
             int newtotal = 0;
-            for(int x = 0; x < totals.Count; x++)
+            float tempval = (float) runningtotal / 100.0f;
+            for (int x = 0; x < totals.Count; x++)
             {
-               totals[x] /= runningtotal;
-               newtotal += totals[x];
+               try
+               {
+                  totals[x] = (int)((float)totals[x] / tempval);
+                  newtotal += totals[x];
+               }
+               catch (Exception ex)
+               {
+                  Console.WriteLine(ex.Message);
+               }
             }
-            if(newtotal != 100)
-            { 
+            if (newtotal != 100)
+            {
                // yeah, could be off by a bit due to rounding
             }
             return totals.ToArray();
          }
       }
-   
+
 
       public Color[] PieColor
       {
@@ -81,7 +101,7 @@ namespace PMTimeTracker
       public TrackerSaveLoad()
       {
          TrackerDescriptions = new List<TrackerDescription>();
-         TimeSpent = new Dictionary<string,int>();
+         TimeSpent = new Dictionary<string, int>();
          LoadOptions();
       }
 
@@ -95,7 +115,7 @@ namespace PMTimeTracker
             if (fi.Exists)
             {
                var searilizationstring = System.IO.File.ReadAllText(fi.FullName);
-               UpdatedTime = serializer.Deserialize< Dictionary<string, int> > (searilizationstring);
+               UpdatedTime = serializer.Deserialize<Dictionary<string, int>>(searilizationstring);
             }
          }
          catch (Exception ex)
@@ -127,7 +147,7 @@ namespace PMTimeTracker
             Console.WriteLine(ex.Message);
          }
       }
-      
+
       public void CreateOptions()
       {
          var fi = new System.IO.FileInfo(optionsfilename);
@@ -177,8 +197,25 @@ namespace PMTimeTracker
          {
             Console.WriteLine(ex.Message);
          }
+
+         try
+         {
+            var fi = new System.IO.FileInfo(savedtimefile);
+            if (!fi.Exists)
+            {
+               return;
+            }
+            var searilizationstring = System.IO.File.ReadAllText(fi.FullName);
+            var deserializedResult = serializer.Deserialize< Dictionary<string, int> > (searilizationstring);
+            TimeSpent = deserializedResult;
+
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine(ex.Message);
+         }
       }
-   
+
       public void SaveOptions()
       {
          var serializer = new JavaScriptSerializer();
@@ -195,9 +232,20 @@ namespace PMTimeTracker
          }
       }
 
+      internal void UpdateTracker(string currentlytracking, int accumulated_seconds)
+      {
+         if (TimeSpent.ContainsKey(currentlytracking))
+         {
+            TimeSpent[currentlytracking] += accumulated_seconds;
+         }
+         else
+         {
+            TimeSpent[currentlytracking] = accumulated_seconds;
+         }
+      }
+
    }
 }
-
 
 
 

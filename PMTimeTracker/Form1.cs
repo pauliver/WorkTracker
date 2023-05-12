@@ -20,6 +20,9 @@ namespace PMTimeTracker
       int timeout = 60 * 60; // 1 hour
       bool LastHourTimedOut = false;
       private System.Windows.Forms.NotifyIcon notifyIcon1;
+
+
+
       public TimeTracking()
       {
          //tracker.CreateOptions();
@@ -32,7 +35,7 @@ namespace PMTimeTracker
          notifyIcon1.ContextMenuStrip.Items.Add("Exit", null, Exit_Click);
          notifyIcon1.ContextMenuStrip.Items.Add("Hide", null, Hide_Click);
          notifyIcon1.ContextMenuStrip.Items.Add("Show", null, Show_Click);
-         notifyIcon1.ContextMenuStrip.Items.Add("ShowPieChart", null, ShowPieChart_Click);
+         //notifyIcon1.ContextMenuStrip.Items.Add("ShowPieChart", null, ShowPieChart_Click);
          notifyIcon1.Click += Show_Click;
 
          InitializeComponent();
@@ -67,11 +70,12 @@ namespace PMTimeTracker
       {
          try
          {
+            DrawingPanel.Show();
             DrawPieChart(tracker.PiePercent, tracker.PieColor);
          }
          catch (Exception ex)
          {
-            MessageBox.Show(ex.Message);
+           Console.WriteLine(ex.Message);
          }
       }
       private void Hide_Click(object sender, EventArgs e)
@@ -88,8 +92,9 @@ namespace PMTimeTracker
          if (TimerActive)
          {
             accumulated_seconds += 1;
+            ExpectedTime.Value = accumulated_seconds;
          }
-         if(accumulated_seconds > timeout)
+         if (accumulated_seconds > timeout)
          {
             TimerActive = false;
             accumulated_seconds = 0;
@@ -119,13 +124,13 @@ namespace PMTimeTracker
 
          if (sum != 100)
          {
-            MessageBox.Show("Sum Do Not Add Up To 100. it is : " + sum);
+            Console.WriteLine("Sum Do Not Add Up To 100. it is : " + sum);
          }
 
          //Check Here Number Of Values & Colors Are Same Or Not.They Must Be Same.
          if (myPiePerecents.Length != myPieColors.Length)
          {
-            MessageBox.Show("There Must Be The Same Number Of Percents And Colors.");
+            Console.WriteLine("There Must Be The Same Number Of Percents And Colors.");
          }
 
          int PiePercentTotal = 0;
@@ -140,7 +145,6 @@ namespace PMTimeTracker
 
             PiePercentTotal += myPiePerecents[PiePercents];
          }
-         return;
       }
 
       private void DrawingPanel_Click(object sender, EventArgs e)
@@ -150,12 +154,71 @@ namespace PMTimeTracker
 
       private void StartTracking_Click(object sender, EventArgs e)
       {
+         CompletePreviousTimeTracking();
          currentlytracking = OptionsView.SelectedItems[0].Text;
+         BeginCurrentTimeTracking(currentlytracking);
+         StopTracking.Enabled = true;
       }
 
       private void OptionsView_SelectedIndexChanged(object sender, EventArgs e)
       {
          //currentlytracking = OptionsView.SelectedItems().Text;
       }
+
+      private void StopTracking_Click(object sender, EventArgs e)
+      {
+         CompletePreviousTimeTracking();
+      }
+      private void BeginCurrentTimeTracking(string name)
+      {
+         //name == OptionsView.SelectedItems[0].Text;
+         LastHourTimedOut = false;
+         accumulated_seconds = 0;
+         TimerActive = true;
+         Timer.Enabled = true;
+         //StartTracking.Enabled = false; //we want to let you just mash 'start tracking' if you want to
+         StopTracking.Visible = true;
+         StopTracking.Enabled = true;
+
+         ExpectedTime.Value = 0;
+         ExpectedTime.Visible = true;
+
+         var td = tracker.GetTrackerDescriptionbyTask(name);
+         if(td != null)
+         {
+            timeout = td.MaxSeconds;
+            //should also do something with the '30 min hard stop', that invovles system time
+            ExpectedTime.Maximum = td.ExpectedSeconds;
+            ExpectedTime.Value = 0;
+         }
+         else
+         {
+            MessageBox.Show("Error: could not find task " + name);
+         }
+      }
+      private void CompletePreviousTimeTracking()
+      {
+         Timer.Enabled = false;
+         if (LastHourTimedOut)  // if we timed out, we need to complete the previous task
+         {
+            tracker.UpdateTracker(currentlytracking, accumulated_seconds);
+
+         }
+         else if (TimerActive) //&& currentlytracking != "nothing" 
+         {
+            tracker.UpdateTracker(currentlytracking, accumulated_seconds);
+
+         }
+         accumulated_seconds = 0;
+         TimerActive = false;
+         LastHourTimedOut = false;
+         currentlytracking = "nothing";
+         StopTracking.Enabled = false;
+         StopTracking.Visible = false;
+         StartTracking.Enabled = true;
+         ExpectedTime.Value = 0;
+         ExpectedTime.Visible = false; 
+      }
+
    }
 }
