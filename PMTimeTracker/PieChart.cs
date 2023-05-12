@@ -27,14 +27,15 @@ namespace PMTimeTracker
          DrawPieChart(myPiePercent, myPieColors);
       }
 
+      //https://www.c-sharpcorner.com/uploadfile/9f4ff8/draw-a-pie-chart-in-C-Sharp/
 
       public void DrawPieChart(int[] myPiePerecents, Color[] myPieColors)
       {
          myPieGraphic.Clear(Color.White);
-         Point myPieLocation = new Point(125, 50);
+         Point myPieLocation = new Point(10, 10);
 
          //Set Here Size Of The Chartâ€¦
-         Size myPieSize = new Size(400, 400);
+         Size myPieSize = new Size(250, 250);
 
          //Check if sections add up to 100.
          int sum = 0;
@@ -61,7 +62,42 @@ namespace PMTimeTracker
             {
 
                //Here it Will Convert Each Value Into 360, So Total Into 360 & Then It Will Draw A Full Pie Chart.
-               myPieGraphic.FillPie(brush, new Rectangle(myPieLocation, myPieSize), Convert.ToSingle(PiePercentTotal * 360 / 100), Convert.ToSingle(myPiePerecents[PiePercents] * 360 / 100));
+               myPieGraphic.FillPie(brush, new Rectangle(new Point (10,10), myPieSize), Convert.ToSingle(PiePercentTotal * 360 / 100), Convert.ToSingle(myPiePerecents[PiePercents] * 360 / 100));
+            }
+
+            PiePercentTotal += myPiePerecents[PiePercents];
+         }
+      }
+      public void DrawPieChart(float[] myPiePerecents, Color[] myPieColors)
+      {
+         myPieGraphic.Clear(Color.White);
+         Point myPieLocation = new Point(10, 10);
+
+         //Set Here Size Of The Chartâ€¦
+         Size myPieSize = new Size(250, 250);
+
+         //Check if sections add up to 100.
+         float sum = 0;
+         foreach (float percent_loopVariable in myPiePerecents)
+         {
+            sum += percent_loopVariable;
+         }
+
+
+         //Check Here Number Of Values & Colors Are Same Or Not.They Must Be Same.
+         if (myPiePerecents.Length != myPieColors.Length)
+         {
+            this.Text = "There Must Be The Same Number Of Percents And Colors.";
+         }
+
+         float PiePercentTotal = 0;
+         for (int PiePercents = 0; PiePercents < myPiePerecents.Length; PiePercents++)
+         {
+            using (SolidBrush brush = new SolidBrush(myPieColors[PiePercents]))
+            {
+
+               //Here it Will Convert Each Value Into 360, So Total Into 360 & Then It Will Draw A Full Pie Chart.
+               myPieGraphic.FillPie(brush, new Rectangle(new Point(10, 10), myPieSize), Convert.ToSingle(PiePercentTotal * 360.0f / 100.0f), Convert.ToSingle(myPiePerecents[PiePercents] * 360.0f / sum));
             }
 
             PiePercentTotal += myPiePerecents[PiePercents];

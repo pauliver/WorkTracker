@@ -42,12 +42,12 @@ namespace PMTimeTracker
       string optionsfilename = "config.json";
       string savedtimefile = "user.json";
 
-      public int[] PiePercent
+      public float[] PiePercent
       {
          get
          {
             float runningtotal = 0.0f;
-            var totals = new List<int>();
+            var totals = new List<float>();
             foreach (var item in TrackerDescriptions)
             {
                if (TimeSpent.ContainsKey(item.Task))
@@ -61,6 +61,8 @@ namespace PMTimeTracker
                   totals.Add(0);
                }
             }
+            return totals.ToArray();
+            /*
             int newtotal = 0;
             float tempval = (float) runningtotal / 100.0f;
             for (int x = 0; x < totals.Count; x++)
@@ -80,6 +82,7 @@ namespace PMTimeTracker
                // yeah, could be off by a bit due to rounding
             }
             return totals.ToArray();
+            */
          }
       }
 

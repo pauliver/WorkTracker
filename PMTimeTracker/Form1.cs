@@ -70,8 +70,8 @@ namespace PMTimeTracker
             //DrawingPanel.Show();
             PieChart chart = new PieChart();
             chart.Show();
-            chart.TestPieChart();
-            //chart.DrawPieChart(tracker.PiePercent, tracker.PieColor);
+            //chart.TestPieChart();
+            chart.DrawPieChart(tracker.PiePercent, tracker.PieColor);
          }
          catch (Exception ex)
          {
