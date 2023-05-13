@@ -53,7 +53,7 @@
          this.ApieChartPlease.Size = new System.Drawing.Size(379, 322);
          this.ApieChartPlease.TabIndex = 0;
          this.ApieChartPlease.Text = "chart1";
-         this.ApieChartPlease.Click += new System.EventHandler(this.ApieChartPlease_Click);
+         this.ApieChartPlease.DoubleClick += new System.EventHandler(this.ApieChartPlease_Click);
          // 
          // PieChart
          // 

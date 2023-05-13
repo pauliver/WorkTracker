@@ -132,7 +132,7 @@ namespace PMTimeTracker
 
          //Add a new chart-series
          string seriesname = "Time Spent";
-         ApieChartPlease.Series.Add("TIme Spent Pie Chart");
+         ApieChartPlease.Series.Add(seriesname);
          //set the chart-type to "Pie"
          ApieChartPlease.Series[seriesname].ChartType = SeriesChartType.Pie;
 
@@ -147,7 +147,7 @@ namespace PMTimeTracker
             //Add some datapoints so the series. in this case you can pass the values to this method
             if (TimeSpent.ContainsKey(TrackerDescriptions[x].Task) && TimeSpent[TrackerDescriptions[x].Task] > 0)
             {
-               ApieChartPlease.Series[seriesname].Points.AddXY(TrackerDescriptions[x].Task, TimeSpent[TrackerDescriptions[x].Task]);
+               ApieChartPlease.Series[seriesname].Points.AddXY( TrackerDescriptions[x].Task + " | " + (float)(TimeSpent[TrackerDescriptions[x].Task]) / 360.0f + " hours", TimeSpent[TrackerDescriptions[x].Task]);
                ApieChartPlease.Series[seriesname].Points[fakex++].Color = TrackerDescriptions[x].Color; 
             }
          }
