@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace PMTimeTracker
 {
@@ -22,6 +23,7 @@ namespace PMTimeTracker
       Color[] myPieColors = { Color.Red, Color.Black, Color.Blue, Color.Green, Color.Maroon };
       Graphics myPieGraphic;
 
+#if false
       public void TestPieChart()
       {
          DrawPieChart(myPiePercent, myPieColors);
@@ -104,8 +106,52 @@ namespace PMTimeTracker
          }
       }
 
+#endif
       private void PieChart_Load(object sender, EventArgs e)
       {
+
+      }
+
+      private void ApieChartPlease_Click(object sender, EventArgs e)
+      {
+         this.Hide();
+      }
+
+      public void DrawPieChart(List<TrackerDescription> TrackerDescriptions, Dictionary<string, int> TimeSpent)
+      {
+         ApieChartPlease.Series.Clear();
+         ApieChartPlease.Legends.Clear();
+
+         //Add a new Legend(if needed) and do some formating
+         ApieChartPlease.Legends.Add("MyLegend");
+         ApieChartPlease.Legends[0].LegendStyle = LegendStyle.Table;
+         ApieChartPlease.Legends[0].Docking = Docking.Bottom;
+         ApieChartPlease.Legends[0].Alignment = StringAlignment.Center;
+         ApieChartPlease.Legends[0].Title = "Time Spent";
+         ApieChartPlease.Legends[0].BorderColor = Color.Black;
+
+         //Add a new chart-series
+         string seriesname = "Time Spent";
+         ApieChartPlease.Series.Add("TIme Spent Pie Chart");
+         //set the chart-type to "Pie"
+         ApieChartPlease.Series[seriesname].ChartType = SeriesChartType.Pie;
+
+
+         // Reminder X++ returns X and then increments it. ++X increments X and then returns it.
+         //  this makes ++X more efficient than X++.
+         //  this also means we can use X++ in the for loop and not have to worry about the increment
+
+         int fakex = 0;
+         for(int x = 0; x < TrackerDescriptions.Count();++x)
+         {
+            //Add some datapoints so the series. in this case you can pass the values to this method
+            if (TimeSpent.ContainsKey(TrackerDescriptions[x].Task) && TimeSpent[TrackerDescriptions[x].Task] > 0)
+            {
+               ApieChartPlease.Series[seriesname].Points.AddXY(TrackerDescriptions[x].Task, TimeSpent[TrackerDescriptions[x].Task]);
+               ApieChartPlease.Series[seriesname].Points[fakex++].Color = TrackerDescriptions[x].Color; 
+            }
+         }
+
 
       }
    }

@@ -21,6 +21,7 @@ namespace PMTimeTracker
       bool LastHourTimedOut = false;
       private System.Windows.Forms.NotifyIcon notifyIcon1;
 
+      PieChart chart;
 
 
       public TimeTracking()
@@ -56,6 +57,9 @@ namespace PMTimeTracker
             OptionsView.Items[0].Selected = true;
             currentlytracking = OptionsView.Items[0].Text;
          }
+
+         chart = new PieChart();
+         chart.Hide();
       }
 
       private void Exit_Click(object sender, EventArgs e)
@@ -67,11 +71,8 @@ namespace PMTimeTracker
       {
          try
          {
-            //DrawingPanel.Show();
-            PieChart chart = new PieChart();
             chart.Show();
-            //chart.TestPieChart();
-            chart.DrawPieChart(tracker.PiePercent, tracker.PieColor);
+            chart.DrawPieChart(tracker.TrackerDescriptions, tracker.TimeSpent);
          }
          catch (Exception ex)
          {
