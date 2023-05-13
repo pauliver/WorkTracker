@@ -147,11 +147,16 @@ namespace PMTimeTracker
             //Add some datapoints so the series. in this case you can pass the values to this method
             if (TimeSpent.ContainsKey(TrackerDescriptions[x].Task) && TimeSpent[TrackerDescriptions[x].Task] > 0)
             {
-               ApieChartPlease.Series[seriesname].Points.AddXY( TrackerDescriptions[x].Task + " | " + (float)(TimeSpent[TrackerDescriptions[x].Task]) / 360.0f + " hours", TimeSpent[TrackerDescriptions[x].Task]);
+               ApieChartPlease.Series[seriesname].Points.AddXY( TrackerDescriptions[x].Task + Environment.NewLine + (float)(TimeSpent[TrackerDescriptions[x].Task]) / 360.0f + "Hours: ", TimeSpent[TrackerDescriptions[x].Task]);
                ApieChartPlease.Series[seriesname].Points[fakex++].Color = TrackerDescriptions[x].Color; 
             }
          }
 
+
+      }
+
+      private void ApieChartPlease_Click_1(object sender, EventArgs e)
+      {
 
       }
    }

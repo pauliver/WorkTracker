@@ -53,6 +53,7 @@
          this.ApieChartPlease.Size = new System.Drawing.Size(379, 322);
          this.ApieChartPlease.TabIndex = 0;
          this.ApieChartPlease.Text = "chart1";
+         this.ApieChartPlease.Click += new System.EventHandler(this.ApieChartPlease_Click_1);
          this.ApieChartPlease.DoubleClick += new System.EventHandler(this.ApieChartPlease_Click);
          // 
          // PieChart
@@ -61,7 +62,7 @@
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
          this.ClientSize = new System.Drawing.Size(379, 321);
          this.Controls.Add(this.ApieChartPlease);
-         this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+         this.Margin = new System.Windows.Forms.Padding(4);
          this.MaximizeBox = false;
          this.MinimizeBox = false;
          this.Name = "PieChart";
