@@ -218,5 +218,11 @@ namespace PMTimeTracker
       {
 
       }
+
+      private void button3_Click(object sender, EventArgs e)
+      {
+         AboutAndSettings abs = new AboutAndSettings();
+         abs.Show();
+      }
    }
 }

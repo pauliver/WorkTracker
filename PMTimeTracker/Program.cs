@@ -24,17 +24,17 @@ namespace PMTimeTracker
          try
          {
             CR = new CrashReporter();
-            var icon = new NotifyIcon();
-            icon.ContextMenu = new ContextMenu();
+            //var icon = new NotifyIcon();
+            //icon.ContextMenu = new ContextMenu();
 
-            {
+            /*{
                var menustrip = new MenuItem();
                menustrip.Text = "Exit";
                menustrip.Click += (s, e) => Application.Exit();
                icon.ContextMenu.MenuItems.Add(menustrip);
-            }
+            }*/
             var form1 = new TimeTracking();
-            {
+            /*{
                var menustrip = new MenuItem();
                menustrip.Text = "Show";
                menustrip.Click += (s, e) => form1.Show();
@@ -44,6 +44,7 @@ namespace PMTimeTracker
             icon.Visible = true;
             //Application.EnableVisualStyles();
             //Application.SetCompatibleTextRenderingDefault(false);
+            */
             Application.Run(form1);
 
          }catch (Exception ex)
