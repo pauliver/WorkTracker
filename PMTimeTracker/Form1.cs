@@ -36,7 +36,8 @@ namespace PMTimeTracker
          notifyIcon1.ContextMenuStrip.Items.Add("Exit", null, Exit_Click);
          notifyIcon1.ContextMenuStrip.Items.Add("Hide", null, Hide_Click);
          notifyIcon1.ContextMenuStrip.Items.Add("Show", null, Show_Click);
-         notifyIcon1.ContextMenuStrip.Items.Add("ShowPieChart", null, ShowPieChart_Click);
+         notifyIcon1.ContextMenuStrip.Items.Add("View Data & Settings", null, ShowPieChart_Click);
+         notifyIcon1.ContextMenuStrip.Items.Add("About", null, ShowAbout_Click);
          notifyIcon1.Click += Show_Click;
 
          InitializeComponent();
@@ -61,7 +62,18 @@ namespace PMTimeTracker
          chart = new PieChart();
          chart.Hide();
       }
-
+      private void ShowAbout_Click(object sender, EventArgs e)
+      {
+         try
+         {
+            AboutAndSettings abs = new AboutAndSettings();
+            abs.Show();
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine(ex.Message);
+         }
+      }
       private void Exit_Click(object sender, EventArgs e)
       {
          tracker.UpdateUserSave();

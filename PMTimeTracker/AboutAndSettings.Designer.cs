@@ -60,9 +60,9 @@
          this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
          this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
          this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-         this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.668712F));
-         this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.69939F));
-         this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40.4908F));
+         this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 21.47239F));
+         this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 31.59509F));
+         this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 17.79141F));
          this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
          this.tableLayoutPanel.Size = new System.Drawing.Size(556, 326);
          this.tableLayoutPanel.TabIndex = 0;
@@ -132,13 +132,13 @@
          // textBoxDescription
          // 
          this.textBoxDescription.Dock = System.Windows.Forms.DockStyle.Fill;
-         this.textBoxDescription.Location = new System.Drawing.Point(391, 124);
+         this.textBoxDescription.Location = new System.Drawing.Point(391, 169);
          this.textBoxDescription.Margin = new System.Windows.Forms.Padding(8, 4, 4, 4);
          this.textBoxDescription.Multiline = true;
          this.textBoxDescription.Name = "textBoxDescription";
          this.textBoxDescription.ReadOnly = true;
          this.textBoxDescription.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-         this.textBoxDescription.Size = new System.Drawing.Size(161, 65);
+         this.textBoxDescription.Size = new System.Drawing.Size(161, 94);
          this.textBoxDescription.TabIndex = 23;
          this.textBoxDescription.TabStop = false;
          this.textBoxDescription.Text = "Description";
