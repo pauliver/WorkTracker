@@ -45,11 +45,10 @@
          this.HideBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
          this.HideBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
          this.HideBtn.ForeColor = System.Drawing.Color.Black;
-         this.HideBtn.Location = new System.Drawing.Point(7, 425);
-         this.HideBtn.Margin = new System.Windows.Forms.Padding(4);
+         this.HideBtn.Location = new System.Drawing.Point(5, 354);
          this.HideBtn.Name = "HideBtn";
-         this.HideBtn.Size = new System.Drawing.Size(173, 87);
-         this.HideBtn.TabIndex = 1;
+         this.HideBtn.Size = new System.Drawing.Size(130, 71);
+         this.HideBtn.TabIndex = 4;
          this.HideBtn.Text = "Hide";
          this.HideBtn.UseVisualStyleBackColor = false;
          this.HideBtn.Click += new System.EventHandler(this.Hide_Click);
@@ -61,10 +60,9 @@
          // 
          // ExpectedTime
          // 
-         this.ExpectedTime.Location = new System.Drawing.Point(7, 4);
-         this.ExpectedTime.Margin = new System.Windows.Forms.Padding(4);
+         this.ExpectedTime.Location = new System.Drawing.Point(12, 12);
          this.ExpectedTime.Name = "ExpectedTime";
-         this.ExpectedTime.Size = new System.Drawing.Size(833, 26);
+         this.ExpectedTime.Size = new System.Drawing.Size(654, 21);
          this.ExpectedTime.TabIndex = 3;
          this.ExpectedTime.Visible = false;
          // 
@@ -76,11 +74,10 @@
          this.StartTracking.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
          this.StartTracking.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
          this.StartTracking.ForeColor = System.Drawing.Color.Cornsilk;
-         this.StartTracking.Location = new System.Drawing.Point(308, 489);
-         this.StartTracking.Margin = new System.Windows.Forms.Padding(4);
+         this.StartTracking.Location = new System.Drawing.Point(231, 397);
          this.StartTracking.Name = "StartTracking";
-         this.StartTracking.Size = new System.Drawing.Size(239, 68);
-         this.StartTracking.TabIndex = 5;
+         this.StartTracking.Size = new System.Drawing.Size(179, 55);
+         this.StartTracking.TabIndex = 2;
          this.StartTracking.Text = "TRACK TIME";
          this.StartTracking.UseVisualStyleBackColor = false;
          this.StartTracking.Click += new System.EventHandler(this.StartTracking_Click);
@@ -94,11 +91,10 @@
          this.StopTracking.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
          this.StopTracking.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
          this.StopTracking.ForeColor = System.Drawing.Color.Yellow;
-         this.StopTracking.Location = new System.Drawing.Point(328, 527);
-         this.StopTracking.Margin = new System.Windows.Forms.Padding(4);
+         this.StopTracking.Location = new System.Drawing.Point(246, 428);
          this.StopTracking.Name = "StopTracking";
-         this.StopTracking.Size = new System.Drawing.Size(196, 38);
-         this.StopTracking.TabIndex = 6;
+         this.StopTracking.Size = new System.Drawing.Size(147, 31);
+         this.StopTracking.TabIndex = 3;
          this.StopTracking.Text = "Stop Tracking";
          this.StopTracking.UseVisualStyleBackColor = false;
          this.StopTracking.Visible = false;
@@ -106,23 +102,26 @@
          // 
          // OptionsView
          // 
+         this.OptionsView.BackColor = System.Drawing.SystemColors.Window;
+         this.OptionsView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+         this.OptionsView.ForeColor = System.Drawing.Color.Black;
          this.OptionsView.HideSelection = false;
-         this.OptionsView.Location = new System.Drawing.Point(7, 37);
-         this.OptionsView.Margin = new System.Windows.Forms.Padding(4);
+         this.OptionsView.Location = new System.Drawing.Point(5, 39);
+         this.OptionsView.MultiSelect = false;
          this.OptionsView.Name = "OptionsView";
-         this.OptionsView.Size = new System.Drawing.Size(172, 379);
-         this.OptionsView.TabIndex = 7;
+         this.OptionsView.Size = new System.Drawing.Size(130, 309);
+         this.OptionsView.TabIndex = 1;
          this.OptionsView.UseCompatibleStateImageBehavior = false;
          this.OptionsView.View = System.Windows.Forms.View.List;
          this.OptionsView.SelectedIndexChanged += new System.EventHandler(this.OptionsView_SelectedIndexChanged);
          // 
          // TimeTracking
          // 
-         this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+         this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
          this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
          this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-         this.ClientSize = new System.Drawing.Size(837, 597);
+         this.ClientSize = new System.Drawing.Size(671, 490);
          this.ControlBox = false;
          this.Controls.Add(this.OptionsView);
          this.Controls.Add(this.StopTracking);
@@ -131,7 +130,6 @@
          this.Controls.Add(this.HideBtn);
          this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
          this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-         this.Margin = new System.Windows.Forms.Padding(4);
          this.MaximizeBox = false;
          this.MinimizeBox = false;
          this.Name = "TimeTracking";

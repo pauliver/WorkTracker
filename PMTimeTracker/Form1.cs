@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,7 +37,7 @@ namespace PMTimeTracker
          notifyIcon1.ContextMenuStrip.Items.Add("Exit", null, Exit_Click);
          notifyIcon1.ContextMenuStrip.Items.Add("Hide", null, Hide_Click);
          notifyIcon1.ContextMenuStrip.Items.Add("Show", null, Show_Click);
-         notifyIcon1.ContextMenuStrip.Items.Add("View Data & Settings", null, ShowPieChart_Click);
+         notifyIcon1.ContextMenuStrip.Items.Add("View &Data and Settings", null, ShowPieChart_Click);
          notifyIcon1.ContextMenuStrip.Items.Add("About", null, ShowAbout_Click);
          notifyIcon1.Click += Show_Click;
 
@@ -84,6 +85,7 @@ namespace PMTimeTracker
          try
          {
             chart.Show();
+            chart.TransferTracker(tracker);
             chart.DrawPieChart(tracker.TrackerDescriptions, tracker.TimeSpent);
          }
          catch (Exception ex)
@@ -126,7 +128,25 @@ namespace PMTimeTracker
 
       private void OptionsView_SelectedIndexChanged(object sender, EventArgs e)
       {
-         //currentlytracking = OptionsView.SelectedItems().Text;
+         /*
+         OptionsViewr.Resources[SystemColors.InactiveSelectionHighlightBrushKey] = SystemColors.HighlightBrush;
+         OptionsViewr.Resources[SystemColors.InactiveSelectionHighlightTextBrushKey] = SystemColors.HighlightTextBrush;
+         OptionsViewr.Resources.Add(SystemColors.InactiveSelectionHighlightBrushKey, new SolidColorBrush(Colors.Orange));
+
+         for (int i = 0; i < OptionsView.Items.Count; i++)
+         {
+            if (OptionsView.Items[i].Selected)
+            {
+               OptionsView.Items[i].BackColor = Color.Black;
+               OptionsView.Items[i].ForeColor = Color.White;
+            }
+            else
+            {
+               OptionsView.Items[i].BackColor = Color.White;
+               OptionsView.Items[i].ForeColor = Color.Black;
+            }
+         }
+         */
       }
 
       private void StopTracking_Click(object sender, EventArgs e)

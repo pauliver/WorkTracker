@@ -13,20 +13,7 @@ namespace PMTimeTracker
 {
    public partial class PieChart : Form
    {
-
-      [TypeConverter(typeof(ExpandableObjectConverter))]
-      public class PropretyGridHelper
-      {
-         [CategoryAttribute("Tasks"), DescriptionAttribute("lorem ipsum")]
-         public List<TrackerDescription> TrackerDescriptions
-         { get;set;  }
-
-         [CategoryAttribute("Time Spent"), DescriptionAttribute("lorem ipsum")]
-         public Dictionary<string, int> TimeSpent
-         { get; set; }  
-      }
-
-      PropretyGridHelper PGH = new PropretyGridHelper();
+      TrackerSaveLoad TSL;
       public PieChart()
       {
          //myPieGraphic = this.CreateGraphics();
@@ -194,10 +181,6 @@ namespace PMTimeTracker
 
          //https://stackoverflow.com/questions/1928567/using-a-dictionary-in-a-propertygrid
 
-         //return;
-         PGH.TrackerDescriptions = TrackerDescriptions;
-         PGH.TimeSpent = TimeSpent;
-         TDPropertyGrid.SelectedObject = PGH;
       }
       protected override void OnFormClosing(FormClosingEventArgs e)
       {
@@ -209,11 +192,6 @@ namespace PMTimeTracker
          }
       }
 
-      private void button2_Click(object sender, EventArgs e)
-      {
-
-      }
-
       private void SettingsPage_Click(object sender, EventArgs e)
       {
 
@@ -221,8 +199,42 @@ namespace PMTimeTracker
 
       private void button3_Click(object sender, EventArgs e)
       {
+         this.Hide();
+      } 
+
+      private void button5_Click(object sender, EventArgs e)
+      {
          AboutAndSettings abs = new AboutAndSettings();
          abs.Show();
+      }
+
+      private void button4_Click(object sender, EventArgs e)
+      {
+         System.Diagnostics.Process.Start("https://github.com/pauliver/WorkTracker");
+      }
+
+      private void button1_Click(object sender, EventArgs e)
+      {
+         //Save the .json files
+         TSL.SaveOptions();
+         TSL.UpdateUserSave();
+      }
+
+      private void button2_Click(object sender, EventArgs e)
+      {
+         TSL.LoadOptions();
+      }
+
+      internal void TransferTracker(TrackerSaveLoad tracker)
+      {
+         TSL = tracker;
+         
+         TDPropertyGrid.SelectedObject = TSL;
+      }
+
+      private void button6_Click(object sender, EventArgs e)
+      {
+         TSL.UpdateUserSave();
       }
    }
 }

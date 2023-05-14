@@ -10,7 +10,7 @@ using System.Windows.Forms.VisualStyles;
 
 namespace PMTimeTracker
 {
-   [DefaultPropertyAttribute("Task")]
+   [DefaultPropertyAttribute("Task"), TypeConverterAttribute(typeof(ExpandableObjectConverter))]
    public class TrackerDescription
    {
       [CategoryAttribute("Task"), DescriptionAttribute("Name of the task")]
@@ -31,8 +31,11 @@ namespace PMTimeTracker
       public string ImagePath { get; set; }
    }
 
+   [TypeConverter(typeof(ExpandableObjectConverter))]
    public class TrackerSaveLoad
    {
+
+      [CategoryAttribute("Tasks"), DescriptionAttribute("lorem ipsum")]
       public List<TrackerDescription> TrackerDescriptions { get; set; }
 
       public TrackerDescription GetTrackerDescriptionbyTask(string task)
@@ -47,6 +50,8 @@ namespace PMTimeTracker
          return null;
       }
 
+
+      [CategoryAttribute("Time Spent"), DescriptionAttribute("lorem ipsum")]
       public Dictionary<string, int> TimeSpent { get; set; }
 
       string optionsfilename = "config.json";

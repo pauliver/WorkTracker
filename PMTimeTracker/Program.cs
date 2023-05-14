@@ -31,7 +31,10 @@ namespace PMTimeTracker
 
          }catch (Exception ex)
          {
-            CR.ItsGoneWrong(ex, "PM Tracker : " + "replace this with app.version, but for now, pre-alpha");
+            if (!CR.CleanlyLoggedIn)
+               MessageBox.Show("We can log crashes if you have a GitHub PAT (Personal Access Token) and a GitHub account.  Please create an Envornment Variable named GITHUB_TOKEN with a PAT scoped to create new issues." + Environment.NewLine + Environment.NewLine + "If you don't have a GitHub account, you can create one for free at");
+
+            CR.ItsGoneWrong(ex, "PM Tracker : " + Application.ProductVersion + "Crash : " + System.DateTime.Now.ToString());
          }
 
       }
