@@ -13,17 +13,31 @@ namespace PMTimeTracker
 {
    public partial class PieChart : Form
    {
+
+      [TypeConverter(typeof(ExpandableObjectConverter))]
+      public class PropretyGridHelper
+      {
+         [CategoryAttribute("Tasks"), DescriptionAttribute("lorem ipsum")]
+         public List<TrackerDescription> TrackerDescriptions
+         { get;set;  }
+
+         [CategoryAttribute("Time Spent"), DescriptionAttribute("lorem ipsum")]
+         public Dictionary<string, int> TimeSpent
+         { get; set; }  
+      }
+
+      PropretyGridHelper PGH = new PropretyGridHelper();
       public PieChart()
       {
-         myPieGraphic = this.CreateGraphics();
+         //myPieGraphic = this.CreateGraphics();
 
          InitializeComponent();
       }
+
+#if false
       int[] myPiePercent = { 10, 20, 25, 5, 40 };
       Color[] myPieColors = { Color.Red, Color.Black, Color.Blue, Color.Green, Color.Maroon };
       Graphics myPieGraphic;
-
-#if false
       public void TestPieChart()
       {
          DrawPieChart(myPiePercent, myPieColors);
@@ -130,6 +144,8 @@ namespace PMTimeTracker
          ApieChartPlease.Legends[0].Title = "Time Spent";
          ApieChartPlease.Legends[0].BorderColor = Color.Black;
 
+
+
          //Add a new chart-series
          string seriesname = "Time Spent";
          ApieChartPlease.Series.Add(seriesname);
@@ -148,14 +164,57 @@ namespace PMTimeTracker
             if (TimeSpent.ContainsKey(TrackerDescriptions[x].Task) && TimeSpent[TrackerDescriptions[x].Task] > 0)
             {
                ApieChartPlease.Series[seriesname].Points.AddXY( TrackerDescriptions[x].Task + Environment.NewLine + (float)(TimeSpent[TrackerDescriptions[x].Task]) / 360.0f + "Hours: ", TimeSpent[TrackerDescriptions[x].Task]);
-               ApieChartPlease.Series[seriesname].Points[fakex++].Color = TrackerDescriptions[x].Color; 
+               ApieChartPlease.Series[seriesname].Points[fakex++].Color = TrackerDescriptions[x].Color;
+
             }
          }
 
+         BarChart.Series.Clear();
+         BarChart.Legends.Clear();
+         //Add a new Legend(if needed) and do some formating
+         BarChart.Legends.Add("MyLegend");
+         BarChart.Legends[0].LegendStyle = LegendStyle.Table;
+         BarChart.Legends[0].Docking = Docking.Bottom;
+         BarChart.Legends[0].Alignment = StringAlignment.Center;
+         BarChart.Legends[0].Title = "Time Spent in Minutes";
+         BarChart.Legends[0].BorderColor = Color.Black;
+         BarChart.Series.Add(seriesname);
+         BarChart.Series[seriesname].ChartType = SeriesChartType.Bar;
+         fakex = 0;
+         for (int x = 0; x < TrackerDescriptions.Count(); ++x)
+         {
+            //Add some datapoints so the series. in this case you can pass the values to this method
+            if (TimeSpent.ContainsKey(TrackerDescriptions[x].Task) && TimeSpent[TrackerDescriptions[x].Task] > 0)
+            {
+
+               BarChart.Series[seriesname].Points.AddXY(TrackerDescriptions[x].Task + Environment.NewLine + (float)(TimeSpent[TrackerDescriptions[x].Task]) / 360.0f + "Hours: ", TimeSpent[TrackerDescriptions[x].Task] / 60.0f);
+               BarChart.Series[seriesname].Points[fakex++].Color = TrackerDescriptions[x].Color;
+            }
+         }
+
+         //https://stackoverflow.com/questions/1928567/using-a-dictionary-in-a-propertygrid
+
+         //return;
+         PGH.TrackerDescriptions = TrackerDescriptions;
+         PGH.TimeSpent = TimeSpent;
+         TDPropertyGrid.SelectedObject = PGH;
+      }
+      protected override void OnFormClosing(FormClosingEventArgs e)
+      {
+         base.OnFormClosing(e);
+         if (e.CloseReason == CloseReason.UserClosing)
+         {
+            e.Cancel = true;
+            Hide();
+         }
+      }
+
+      private void button2_Click(object sender, EventArgs e)
+      {
 
       }
 
-      private void ApieChartPlease_Click_1(object sender, EventArgs e)
+      private void SettingsPage_Click(object sender, EventArgs e)
       {
 
       }

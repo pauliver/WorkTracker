@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.ConstrainedExecution;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -19,10 +20,10 @@ namespace PMTimeTracker
 
          MessageBox.Show("This is a pre-alpha release.  It is not ready for production use.  Please use at your own risk." + Environment.NewLine + Environment.NewLine + "Pie chart only works in debug" + Environment.NewLine + Environment.NewLine + "Windows doesn't handle scales other than 100% well...");
 #endif
-         var CR = new CrashReporter();
+         CrashReporter CR = null;
          try
          {
-            CR.AttemptLogin();
+            CR = new CrashReporter();
             var icon = new NotifyIcon();
             icon.ContextMenu = new ContextMenu();
 

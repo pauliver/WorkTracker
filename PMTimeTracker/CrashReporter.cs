@@ -130,6 +130,11 @@ namespace PMTimeTracker
          {
             Console.WriteLine("Loading github...");
             string secretkey = Environment.GetEnvironmentVariable("GITHUB_TOKEN");
+            if(secretkey == null)
+            {
+               cleanlyLoggedIn = false;
+               return false;
+            }
             github = new GitHubClient(new ProductHeaderValue("Pauliver-PMTimeTracking"))
             {
                Credentials = new Credentials(secretkey)
