@@ -170,6 +170,7 @@ namespace PMTimeTracker
          var td = tracker.GetTrackerDescriptionbyTask(name);
          if(td != null)
          {
+            this.Text = "Time Tracking : " + name;
             timeout = td.MaxSeconds;
             //should also do something with the '30 min hard stop', that invovles system time
             ExpectedTime.Maximum = td.ExpectedSeconds;
@@ -182,6 +183,7 @@ namespace PMTimeTracker
       }
       private void CompletePreviousTimeTracking()
       {
+         this.Text = "Time Tracking ";
          Timer.Enabled = false;
          if (LastHourTimedOut)  // if we timed out, we need to complete the previous task
          {
