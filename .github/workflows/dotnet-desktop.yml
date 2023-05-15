@@ -97,9 +97,9 @@ jobs:
     - uses: ncipollo/release-action@v1
       with:
         allowUpdates: true
-        name: "Actions Generated Release ${{ env:Configuration }}"
+        name: "Actions Generated Release $env:Configuration"
         replacesArtifacts: true
-        tag: "[Alpha,Automated,${{ env:Configuration }}]"
+        tag: "[Alpha,Automated,$env:Configuration]"
         artifacts: "release-$env:Configuration.zip"
         bodyFile: "readme.md"
 
