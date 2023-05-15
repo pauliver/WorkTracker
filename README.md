@@ -1,3 +1,8 @@
+[![Does it Compile](https://github.com/pauliver/WorkTracker/actions/workflows/dotnet-build.yml/badge.svg)](https://github.com/pauliver/WorkTracker/actions/workflows/dotnet-build.yml)
+
+[![Build and Package Release](https://github.com/pauliver/WorkTracker/actions/workflows/dotnet-release.yml/badge.svg)](https://github.com/pauliver/WorkTracker/actions/workflows/dotnet-release.yml)
+
+
 # WorkTracker
 quick C# app to track work
 
