@@ -94,6 +94,12 @@ jobs:
         filename: 'release.zip'
         exclusions: '*.git*'
 
+    - uses: ncipollo/release-action@v1
+      with:
+        allowUpdates: true
+        artifacts: "release.zip"
+        bodyFile: "readme.md"
+
     # Decode the base 64 encoded pfx and save the Signing_Certificate
     - name: Decode the pfx
       run: |
