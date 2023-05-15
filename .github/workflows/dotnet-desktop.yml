@@ -91,14 +91,14 @@ jobs:
       uses: thedoctor0/zip-release@0.7.1
       with:
         type: 'zip'
-        filename: 'release.zip'
+        filename: 'release-$env:Configuration.zip'
         exclusions: '*.git*'
 
     - uses: ncipollo/release-action@v1
       with:
         allowUpdates: true
-        tag: "[Alpha,Automated]"
-        artifacts: "release.zip"
+        tag: "[Alpha,Automated,$env:Configuration]"
+        artifacts: "release-$env:Configuration.zip"
         bodyFile: "readme.md"
 
     # Decode the base 64 encoded pfx and save the Signing_Certificate
