@@ -29,6 +29,15 @@ namespace PMTimeTracker
       public bool ThirtyMinHardStop { get; set; }
       [CategoryAttribute("Task Visualization"), DescriptionAttribute("lorem ipsum")]
       public string ImagePath { get; set; }
+
+      [CategoryAttribute("Task AutoMatch"), DescriptionAttribute("If we detect a running application that has focus, should we change to this? By the title")]
+      public bool AutoMatchBasedOnWindowTitle { get; set; }
+      [CategoryAttribute("Task AutoMatch"), DescriptionAttribute("Title to Match")]
+      public string WindowTitleMatch { get; set; }
+      [CategoryAttribute("Task AutoMatch"), DescriptionAttribute("If we detect a running application that has focus, should we change to this? By the App Name")]
+      public bool AutoMatchBasedOnApplication { get; set; }
+      [CategoryAttribute("Task AutoMatch"), DescriptionAttribute("App Name to Match")]
+      public string WindowAppMatch { get; set; }
    }
 
    [TypeConverter(typeof(ExpandableObjectConverter))]
@@ -165,6 +174,11 @@ namespace PMTimeTracker
             Console.WriteLine(ex.Message);
          }
       }
+      static int FIFTEEN_MIN = 15 * 60;
+      static int THIRTY_MIN = 30 * 60;
+      static int SIXTY_MIN = 60 * 60;
+      static int NINTY_MIN = 90 * 60;
+      static int ONETWENT_MIN =  120 * 60;
 
       public void CreateOptions()
       {
@@ -174,15 +188,15 @@ namespace PMTimeTracker
             //return;
          }
          List<TrackerDescription> initialoptions = new List<TrackerDescription>();
-         initialoptions.Add(new TrackerDescription() { Task = "Meeting : Team", Color = Color.Green, ExpectedSeconds = 30 * 60, MaxSeconds = 60 * 60 * 2, ThirtyMinHardStop = false });
-         initialoptions.Add(new TrackerDescription() { Task = "Meeting : Huge", Color = Color.GreenYellow, ExpectedSeconds = 90 * 60, MaxSeconds = 60 * 60 * 2, ThirtyMinHardStop = false });
-         initialoptions.Add(new TrackerDescription() { Task = "Meeting : 1on1", Color = Color.BlueViolet, ExpectedSeconds = 30 * 60, MaxSeconds = 60 * 60 * 2, ThirtyMinHardStop = false });
-         initialoptions.Add(new TrackerDescription() { Task = "Training", Color = Color.Red, ExpectedSeconds = 60 * 60, MaxSeconds = 60 * 60 * 2, ThirtyMinHardStop = false });
-         initialoptions.Add(new TrackerDescription() { Task = "Helping Others", Color = Color.Purple, ExpectedSeconds = 30 * 60, MaxSeconds = 60 * 60 * 2, ThirtyMinHardStop = false });
-         initialoptions.Add(new TrackerDescription() { Task = "Pure Overhead", Color = Color.DarkRed, ExpectedSeconds = 15 * 60, MaxSeconds = 60 * 60 * 2, ThirtyMinHardStop = false });
-         initialoptions.Add(new TrackerDescription() { Task = "Feature Work", Color = Color.DarkSeaGreen, ExpectedSeconds = 60 * 60, MaxSeconds = 60 * 60 * 2, ThirtyMinHardStop = false });
-         initialoptions.Add(new TrackerDescription() { Task = "Mandatory Follow UP", Color = Color.Yellow, ExpectedSeconds = 15 * 60, MaxSeconds = 60 * 60 * 2, ThirtyMinHardStop = false });
-         initialoptions.Add(new TrackerDescription() { Task = "Taxes", Color = Color.OrangeRed, ExpectedSeconds = 60 * 60, MaxSeconds = 60 * 60 * 2, ThirtyMinHardStop = false });
+         initialoptions.Add(new TrackerDescription() { Task = "Product or Feature work", Color = Color.Green, ExpectedSeconds = THIRTY_MIN, MaxSeconds = ONETWENT_MIN, ThirtyMinHardStop = false });
+         initialoptions.Add(new TrackerDescription() { Task = "Career Development", Color = Color.GreenYellow, ExpectedSeconds = NINTY_MIN, MaxSeconds = ONETWENT_MIN, ThirtyMinHardStop = false });
+         initialoptions.Add(new TrackerDescription() { Task = "Strategic Thinking", Color = Color.BlueViolet, ExpectedSeconds = THIRTY_MIN, MaxSeconds = ONETWENT_MIN, ThirtyMinHardStop = false });
+         initialoptions.Add(new TrackerDescription() { Task = "Status", Color = Color.Red, ExpectedSeconds = SIXTY_MIN, MaxSeconds = ONETWENT_MIN, ThirtyMinHardStop = false });
+         initialoptions.Add(new TrackerDescription() { Task = "Contributing to Others", Color = Color.Purple, ExpectedSeconds = THIRTY_MIN, MaxSeconds = ONETWENT_MIN, ThirtyMinHardStop = false });
+         initialoptions.Add(new TrackerDescription() { Task = "Pure Overhead", Color = Color.DarkRed, ExpectedSeconds = FIFTEEN_MIN, MaxSeconds = ONETWENT_MIN, ThirtyMinHardStop = false });
+         initialoptions.Add(new TrackerDescription() { Task = "Team or Org Meeting", Color = Color.DarkSeaGreen, ExpectedSeconds = SIXTY_MIN, MaxSeconds = ONETWENT_MIN, ThirtyMinHardStop = false });
+         initialoptions.Add(new TrackerDescription() { Task = "Administrative", Color = Color.Yellow, ExpectedSeconds = FIFTEEN_MIN, MaxSeconds = ONETWENT_MIN, ThirtyMinHardStop = false });
+         initialoptions.Add(new TrackerDescription() { Task = "Fires", Color = Color.OrangeRed, ExpectedSeconds = SIXTY_MIN, MaxSeconds = ONETWENT_MIN, ThirtyMinHardStop = false });
 
          var serializer = new JavaScriptSerializer();
          try

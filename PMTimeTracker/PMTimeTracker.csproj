@@ -69,12 +69,13 @@
       <DependentUpon>AboutAndSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="CrashReporter.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="MainWindow.Designer.cs">
+      <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="GrabRunningInfo.cs" />
     <Compile Include="PieChart.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,8 +88,8 @@
     <EmbeddedResource Include="AboutAndSettings.resx">
       <DependentUpon>AboutAndSettings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="MainWindow.resx">
+      <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PieChart.resx">
       <DependentUpon>PieChart.cs</DependentUpon>

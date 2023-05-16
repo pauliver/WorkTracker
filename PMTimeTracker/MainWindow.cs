@@ -102,6 +102,7 @@ namespace PMTimeTracker
          this.Show();
       }
 
+
       private void Timer_Tick(object sender, EventArgs e)
       {
          if (TimerActive)
