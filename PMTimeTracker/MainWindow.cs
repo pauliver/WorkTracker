@@ -123,7 +123,6 @@ namespace PMTimeTracker
          if (TimerActive)
          {
             accumulated_seconds += 1;
-            ExpectedTime.Value = accumulated_seconds;
 
 #if ATTEMPING_WINDOW_DETECTION
             {
@@ -148,12 +147,18 @@ namespace PMTimeTracker
 #endif
 
             }
+         if(accumulated_seconds <= ExpectedTime.Maximum)
+
+         {
+            ExpectedTime.Value = accumulated_seconds;
+         }
 
          if (accumulated_seconds > timeout)
          {
             TimerActive = false;
             accumulated_seconds = 0;
             LastHourTimedOut = true;
+            //CompletePreviousTimeTracking();
          }
       }
    

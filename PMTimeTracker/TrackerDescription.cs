@@ -40,7 +40,6 @@ namespace PMTimeTracker
       public string WindowAppMatch { get; set; }
    }
 
-   [TypeConverter(typeof(ExpandableObjectConverter))]
    public class TrackerSaveLoad
    {
 
