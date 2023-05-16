@@ -23,7 +23,7 @@ namespace PMTimeTracker
       [DllImport("user32.dll")]
       public static extern IntPtr GetWindowThreadProcessId(IntPtr hWnd, out uint processId);
 
-      public static string GetActiveWindowTitle()
+      async public static Task<string> GetActiveWindowTitle()
       {
          try
          {
@@ -35,7 +35,7 @@ namespace PMTimeTracker
             return "No Window : " + ex.Message;
          }
       }
-      public static string GetActiveWindowAppName()
+      async public static ValueTask<string> GetActiveWindowAppName()
       {
          try
          {
