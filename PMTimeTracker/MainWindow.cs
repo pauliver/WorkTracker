@@ -24,7 +24,9 @@ namespace PMTimeTracker
 
       PieChart chart;
 
-
+      System.IO.FileInfo LogFile = new System.IO.FileInfo("PMTimeTracker.log");
+      string LastLogFileApp = "";
+      string LogFileTemp = "";
       public TimeTracking()
       {
          //tracker.CreateOptions();
@@ -42,6 +44,18 @@ namespace PMTimeTracker
          notifyIcon1.Click += Show_Click;
 
          InitializeComponent();
+
+         try
+         {
+            if(LogFile.Exists)
+            {
+               LogFile.Delete();
+            }
+            LogFile.Create().Close();
+         }catch(Exception ex)
+         {
+            Console.WriteLine(ex.Message);
+         }
       }
 
       private void Form1_Load(object sender, EventArgs e)
@@ -109,7 +123,23 @@ namespace PMTimeTracker
          {
             accumulated_seconds += 1;
             ExpectedTime.Value = accumulated_seconds;
+            try
+            {
+               var ActiveWindowTitle = GrabRunningInfo.GetActiveWindowTitle();
+               var ActiveWindowApp = GrabRunningInfo.GetActiveWindowAppName();
+
+               if (ActiveWindowApp != LastLogFileApp)
+               {
+                  LogFileTemp += Environment.NewLine + ActiveWindowApp + " : " + ActiveWindowTitle + " - " + DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss") + Environment.NewLine;
+               }
+            }
+            catch (Exception ex)
+            {
+               Console.WriteLine(ex.Message);
+            }
+            
          }
+
          if (accumulated_seconds > timeout)
          {
             TimerActive = false;
@@ -117,7 +147,7 @@ namespace PMTimeTracker
             LastHourTimedOut = true;
          }
       }
-
+   
 
       private void StartTracking_Click(object sender, EventArgs e)
       {
@@ -129,25 +159,7 @@ namespace PMTimeTracker
 
       private void OptionsView_SelectedIndexChanged(object sender, EventArgs e)
       {
-         /*
-         OptionsViewr.Resources[SystemColors.InactiveSelectionHighlightBrushKey] = SystemColors.HighlightBrush;
-         OptionsViewr.Resources[SystemColors.InactiveSelectionHighlightTextBrushKey] = SystemColors.HighlightTextBrush;
-         OptionsViewr.Resources.Add(SystemColors.InactiveSelectionHighlightBrushKey, new SolidColorBrush(Colors.Orange));
-
-         for (int i = 0; i < OptionsView.Items.Count; i++)
-         {
-            if (OptionsView.Items[i].Selected)
-            {
-               OptionsView.Items[i].BackColor = Color.Black;
-               OptionsView.Items[i].ForeColor = Color.White;
-            }
-            else
-            {
-               OptionsView.Items[i].BackColor = Color.White;
-               OptionsView.Items[i].ForeColor = Color.Black;
-            }
-         }
-         */
+         // Need to make this more visible
       }
 
       private void StopTracking_Click(object sender, EventArgs e)
@@ -156,6 +168,8 @@ namespace PMTimeTracker
       }
       private void BeginCurrentTimeTracking(string name)
       {
+         LastLogFileApp = "";
+         LogFileTemp = "";
          //name == OptionsView.SelectedItems[0].Text;
          LastHourTimedOut = false;
          accumulated_seconds = 0;
@@ -204,7 +218,21 @@ namespace PMTimeTracker
          StopTracking.Visible = false;
          StartTracking.Enabled = true;
          ExpectedTime.Value = 0;
-         ExpectedTime.Visible = false; 
+         ExpectedTime.Visible = false;
+
+         //clean up the log file
+         try
+         {
+            System.IO.File.AppendAllText(LogFile.Name, Environment.NewLine + currentlytracking + " " + System.DateTime.Now + Environment.NewLine + LogFileTemp);
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine(ex.Message);
+         }
+         currentlytracking = "nothing";
+         LastLogFileApp = "";
+         LogFileTemp = "";
+         GC.Collect();
       }
 
    }
