@@ -150,7 +150,7 @@ namespace PMTimeTracker
             //Add some datapoints so the series. in this case you can pass the values to this method
             if (TimeSpent.ContainsKey(TrackerDescriptions[x].Task) && TimeSpent[TrackerDescriptions[x].Task] > 0)
             {
-               ApieChartPlease.Series[seriesname].Points.AddXY( TrackerDescriptions[x].Task + Environment.NewLine + (float)(TimeSpent[TrackerDescriptions[x].Task]) / 360.0f + "Hours: ", TimeSpent[TrackerDescriptions[x].Task]);
+               ApieChartPlease.Series[seriesname].Points.AddXY( TrackerDescriptions[x].Task + Environment.NewLine + (float)(TimeSpent[TrackerDescriptions[x].Task]) / TrackerSaveLoad.SIXTY_MIN + "Hours: ", TimeSpent[TrackerDescriptions[x].Task]);
                ApieChartPlease.Series[seriesname].Points[fakex++].Color = TrackerDescriptions[x].Color;
 
             }
@@ -174,7 +174,7 @@ namespace PMTimeTracker
             if (TimeSpent.ContainsKey(TrackerDescriptions[x].Task) && TimeSpent[TrackerDescriptions[x].Task] > 0)
             {
 
-               BarChart.Series[seriesname].Points.AddXY(TrackerDescriptions[x].Task + Environment.NewLine + (float)(TimeSpent[TrackerDescriptions[x].Task]) / 360.0f + "Hours: ", TimeSpent[TrackerDescriptions[x].Task] / 60.0f);
+               BarChart.Series[seriesname].Points.AddXY(TrackerDescriptions[x].Task + Environment.NewLine + (float)(TimeSpent[TrackerDescriptions[x].Task]) / TrackerSaveLoad.SIXTY_MIN + "Hours: ", TimeSpent[TrackerDescriptions[x].Task] / TrackerSaveLoad.SIXTY_MIN);
                BarChart.Series[seriesname].Points[fakex++].Color = TrackerDescriptions[x].Color;
             }
          }

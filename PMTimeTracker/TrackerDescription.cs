@@ -173,11 +173,11 @@ namespace PMTimeTracker
             Console.WriteLine(ex.Message);
          }
       }
-      static int FIFTEEN_MIN = 15 * 60;
-      static int THIRTY_MIN = 30 * 60;
-      static int SIXTY_MIN = 60 * 60;
-      static int NINTY_MIN = 90 * 60;
-      static int ONETWENT_MIN =  120 * 60;
+      public static int FIFTEEN_MIN = 15 * 60;
+      public static int THIRTY_MIN = 30 * 60;
+      public static int SIXTY_MIN = 60 * 60;
+      public static int NINTY_MIN = 90 * 60;
+      public static int ONETWENT_MIN =  120 * 60;
 
       public void CreateOptions()
       {
