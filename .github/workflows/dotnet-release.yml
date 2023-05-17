@@ -41,8 +41,9 @@ name: Build and Package Release
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    tags:        
+      - Alpha-*.*.*
+      - v1.*
 
 jobs:
 
