@@ -44,8 +44,6 @@ on:
     tags:        
       - Alpha-*.*.*
       - v1.*
-  pull_request:
-    branches: [ "main" ]
 
 jobs:
 
