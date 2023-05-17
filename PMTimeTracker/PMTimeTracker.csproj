@@ -152,6 +152,9 @@
     <Content Include="PMTracker.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\Firefly in image of a clock screaming at the sky while the world burns around it 95772.ico" />
+    <Content Include="Resources\Firefly in image of a clock screaming at the sky while the world burns around it 95772.jpg" />
+    <Content Include="Resources\Firefly in image of a clock screaming at the sky while the world burns around it 99368.jpg" />
     <None Include="Resources\BackgroundImage.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
