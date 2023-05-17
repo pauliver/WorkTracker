@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+#if ATTEMPING_WINDOW_DETECTION
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-
+#endif
 
 namespace PMTimeTracker
 {
@@ -14,7 +15,7 @@ namespace PMTimeTracker
 
    public class GrabRunningInfo
    {
-
+#if ATTEMPING_WINDOW_DETECTION
       [DllImport("user32.dll")]
       static extern IntPtr GetForegroundWindow();
       [DllImport("user32.dll")]
@@ -50,5 +51,6 @@ namespace PMTimeTracker
             return "No AppName : " + ex.Message;
          }
       }
+#endif
    }
 }

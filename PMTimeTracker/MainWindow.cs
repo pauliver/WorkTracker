@@ -6,9 +6,11 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
+#if ATTEMPING_WINDOW_DETECTION
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Web.Script.Serialization; 
+#endif
+using System.Windows.Forms;
 
 namespace PMTimeTracker
 {
