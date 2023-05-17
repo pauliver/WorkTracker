@@ -143,7 +143,7 @@ namespace PMTimeTracker
          this.Show();
       }
 
-
+      bool showtoggle = true;
       private void Timer_Tick(object sender, EventArgs e)
       {
          if (TimerActive)
@@ -153,10 +153,16 @@ namespace PMTimeTracker
             int Minute = System.DateTime.Now.Minute;
             if (ThirtyMinuteShow && (Minute == 0 || Minute == 30))
             {
-               if (System.DateTime.Now.Second < 10)
+               // don't collapse this into the above if statement
+               if(showtoggle) //ensure we only ever pop it up 1x
                {
                   this.Show();
+                  showtoggle = false;
                }
+            }
+            else
+            {
+               showtoggle = true;
             }
 
 #if ATTEMPING_WINDOW_DETECTION
