@@ -20,6 +20,7 @@ namespace PMTimeTracker
       int accumulated_seconds = 0;
       int timeout = 60 * 60; // 1 hour
       bool LastHourTimedOut = false;
+      bool ThirtyMinuteShow = false;
       private System.Windows.Forms.NotifyIcon notifyIcon1;
 
       PieChart chart;
@@ -57,6 +58,27 @@ namespace PMTimeTracker
             Console.WriteLine(ex.Message);
          }
 #endif
+         try
+         {
+            //Firefly in image of a clock screaming at the sky while the world burns around it 26800
+            // image from Adobe Firefly
+            var bmp = new Bitmap(this.BackgroundImage);
+
+            var WidthRatio = bmp.Size.Width / this.Width;
+            var HeightRatio = bmp.Size.Width / this.Height;
+
+            var scope = new Rectangle(OptionsView.Location.X * WidthRatio, OptionsView.Location.Y * HeightRatio, OptionsView.Width * WidthRatio, OptionsView.Height * HeightRatio);
+            var BackgroundBitmap = new Bitmap(OptionsView.Width, OptionsView.Height);
+            Graphics bg = Graphics.FromImage(BackgroundBitmap);
+
+            bg.DrawImage(bmp, new Rectangle(0, 0, OptionsView.Width, OptionsView.Height), scope, GraphicsUnit.Pixel);
+
+            OptionsView.BackgroundImageTiled = false;
+            OptionsView.BackgroundImage = BackgroundBitmap;
+         }catch(Exception ex)
+         {
+            Console.WriteLine(ex.Message);
+         }
       }
 
       private void Form1_Load(object sender, EventArgs e)
@@ -92,6 +114,10 @@ namespace PMTimeTracker
       }
       private void Exit_Click(object sender, EventArgs e)
       {
+         if(TimerActive && currentlytracking != "nothing")
+         {
+            CompletePreviousTimeTracking();
+         }
          tracker.UpdateUserSave();
          Application.Exit();
       }
@@ -124,6 +150,15 @@ namespace PMTimeTracker
          {
             accumulated_seconds += 1;
 
+            int Minute = System.DateTime.Now.Minute;
+            if (ThirtyMinuteShow && (Minute == 0 || Minute == 30))
+            {
+               if (System.DateTime.Now.Second < 10)
+               {
+                  this.Show();
+               }
+            }
+
 #if ATTEMPING_WINDOW_DETECTION
             {
                try
@@ -146,18 +181,20 @@ namespace PMTimeTracker
                }
 #endif
 
-            }
-         if(accumulated_seconds <= ExpectedTime.Maximum)
+         }
 
+         if(accumulated_seconds <= ExpectedTime.Maximum)
          {
             ExpectedTime.Value = accumulated_seconds;
          }
+      
 
          if (accumulated_seconds > timeout)
          {
             TimerActive = false;
             accumulated_seconds = 0;
             LastHourTimedOut = true;
+            StartTracking.Text = "Start Tracking";
             //CompletePreviousTimeTracking();
          }
       }
@@ -178,6 +215,7 @@ namespace PMTimeTracker
 
       private void StopTracking_Click(object sender, EventArgs e)
       {
+         StartTracking.Text = "Start Tracking";
          CompletePreviousTimeTracking();
       }
       private void BeginCurrentTimeTracking(string name)
@@ -199,10 +237,13 @@ namespace PMTimeTracker
          ExpectedTime.Value = 0;
          ExpectedTime.Visible = true;
 
+         StartTracking.Text = "Re-Start Tracking";
+
          var td = tracker.GetTrackerDescriptionbyTask(name);
          if(td != null)
          {
             this.Text = "Time Tracking : " + name;
+            ThirtyMinuteShow = td.ThirtyMinHardStop;
             timeout = td.MaxSeconds;
             //should also do something with the '30 min hard stop', that invovles system time
             ExpectedTime.Maximum = td.ExpectedSeconds;
@@ -215,6 +256,7 @@ namespace PMTimeTracker
       }
       private void CompletePreviousTimeTracking()
       {
+         StartTracking.Text = "Start Tracking";
          this.Text = "Time Tracking ";
          Timer.Enabled = false;
          if (LastHourTimedOut)  // if we timed out, we need to complete the previous task

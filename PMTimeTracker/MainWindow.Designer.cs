@@ -45,9 +45,9 @@
          this.HideBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
          this.HideBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
          this.HideBtn.ForeColor = System.Drawing.Color.Black;
-         this.HideBtn.Location = new System.Drawing.Point(5, 354);
+         this.HideBtn.Location = new System.Drawing.Point(4, 313);
          this.HideBtn.Name = "HideBtn";
-         this.HideBtn.Size = new System.Drawing.Size(130, 71);
+         this.HideBtn.Size = new System.Drawing.Size(130, 42);
          this.HideBtn.TabIndex = 4;
          this.HideBtn.Text = "Hide";
          this.HideBtn.UseVisualStyleBackColor = false;
@@ -60,7 +60,7 @@
          // 
          // ExpectedTime
          // 
-         this.ExpectedTime.Location = new System.Drawing.Point(12, 12);
+         this.ExpectedTime.Location = new System.Drawing.Point(12, 458);
          this.ExpectedTime.Name = "ExpectedTime";
          this.ExpectedTime.Size = new System.Drawing.Size(654, 21);
          this.ExpectedTime.TabIndex = 3;
@@ -91,9 +91,9 @@
          this.StopTracking.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
          this.StopTracking.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
          this.StopTracking.ForeColor = System.Drawing.Color.Yellow;
-         this.StopTracking.Location = new System.Drawing.Point(246, 428);
+         this.StopTracking.Location = new System.Drawing.Point(4, 361);
          this.StopTracking.Name = "StopTracking";
-         this.StopTracking.Size = new System.Drawing.Size(147, 31);
+         this.StopTracking.Size = new System.Drawing.Size(130, 31);
          this.StopTracking.TabIndex = 3;
          this.StopTracking.Text = "Stop Tracking";
          this.StopTracking.UseVisualStyleBackColor = false;
@@ -104,12 +104,13 @@
          // 
          this.OptionsView.BackColor = System.Drawing.SystemColors.Window;
          this.OptionsView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+         this.OptionsView.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
          this.OptionsView.ForeColor = System.Drawing.Color.Black;
          this.OptionsView.HideSelection = false;
-         this.OptionsView.Location = new System.Drawing.Point(5, 39);
+         this.OptionsView.Location = new System.Drawing.Point(4, 6);
          this.OptionsView.MultiSelect = false;
          this.OptionsView.Name = "OptionsView";
-         this.OptionsView.Size = new System.Drawing.Size(130, 309);
+         this.OptionsView.Size = new System.Drawing.Size(267, 301);
          this.OptionsView.TabIndex = 1;
          this.OptionsView.UseCompatibleStateImageBehavior = false;
          this.OptionsView.View = System.Windows.Forms.View.List;
