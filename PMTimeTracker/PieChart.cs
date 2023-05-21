@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -228,13 +230,49 @@ namespace PMTimeTracker
       internal void TransferTracker(TrackerSaveLoad tracker)
       {
          TSL = tracker;
-         
-         TDPropertyGrid.SelectedObject = TSL;
+
+         OptionsView.Clear();
+         foreach (var item in tracker.TrackerDescriptions)
+         {
+            OptionsView.Items.Add(item.Task);
+         }
+         if(OptionsView.Items.Count > 0)
+         {
+            OptionsView.Items[0].Selected = true; 
+         }
+
       }
 
       private void button6_Click(object sender, EventArgs e)
       {
          TSL.UpdateUserSave();
       }
-   }
+
+      private void OptionsView_SelectedIndexChanged(object sender, EventArgs e)
+      {
+         TDPropertyGrid.SelectedObjects = null;
+         ListView.SelectedListViewItemCollection selected = this.OptionsView.SelectedItems;
+         if (selected != null && selected.Count > 0)
+         {
+            List<Object> selected_objects = new List<object>();
+            foreach (ListViewItem selected_item in selected)
+            {
+               if (selected_item != null && selected_item.Text.Trim() != "")  
+               {
+                  var displayobject = TSL.GetTrackerDescriptionbyTask(selected_item.Text);
+                  if (displayobject != null)
+                  {
+                     selected_objects.Add(displayobject);
+                  }
+                  else
+                  {
+                     Debugger.Break();
+                     Debugger.Log(2, "Invalid Selection", "Display Object, in the options menu, is invalid");
+                  }
+               }
+            }
+            TDPropertyGrid.SelectedObjects = selected_objects.ToArray();
+         }
+      }
+    }
 }
