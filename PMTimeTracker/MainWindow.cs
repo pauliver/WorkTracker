@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
 using System.Linq;
 using System.Text;
 #if ATTEMPING_WINDOW_DETECTION
@@ -30,7 +31,7 @@ namespace PMTimeTracker
       System.IO.FileInfo LogFile = new System.IO.FileInfo("PMTimeTracker.log");
       string LastLogFileApp = "";
       string LogFileTemp = "";
-      public TimeTracking()
+      public TimeTracking(FileInfo new_logfile,TrackerSaveLoad tsl)
       {
          //tracker.CreateOptions();
 
