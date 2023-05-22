@@ -74,7 +74,7 @@ namespace PMTimeTracker
          }
       }
 
-
+      public static string SaveFileFolder = "SaveFiles\\";
       public AppSettingsManager():base()
       {
          UserTimeSpent = new IndividualSettingsDictionary<Dictionary<string, int>, string, int>(new System.IO.FileInfo(UserDataSave));

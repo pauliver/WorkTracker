@@ -39,6 +39,7 @@ namespace PMTimeTracker
          MessageBox.Show("This is a pre-alpha release.  It is not ready for production use.  Please use at your own risk." + Environment.NewLine + Environment.NewLine + "Pie chart only works in debug" + Environment.NewLine + Environment.NewLine + "Windows doesn't handle scales other than 100% well...");
 #endif
          CrashReporter CR = null;
+         AppSettingsManager asm = null;
          try
          {
             CR = new CrashReporter();
@@ -50,9 +51,9 @@ namespace PMTimeTracker
             // initialize logging
 
             // move options loading to here
+            asm = new AppSettingsManager();
 
-
-            var form1 = new TimeTracking();
+            var form1 = new TimeTracking(asm);
 
             Application.Run(form1);
 
@@ -63,6 +64,7 @@ namespace PMTimeTracker
 
             CR.ItsGoneWrong(ex, "PM Tracker : " + Application.ProductVersion + "Crash : " + System.DateTime.Now.ToString());
          }
+         asm.UpdateUserSave();
 
       }
 

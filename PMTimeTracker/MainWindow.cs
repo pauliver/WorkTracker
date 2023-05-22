@@ -18,7 +18,7 @@ namespace PMTimeTracker
 {
    public partial class TimeTracking : Form
    {
-      AppSettingsManager tracker = new AppSettingsManager();
+      AppSettingsManager tracker;
       string currentlytracking = "nothing";
       bool TimerActive = false;
       int accumulated_seconds = 0;
@@ -31,8 +31,9 @@ namespace PMTimeTracker
 
       System.IO.FileInfo LogFile = new System.IO.FileInfo("Settings\\PMTimeTracker.log");
 
-      public TimeTracking() //FileInfo new_logfile,AppSettingsManager tsl)
+      public TimeTracking(AppSettingsManager asm)//FileInfo new_logfile,AppSettingsManager tsl)
       {
+         tracker = asm;
          //tracker.CreateOptions();
 
          notifyIcon1 = new System.Windows.Forms.NotifyIcon();

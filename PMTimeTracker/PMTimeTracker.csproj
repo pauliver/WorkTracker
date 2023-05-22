@@ -140,7 +140,7 @@
     <None Include="Settings\AppConfig.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="packages.config" />
+    <None Include="Helpers\packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -156,9 +156,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="Helpers\App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\background.jpg" />
     <Content Include="Resources\PMTracker.ico" />
     <Content Include="Resources\Firefly in image of a clock screaming at the sky while the world burns around it 95772.ico" />
     <Content Include="Resources\Firefly in image of a clock screaming at the sky while the world burns around it 95772.jpg" />
