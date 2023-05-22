@@ -11,20 +11,26 @@ namespace PMTimeTracker
    public class SettingsManager
    {
       protected string SettingsFolder = "Settings\\";
+      protected string AppSettingsFile;
+      protected string AppConfiiguration;
+      protected string UserDataSave;
+      protected string UserConfig;
       public SettingsManager()
       {
+         // In the future could load all settings files out of here
+         AppSettingsFile = this.SettingsFolder + "AppSettings.json";
+
+         // Here are the settings file swe care about today
+         AppConfiiguration = this.SettingsFolder + "AppConfig.json";
+         UserDataSave = this.SettingsFolder + "UserData.json";
+
       }
 
       public virtual void UpdateUserSave()
       {
       }
 
-      public virtual void CreateOptions()
-      {
-
-      }
-
-      public virtual void LoadOptions()
+      public virtual void Load()
       {
       }
 

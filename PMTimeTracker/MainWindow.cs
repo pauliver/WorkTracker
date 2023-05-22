@@ -64,9 +64,10 @@ namespace PMTimeTracker
 #endif
          try
          {
-            Rectangle screenRectangle = this.RectangleToScreen(this.ClientRectangle);
-
-            int titleHeight = screenRectangle.Top - this.Top;
+            {
+               Rectangle screenRectangle = this.RectangleToScreen(this.ClientRectangle);
+               int titleHeight = screenRectangle.Top - this.Top;
+            }
             //Firefly in image of a clock screaming at the sky while the world burns around it 26800
             // image from Adobe Firefly
             var bmp = new Bitmap(this.BackgroundImage);
@@ -74,8 +75,8 @@ namespace PMTimeTracker
             var WidthRatio = bmp.Size.Width / this.Width;
             var HeightRatio = bmp.Size.Width / this.Height;
 
-            var scope = new Rectangle(OptionsView.Location.X * WidthRatio, OptionsView.Location.Y * HeightRatio, OptionsView.Width * WidthRatio, OptionsView.Height * HeightRatio);
-            var BackgroundBitmap = new Bitmap(OptionsView.Width, OptionsView.Height + titleHeight);
+            var scope = new Rectangle( OptionsView.Location.X * WidthRatio, OptionsView.Location.Y  * HeightRatio, OptionsView.Width * WidthRatio, OptionsView.Height * HeightRatio);
+            var BackgroundBitmap = new Bitmap(OptionsView.Width, OptionsView.Height);
             Graphics bg = Graphics.FromImage(BackgroundBitmap);
 
             bg.DrawImage(bmp, new Rectangle(0, 0, OptionsView.Width, OptionsView.Height), scope, GraphicsUnit.Pixel);
@@ -93,7 +94,7 @@ namespace PMTimeTracker
          OptionsView.Alignment = ListViewAlignment.SnapToGrid;
          OptionsView.AutoArrange = true;
          OptionsView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-         foreach (var item in tracker.TrackerDescriptions)
+         foreach (var item in tracker.TrackerOptionsAndDescriptions.SettingsObject)
          {
             OptionsView.Items.Add(item.Task);
          }
@@ -134,7 +135,7 @@ namespace PMTimeTracker
          {
             chart.Show();
             chart.TransferTracker(tracker);
-            chart.DrawPieChart(tracker.TrackerDescriptions, tracker.TimeSpent);
+            chart.DrawPieChart(tracker.TrackerOptionsAndDescriptions.SettingsObject, tracker.UserTimeSpent.SettingsObject);
          }
          catch (Exception ex)
          {

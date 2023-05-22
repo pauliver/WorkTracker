@@ -14,12 +14,23 @@ namespace PMTimeTracker
    public class AppSettingsManager : SettingsManager
    {
 
+      public static int FIFTEEN_MIN = 15 * 60;
+      public static int THIRTY_MIN = 30 * 60;
+      public static int SIXTY_MIN = 60 * 60;
+      public static int NINTY_MIN = 90 * 60;
+      public static int ONETWENT_MIN = 120 * 60;
+
+
       [CategoryAttribute("Tasks"), DescriptionAttribute("lorem ipsum")]
-      public List<IndividualTaskSettings> TrackerDescriptions { get; set; }
+      public IndividualSettings< List<IndividualTaskSettings> >TrackerOptionsAndDescriptions { get; set; }
+
+      [CategoryAttribute("Time Spent"), DescriptionAttribute("lorem ipsum")]
+      public IndividualSettingsDictionary< Dictionary<string, int>, string,int> UserTimeSpent { get; set; }
+      
 
       public IndividualTaskSettings GetTrackerDescriptionbyTask(string task)
       {
-         foreach (IndividualTaskSettings tracker in TrackerDescriptions)
+         foreach (IndividualTaskSettings tracker in TrackerOptionsAndDescriptions.SettingsObject)
          {
             if (tracker.Task == task)
             {
@@ -28,22 +39,17 @@ namespace PMTimeTracker
          }
          return null;
       }
-
-
-      [CategoryAttribute("Time Spent"), DescriptionAttribute("lorem ipsum")]
-      public Dictionary<string, int> TimeSpent { get; set; }
-
       public float[] PiePercent
       {
          get
          {
             float runningtotal = 0.0f;
             var totals = new List<float>();
-            foreach (var item in TrackerDescriptions)
+            foreach (var item in TrackerOptionsAndDescriptions.SettingsObject)
             {
-               if (TimeSpent.ContainsKey(item.Task))
+               if (UserTimeSpent.SettingsObject.ContainsKey(item.Task))
                {
-                  int value = TimeSpent[item.Task];
+                  int value = UserTimeSpent.SettingsObject[item.Task];
                   totals.Add(value);
                   runningtotal += value;
                }
@@ -53,37 +59,14 @@ namespace PMTimeTracker
                }
             }
             return totals.ToArray();
-            /*
-            int newtotal = 0;
-            float tempval = (float) runningtotal / 100.0f;
-            for (int x = 0; x < totals.Count; x++)
-            {
-               try
-               {
-                  totals[x] = (int)((float)totals[x] / tempval);
-                  newtotal += totals[x];
-               }
-               catch (Exception ex)
-               {
-                  Console.WriteLine(ex.Message);
-               }
-            }
-            if (newtotal != 100)
-            {
-               // yeah, could be off by a bit due to rounding
-            }
-            return totals.ToArray();
-            */
          }
       }
-
-
       public Color[] PieColor
       {
          get
          {
             var colors = new List<Color>();
-            foreach (var item in TrackerDescriptions)
+            foreach (var item in TrackerOptionsAndDescriptions.SettingsObject)
             {
                colors.Add(item.Color);
             }
@@ -92,160 +75,49 @@ namespace PMTimeTracker
       }
 
 
-      string optionsfilename = "config.json";
-      string savedtimefile = "user.json";
-
       public AppSettingsManager():base()
       {
-         optionsfilename = this.SettingsFolder + "config.json";
-         savedtimefile = this.SettingsFolder + "user.json";
+         UserTimeSpent = new IndividualSettingsDictionary<Dictionary<string, int>, string, int>(new System.IO.FileInfo(UserDataSave));
+         TrackerOptionsAndDescriptions = new IndividualSettings<List<IndividualTaskSettings>>(new System.IO.FileInfo(AppConfiiguration));
 
-         TrackerDescriptions = new List<IndividualTaskSettings>();
-         TimeSpent = new Dictionary<string, int>();
+         Load();
+      }
+
+      public override void UpdateUserSave()
+      {
+         UserTimeSpent.RefreshSave();
+      }
+
+      public override void Load()
+      {
          LoadOptions();
+         LoadUserData();
       }
 
-      public void UpdateUserSave()
+      public void LoadUserData()
       {
-         var serializer = new JavaScriptSerializer();
-         Dictionary<string, int> UpdatedTime = new Dictionary<string, int>();
-         try
-         {
-            var fi = new System.IO.FileInfo(savedtimefile);
-            if (fi.Exists)
-            {
-               var searilizationstring = System.IO.File.ReadAllText(fi.FullName);
-               UpdatedTime = serializer.Deserialize<Dictionary<string, int>>(searilizationstring);
-            }
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine(ex.Message);
-         }
-         {
-            foreach (var item in TimeSpent)
-            {
-               if (UpdatedTime.ContainsKey(item.Key))
-               {
-                  UpdatedTime[item.Key] = item.Value;
-               }
-               else
-               {
-                  UpdatedTime.Add(item.Key, item.Value);
-               }
-            }
-         }
-         try
-         {
-            var fi = new System.IO.FileInfo(savedtimefile);
-
-            var serializedResult = serializer.Serialize(UpdatedTime);
-            System.IO.File.WriteAllText(fi.FullName, serializedResult);
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine(ex.Message);
-         }
+         UserTimeSpent.Load();
       }
-      public static int FIFTEEN_MIN = 15 * 60;
-      public static int THIRTY_MIN = 30 * 60;
-      public static int SIXTY_MIN = 60 * 60;
-      public static int NINTY_MIN = 90 * 60;
-      public static int ONETWENT_MIN =  120 * 60;
-
-      public void CreateOptions()
-      {
-         var fi = new System.IO.FileInfo(optionsfilename);
-         if (fi.Exists)
-         {
-            //return;
-         }
-         List<IndividualTaskSettings> initialoptions = new List<IndividualTaskSettings>();
-         initialoptions.Add(new IndividualTaskSettings() { Task = "Product or Feature work", Color = Color.Green, ExpectedSeconds = THIRTY_MIN, MaxSeconds = ONETWENT_MIN, ThirtyMinHardStop = false });
-         initialoptions.Add(new IndividualTaskSettings() { Task = "Career Development", Color = Color.GreenYellow, ExpectedSeconds = NINTY_MIN, MaxSeconds = ONETWENT_MIN, ThirtyMinHardStop = false });
-         initialoptions.Add(new IndividualTaskSettings() { Task = "Strategic Thinking", Color = Color.BlueViolet, ExpectedSeconds = THIRTY_MIN, MaxSeconds = ONETWENT_MIN, ThirtyMinHardStop = false });
-         initialoptions.Add(new IndividualTaskSettings() { Task = "Status", Color = Color.Red, ExpectedSeconds = SIXTY_MIN, MaxSeconds = ONETWENT_MIN, ThirtyMinHardStop = false });
-         initialoptions.Add(new IndividualTaskSettings() { Task = "Contributing to Others", Color = Color.Purple, ExpectedSeconds = THIRTY_MIN, MaxSeconds = ONETWENT_MIN, ThirtyMinHardStop = false });
-         initialoptions.Add(new IndividualTaskSettings() { Task = "Pure Overhead", Color = Color.DarkRed, ExpectedSeconds = FIFTEEN_MIN, MaxSeconds = ONETWENT_MIN, ThirtyMinHardStop = false });
-         initialoptions.Add(new IndividualTaskSettings() { Task = "Team or Org Meeting", Color = Color.DarkSeaGreen, ExpectedSeconds = SIXTY_MIN, MaxSeconds = ONETWENT_MIN, ThirtyMinHardStop = false });
-         initialoptions.Add(new IndividualTaskSettings() { Task = "Administrative", Color = Color.Yellow, ExpectedSeconds = FIFTEEN_MIN, MaxSeconds = ONETWENT_MIN, ThirtyMinHardStop = false });
-         initialoptions.Add(new IndividualTaskSettings() { Task = "Fires", Color = Color.OrangeRed, ExpectedSeconds = SIXTY_MIN, MaxSeconds = ONETWENT_MIN, ThirtyMinHardStop = false });
-
-         var serializer = new JavaScriptSerializer();
-         try
-         {
-            var serializedResult = serializer.Serialize(initialoptions);
-            System.IO.File.WriteAllText(fi.FullName, serializedResult);
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine(ex.Message);
-         }
-      }
-
       public void LoadOptions()
       {
-         var serializer = new JavaScriptSerializer();
-         try
-         {
-            var fi = new System.IO.FileInfo(optionsfilename);
-            if (!fi.Exists)
-            {
-               return;
-            }
-            var searilizationstring = System.IO.File.ReadAllText(fi.FullName);
-            var deserializedResult = serializer.Deserialize<List<IndividualTaskSettings>>(searilizationstring);
-            TrackerDescriptions = deserializedResult;
-
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine(ex.Message);
-         }
-
-         try
-         {
-            var fi = new System.IO.FileInfo(savedtimefile);
-            if (!fi.Exists)
-            {
-               return;
-            }
-            var searilizationstring = System.IO.File.ReadAllText(fi.FullName);
-            var deserializedResult = serializer.Deserialize< Dictionary<string, int> > (searilizationstring);
-            TimeSpent = deserializedResult;
-
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine(ex.Message);
-         }
+         TrackerOptionsAndDescriptions.Load();
       }
 
-      public void SaveOptions()
+      public override void SaveOptions()
       {
-         var serializer = new JavaScriptSerializer();
-         try
-         {
-            var fi = new System.IO.FileInfo(optionsfilename);
-
-            var serializedResult = serializer.Serialize(TrackerDescriptions);
-            System.IO.File.WriteAllText(fi.FullName, serializedResult);
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine(ex.Message);
-         }
+         TrackerOptionsAndDescriptions.Save();
+         //don't save out the time spent
       }
 
-      internal void UpdateTracker(string currentlytracking, int accumulated_seconds)
+      public override void UpdateTracker(string currentlytracking, int accumulated_seconds)
       {
-         if (TimeSpent.ContainsKey(currentlytracking))
+         if (UserTimeSpent.SettingsObject.ContainsKey(currentlytracking))
          {
-            TimeSpent[currentlytracking] += accumulated_seconds;
+            UserTimeSpent.SettingsObject[currentlytracking] += accumulated_seconds;
          }
          else
          {
-            TimeSpent[currentlytracking] = accumulated_seconds;
+            UserTimeSpent.SettingsObject[currentlytracking] = accumulated_seconds;
          }
       }
 

@@ -222,7 +222,7 @@ namespace PMTimeTracker
          TSL.UpdateUserSave();
       }
 
-      private void button2_Click(object sender, EventArgs e)
+      private void ReloadOptions_Click(object sender, EventArgs e)
       {
          TSL.LoadOptions();
       }
@@ -232,7 +232,7 @@ namespace PMTimeTracker
          TSL = tracker;
 
          OptionsView.Clear();
-         foreach (var item in tracker.TrackerDescriptions)
+         foreach (var item in tracker.TrackerOptionsAndDescriptions.SettingsObject)
          {
             OptionsView.Items.Add(item.Task);
          }
