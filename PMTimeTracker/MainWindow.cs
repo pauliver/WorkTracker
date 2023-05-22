@@ -30,8 +30,7 @@ namespace PMTimeTracker
       PieChart chart;
 
       System.IO.FileInfo LogFile = new System.IO.FileInfo("Settings\\PMTimeTracker.log");
-      string LastLogFileApp = "";
-      string LogFileTemp = "";
+
       public TimeTracking() //FileInfo new_logfile,AppSettingsManager tsl)
       {
          //tracker.CreateOptions();
