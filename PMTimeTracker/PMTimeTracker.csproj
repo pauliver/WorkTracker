@@ -88,14 +88,14 @@
     <Compile Include="AboutAndSettings.Designer.cs">
       <DependentUpon>AboutAndSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="CrashReporter.cs" />
+    <Compile Include="Helpers\CrashReporter.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="GrabRunningInfo.cs" />
+    <Compile Include="Helpers\GrabRunningInfo.cs" />
     <Compile Include="MainWindow1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

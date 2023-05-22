@@ -12,7 +12,16 @@ using System.Web.Script.Serialization;
 
 namespace PMTimeTracker
 {
-   public class IndividualSettings<T> where T : IEnumerable, new()
+
+   public interface SettingsFile
+   {
+      void Create();
+      void Load();
+      void Save();
+   }
+
+   public class IndividualSettings<T> : SettingsFile 
+      where T :  IEnumerable, new()
    {
       protected System.IO.FileInfo SettingsFile { get; set; }
       public IndividualSettings(FileInfo settingsFile)
@@ -90,8 +99,8 @@ namespace PMTimeTracker
 
    }
 
-   public class IndividualSettingsDictionary<T,X,Y> :   IndividualSettings<T> 
-      where T : IDictionary<X,Y>, IEnumerable, new()
+   public class IndividualSettingsDictionary<T,X,Y> :   IndividualSettings<T>, SettingsFile
+      where T : IDictionary<X,Y>,  IEnumerable, new()
       //where X : new()
       //where Y : new()
    {

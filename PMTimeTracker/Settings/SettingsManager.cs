@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,9 @@ namespace PMTimeTracker
       protected string AppConfiiguration;
       protected string UserDataSave;
       protected string UserConfig;
+
+      List<SettingsFile> SettingsFiles;
+
       public SettingsManager()
       {
          // In the future could load all settings files out of here
@@ -24,6 +28,20 @@ namespace PMTimeTracker
          AppConfiiguration = this.SettingsFolder + "AppConfig.json";
          UserDataSave = this.SettingsFolder + "UserData.json";
 
+         SettingsFiles = new List<SettingsFile>();
+      }
+
+      protected void RegisterSettingsFile(SettingsFile newSettings)
+      {
+         SettingsFiles.Add(newSettings);
+      }
+
+      protected void RemoveSettingsFile(SettingsFile oldSettings)
+      {
+         if (!SettingsFiles.Contains(oldSettings))
+            Debugger.Break();
+            
+          SettingsFiles.Remove(oldSettings);
       }
 
       public virtual void UpdateUserSave()
@@ -32,6 +50,10 @@ namespace PMTimeTracker
 
       public virtual void Load()
       {
+         foreach(var temp in SettingsFiles)
+         {
+            temp.Load();
+         }
       }
 
       public virtual void SaveOptions()

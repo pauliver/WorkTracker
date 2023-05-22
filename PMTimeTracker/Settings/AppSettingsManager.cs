@@ -80,18 +80,15 @@ namespace PMTimeTracker
          UserTimeSpent = new IndividualSettingsDictionary<Dictionary<string, int>, string, int>(new System.IO.FileInfo(UserDataSave));
          TrackerOptionsAndDescriptions = new IndividualSettings<List<IndividualTaskSettings>>(new System.IO.FileInfo(AppConfiiguration));
 
+         RegisterSettingsFile(UserTimeSpent);
+         RegisterSettingsFile(TrackerOptionsAndDescriptions);
+
          Load();
       }
 
       public override void UpdateUserSave()
       {
          UserTimeSpent.RefreshSave();
-      }
-
-      public override void Load()
-      {
-         LoadOptions();
-         LoadUserData();
       }
 
       public void LoadUserData()
