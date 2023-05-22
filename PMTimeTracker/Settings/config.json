@@ -15,7 +15,7 @@
       },
       "ExpectedSeconds": 1800,
       "MaxSeconds": 7200,
-      "ThirtyMinHardStop": false,
+      "ThirtyMinHardStop": true,
       "ImagePath": null,
       "AutoMatchBasedOnWindowTitle": false,
       "WindowTitleMatch": null,

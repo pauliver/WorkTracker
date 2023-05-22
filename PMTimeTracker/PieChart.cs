@@ -15,7 +15,7 @@ namespace PMTimeTracker
 {
    public partial class PieChart : Form
    {
-      TrackerSaveLoad TSL;
+      AppSettingsManager TSL;
       public PieChart()
       {
          //myPieGraphic = this.CreateGraphics();
@@ -120,7 +120,7 @@ namespace PMTimeTracker
          this.Hide();
       }
 
-      public void DrawPieChart(List<TrackerDescription> TrackerDescriptions, Dictionary<string, int> TimeSpent)
+      public void DrawPieChart(List<IndividualTaskSettings> TrackerDescriptions, Dictionary<string, int> TimeSpent)
       {
          ApieChartPlease.Series.Clear();
          ApieChartPlease.Legends.Clear();
@@ -152,7 +152,7 @@ namespace PMTimeTracker
             //Add some datapoints so the series. in this case you can pass the values to this method
             if (TimeSpent.ContainsKey(TrackerDescriptions[x].Task) && TimeSpent[TrackerDescriptions[x].Task] > 0)
             {
-               ApieChartPlease.Series[seriesname].Points.AddXY( TrackerDescriptions[x].Task + Environment.NewLine + ((float)(TimeSpent[TrackerDescriptions[x].Task]) / TrackerSaveLoad.SIXTY_MIN).ToString("0.##") + " Hours", TimeSpent[TrackerDescriptions[x].Task]);
+               ApieChartPlease.Series[seriesname].Points.AddXY( TrackerDescriptions[x].Task + Environment.NewLine + ((float)(TimeSpent[TrackerDescriptions[x].Task]) / AppSettingsManager.SIXTY_MIN).ToString("0.##") + " Hours", TimeSpent[TrackerDescriptions[x].Task]);
                ApieChartPlease.Series[seriesname].Points[fakex++].Color = TrackerDescriptions[x].Color;
 
             }
@@ -176,7 +176,7 @@ namespace PMTimeTracker
             if (TimeSpent.ContainsKey(TrackerDescriptions[x].Task) && TimeSpent[TrackerDescriptions[x].Task] > 0)
             {
 
-               BarChart.Series[seriesname].Points.AddXY(TrackerDescriptions[x].Task + Environment.NewLine + ((float)(TimeSpent[TrackerDescriptions[x].Task]) / TrackerSaveLoad.SIXTY_MIN).ToString("0.##") + " Hours", TimeSpent[TrackerDescriptions[x].Task] );
+               BarChart.Series[seriesname].Points.AddXY(TrackerDescriptions[x].Task + Environment.NewLine + ((float)(TimeSpent[TrackerDescriptions[x].Task]) / AppSettingsManager.SIXTY_MIN).ToString("0.##") + " Hours", TimeSpent[TrackerDescriptions[x].Task] );
                BarChart.Series[seriesname].Points[fakex++].Color = TrackerDescriptions[x].Color;
             }
          }
@@ -227,7 +227,7 @@ namespace PMTimeTracker
          TSL.LoadOptions();
       }
 
-      internal void TransferTracker(TrackerSaveLoad tracker)
+      internal void TransferTracker(AppSettingsManager tracker)
       {
          TSL = tracker;
 

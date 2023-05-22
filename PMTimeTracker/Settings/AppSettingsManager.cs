@@ -10,45 +10,16 @@ using System.Windows.Forms.VisualStyles;
 
 namespace PMTimeTracker
 {
-   [DefaultPropertyAttribute("Task"), TypeConverterAttribute(typeof(ExpandableObjectConverter))]
-   public class TrackerDescription
-   {
-      [CategoryAttribute("Task"), DescriptionAttribute("Name of the task")]
-      public string Task { get; set; }
-      [CategoryAttribute("Task"), DescriptionAttribute("a more complete description")]
-      public string Task_LongDescription { get; set; }
 
-      [CategoryAttribute("Task"), DescriptionAttribute("Color to render")]
-      public Color Color { get; set; }
-
-      [CategoryAttribute("Task Timing"), DescriptionAttribute("lorem ipsum")]
-      public int ExpectedSeconds { get; set; }
-      [CategoryAttribute("Task Timing"), DescriptionAttribute("lorem ipsum")]
-      public int MaxSeconds { get; set; }
-      [CategoryAttribute("Task Timing"), DescriptionAttribute("lorem ipsum")]
-      public bool ThirtyMinHardStop { get; set; }
-      [CategoryAttribute("Task Visualization"), DescriptionAttribute("lorem ipsum")]
-      public string ImagePath { get; set; }
-
-      [CategoryAttribute("Task AutoMatch"), DescriptionAttribute("If we detect a running application that has focus, should we change to this? By the title")]
-      public bool AutoMatchBasedOnWindowTitle { get; set; }
-      [CategoryAttribute("Task AutoMatch"), DescriptionAttribute("Title to Match")]
-      public string WindowTitleMatch { get; set; }
-      [CategoryAttribute("Task AutoMatch"), DescriptionAttribute("If we detect a running application that has focus, should we change to this? By the App Name")]
-      public bool AutoMatchBasedOnApplication { get; set; }
-      [CategoryAttribute("Task AutoMatch"), DescriptionAttribute("App Name to Match")]
-      public string WindowAppMatch { get; set; }
-   }
-
-   public class TrackerSaveLoad
+   public class AppSettingsManager : SettingsManager
    {
 
       [CategoryAttribute("Tasks"), DescriptionAttribute("lorem ipsum")]
-      public List<TrackerDescription> TrackerDescriptions { get; set; }
+      public List<IndividualTaskSettings> TrackerDescriptions { get; set; }
 
-      public TrackerDescription GetTrackerDescriptionbyTask(string task)
+      public IndividualTaskSettings GetTrackerDescriptionbyTask(string task)
       {
-         foreach (TrackerDescription tracker in TrackerDescriptions)
+         foreach (IndividualTaskSettings tracker in TrackerDescriptions)
          {
             if (tracker.Task == task)
             {
@@ -61,9 +32,6 @@ namespace PMTimeTracker
 
       [CategoryAttribute("Time Spent"), DescriptionAttribute("lorem ipsum")]
       public Dictionary<string, int> TimeSpent { get; set; }
-
-      string optionsfilename = "config.json";
-      string savedtimefile = "user.json";
 
       public float[] PiePercent
       {
@@ -124,9 +92,15 @@ namespace PMTimeTracker
       }
 
 
-      public TrackerSaveLoad()
+      string optionsfilename = "config.json";
+      string savedtimefile = "user.json";
+
+      public AppSettingsManager():base()
       {
-         TrackerDescriptions = new List<TrackerDescription>();
+         optionsfilename = this.SettingsFolder + "config.json";
+         savedtimefile = this.SettingsFolder + "user.json";
+
+         TrackerDescriptions = new List<IndividualTaskSettings>();
          TimeSpent = new Dictionary<string, int>();
          LoadOptions();
       }
@@ -186,16 +160,16 @@ namespace PMTimeTracker
          {
             //return;
          }
-         List<TrackerDescription> initialoptions = new List<TrackerDescription>();
-         initialoptions.Add(new TrackerDescription() { Task = "Product or Feature work", Color = Color.Green, ExpectedSeconds = THIRTY_MIN, MaxSeconds = ONETWENT_MIN, ThirtyMinHardStop = false });
-         initialoptions.Add(new TrackerDescription() { Task = "Career Development", Color = Color.GreenYellow, ExpectedSeconds = NINTY_MIN, MaxSeconds = ONETWENT_MIN, ThirtyMinHardStop = false });
-         initialoptions.Add(new TrackerDescription() { Task = "Strategic Thinking", Color = Color.BlueViolet, ExpectedSeconds = THIRTY_MIN, MaxSeconds = ONETWENT_MIN, ThirtyMinHardStop = false });
-         initialoptions.Add(new TrackerDescription() { Task = "Status", Color = Color.Red, ExpectedSeconds = SIXTY_MIN, MaxSeconds = ONETWENT_MIN, ThirtyMinHardStop = false });
-         initialoptions.Add(new TrackerDescription() { Task = "Contributing to Others", Color = Color.Purple, ExpectedSeconds = THIRTY_MIN, MaxSeconds = ONETWENT_MIN, ThirtyMinHardStop = false });
-         initialoptions.Add(new TrackerDescription() { Task = "Pure Overhead", Color = Color.DarkRed, ExpectedSeconds = FIFTEEN_MIN, MaxSeconds = ONETWENT_MIN, ThirtyMinHardStop = false });
-         initialoptions.Add(new TrackerDescription() { Task = "Team or Org Meeting", Color = Color.DarkSeaGreen, ExpectedSeconds = SIXTY_MIN, MaxSeconds = ONETWENT_MIN, ThirtyMinHardStop = false });
-         initialoptions.Add(new TrackerDescription() { Task = "Administrative", Color = Color.Yellow, ExpectedSeconds = FIFTEEN_MIN, MaxSeconds = ONETWENT_MIN, ThirtyMinHardStop = false });
-         initialoptions.Add(new TrackerDescription() { Task = "Fires", Color = Color.OrangeRed, ExpectedSeconds = SIXTY_MIN, MaxSeconds = ONETWENT_MIN, ThirtyMinHardStop = false });
+         List<IndividualTaskSettings> initialoptions = new List<IndividualTaskSettings>();
+         initialoptions.Add(new IndividualTaskSettings() { Task = "Product or Feature work", Color = Color.Green, ExpectedSeconds = THIRTY_MIN, MaxSeconds = ONETWENT_MIN, ThirtyMinHardStop = false });
+         initialoptions.Add(new IndividualTaskSettings() { Task = "Career Development", Color = Color.GreenYellow, ExpectedSeconds = NINTY_MIN, MaxSeconds = ONETWENT_MIN, ThirtyMinHardStop = false });
+         initialoptions.Add(new IndividualTaskSettings() { Task = "Strategic Thinking", Color = Color.BlueViolet, ExpectedSeconds = THIRTY_MIN, MaxSeconds = ONETWENT_MIN, ThirtyMinHardStop = false });
+         initialoptions.Add(new IndividualTaskSettings() { Task = "Status", Color = Color.Red, ExpectedSeconds = SIXTY_MIN, MaxSeconds = ONETWENT_MIN, ThirtyMinHardStop = false });
+         initialoptions.Add(new IndividualTaskSettings() { Task = "Contributing to Others", Color = Color.Purple, ExpectedSeconds = THIRTY_MIN, MaxSeconds = ONETWENT_MIN, ThirtyMinHardStop = false });
+         initialoptions.Add(new IndividualTaskSettings() { Task = "Pure Overhead", Color = Color.DarkRed, ExpectedSeconds = FIFTEEN_MIN, MaxSeconds = ONETWENT_MIN, ThirtyMinHardStop = false });
+         initialoptions.Add(new IndividualTaskSettings() { Task = "Team or Org Meeting", Color = Color.DarkSeaGreen, ExpectedSeconds = SIXTY_MIN, MaxSeconds = ONETWENT_MIN, ThirtyMinHardStop = false });
+         initialoptions.Add(new IndividualTaskSettings() { Task = "Administrative", Color = Color.Yellow, ExpectedSeconds = FIFTEEN_MIN, MaxSeconds = ONETWENT_MIN, ThirtyMinHardStop = false });
+         initialoptions.Add(new IndividualTaskSettings() { Task = "Fires", Color = Color.OrangeRed, ExpectedSeconds = SIXTY_MIN, MaxSeconds = ONETWENT_MIN, ThirtyMinHardStop = false });
 
          var serializer = new JavaScriptSerializer();
          try
@@ -220,7 +194,7 @@ namespace PMTimeTracker
                return;
             }
             var searilizationstring = System.IO.File.ReadAllText(fi.FullName);
-            var deserializedResult = serializer.Deserialize<List<TrackerDescription>>(searilizationstring);
+            var deserializedResult = serializer.Deserialize<List<IndividualTaskSettings>>(searilizationstring);
             TrackerDescriptions = deserializedResult;
 
          }

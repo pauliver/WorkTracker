@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PMTimeTracker.Properties;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,7 +18,7 @@ namespace PMTimeTracker
 {
    public partial class TimeTracking : Form
    {
-      TrackerSaveLoad tracker = new TrackerSaveLoad();
+      AppSettingsManager tracker = new AppSettingsManager();
       string currentlytracking = "nothing";
       bool TimerActive = false;
       int accumulated_seconds = 0;
@@ -28,15 +29,15 @@ namespace PMTimeTracker
 
       PieChart chart;
 
-      System.IO.FileInfo LogFile = new System.IO.FileInfo("PMTimeTracker.log");
+      System.IO.FileInfo LogFile = new System.IO.FileInfo("Settings\\PMTimeTracker.log");
       string LastLogFileApp = "";
       string LogFileTemp = "";
-      public TimeTracking(FileInfo new_logfile,TrackerSaveLoad tsl)
+      public TimeTracking() //FileInfo new_logfile,AppSettingsManager tsl)
       {
          //tracker.CreateOptions();
 
          notifyIcon1 = new System.Windows.Forms.NotifyIcon();
-         notifyIcon1.Icon = new Icon("PMTracker.ico");
+         notifyIcon1.Icon = Resources.PMTracker;
          notifyIcon1.Text = "PM Time Tracker";
          notifyIcon1.Visible = true;
          notifyIcon1.ContextMenuStrip = new ContextMenuStrip();
@@ -63,6 +64,9 @@ namespace PMTimeTracker
 #endif
          try
          {
+            Rectangle screenRectangle = this.RectangleToScreen(this.ClientRectangle);
+
+            int titleHeight = screenRectangle.Top - this.Top;
             //Firefly in image of a clock screaming at the sky while the world burns around it 26800
             // image from Adobe Firefly
             var bmp = new Bitmap(this.BackgroundImage);
@@ -71,7 +75,7 @@ namespace PMTimeTracker
             var HeightRatio = bmp.Size.Width / this.Height;
 
             var scope = new Rectangle(OptionsView.Location.X * WidthRatio, OptionsView.Location.Y * HeightRatio, OptionsView.Width * WidthRatio, OptionsView.Height * HeightRatio);
-            var BackgroundBitmap = new Bitmap(OptionsView.Width, OptionsView.Height);
+            var BackgroundBitmap = new Bitmap(OptionsView.Width, OptionsView.Height + titleHeight);
             Graphics bg = Graphics.FromImage(BackgroundBitmap);
 
             bg.DrawImage(bmp, new Rectangle(0, 0, OptionsView.Width, OptionsView.Height), scope, GraphicsUnit.Pixel);
