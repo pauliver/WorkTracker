@@ -21,7 +21,7 @@ namespace PMTimeTracker
    }
 
    public class IndividualSettings<T> : SettingsFile 
-      where T :  IEnumerable, new()
+      where T :  new()
    {
       protected System.IO.FileInfo SettingsFile { get; set; }
       public IndividualSettings(FileInfo settingsFile)

@@ -2,5 +2,10 @@
    "AppSettings": "AppSettings.json",
    "AppConfiguration": "AppConfig.json",
    "UserSettings": "UserSettings.json",
-   "UserDataStorage": "UserData.json"
+   "UserDataStorage": "UserData.json",
+   "GitHubPAT": "",
+   "GitHubUser": "pauliver",
+   "GitHubRepo": "",
+   "WeeklySaveFiles":"true;",
+   "SaveImagesOnExit": "false"   
 }

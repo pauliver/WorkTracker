@@ -9,13 +9,34 @@ using System.Web.Script.Serialization;
 
 namespace PMTimeTracker
 {
-   public class SettingsManager
+   public class UserSettingsFile
+   {
+      public string GitHubPAT;
+      public string GitHubUser;
+      public string GitHubRepo;
+      public bool WeeklySaveFiles = true;
+      public bool SaveImagesOnExit = false;
+
+   }
+
+   public class SettingsManager 
    {
       protected string SettingsFolder = "Settings\\";
       protected string AppSettingsFile;
       protected string AppConfiiguration;
       protected string UserDataSave;
       protected string UserConfig;
+
+
+      protected SettingsFile UserSettingFile;
+
+      public UserSettingsFile UserSettings
+      {
+         get
+         {
+            return (UserSettingsFile)UserSettingFile;
+         }
+      }
 
       List<SettingsFile> SettingsFiles;
 
@@ -28,7 +49,14 @@ namespace PMTimeTracker
          AppConfiiguration = this.SettingsFolder + "AppConfig.json";
          UserDataSave = this.SettingsFolder + "UserData.json";
 
+         UserConfig = this.SettingsFolder + "UserConfig.json";
+
          SettingsFiles = new List<SettingsFile>();
+
+         UserSettingFile = new IndividualSettings<UserSettingsFile>(new System.IO.FileInfo(UserConfig));
+         UserSettingFile.Load();
+         RegisterSettingsFile(UserSettingFile);
+
       }
 
       protected void RegisterSettingsFile(SettingsFile newSettings)
