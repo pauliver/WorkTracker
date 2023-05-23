@@ -7,7 +7,6 @@ using Microsoft.Identity.Client;
 using Microsoft.Graph;
 using Microsoft.Extensions.Configuration;
 using System.Linq;
-using Microsoft.Kiota.Abstractions.Authentication;
 
 namespace WindowsGraphQL
 {
@@ -15,7 +14,7 @@ namespace WindowsGraphQL
    // IAuthenticationProvider interface so that GraphServiceClient or AuthHandler can use it.
    // A significantly enhanced version of this class will in the future be available from
    // the GraphSDK team.  It will supports all the types of Client Application as defined by MSAL.
-   public class MsalAuthenticationProvider : IAuthenticationProvider
+   public class MsalAuthenticationProvider : Microsoft.Graph.IAuthenticationProvider
    {
       private IConfidentialClientApplication _clientApplication;
       private string[] _scopes;
