@@ -6,6 +6,14 @@
    "GitHubPAT": "",
    "GitHubUser": "pauliver",
    "GitHubRepo": "",
-   "WeeklySaveFiles":"true;",
-   "SaveImagesOnExit": "false"   
+   "WeeklySaveFiles": "true",
+   "SaveImagesOnExit": "false",
+
+   "UseWeeklySaves": "false",
+   "WeeklySaveFolder": "WeeklySaves\\",
+   "UseAlternativeBacgkround": "false",
+   "AlternativeBackgroundFile": "background.jpg",
+   "UseAlternativeSize": "false",
+   "Height": "1024",
+   "Width":"768"
 }

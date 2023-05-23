@@ -150,7 +150,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Settings\UserConfig.json" />
+    <None Include="Settings\UserConfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Settings\UserData.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -165,6 +167,12 @@
     <Content Include="Resources\Firefly in image of a clock screaming at the sky while the world burns around it 95772.jpg" />
     <Content Include="Resources\Firefly in image of a clock screaming at the sky while the world burns around it 99368.jpg" />
     <None Include="Resources\BackgroundImage.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PluginFramework\PluginFramework.csproj">
+      <Project>{8a1b426e-dd15-4c6d-8244-89e75e8b8cad}</Project>
+      <Name>PluginFramework</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\" />

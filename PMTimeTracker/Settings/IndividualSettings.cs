@@ -18,6 +18,7 @@ namespace PMTimeTracker
       void Create();
       void Load();
       void Save();
+      Object SettingsObjectAsObject { get; }
    }
 
    public class IndividualSettings<T> : SettingsFile 
@@ -27,6 +28,13 @@ namespace PMTimeTracker
       public IndividualSettings(FileInfo settingsFile)
       {
          SettingsFile = settingsFile;
+      }
+
+      public Object SettingsObjectAsObject
+      { get
+         { 
+            return SettingsObject;
+         }
       }
 
       public T SettingsObject { get; set; }

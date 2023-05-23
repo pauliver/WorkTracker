@@ -1,0 +1,7 @@
+﻿{
+   "APIVersion": "0",
+   "EntrypointDLL": "WindowsGraphQL",
+   "FolderName": "WindowsGraphQL",
+   "EntryClass": "WindowsGraphQL",
+   "DesiredTickFrequency": "60"
+}

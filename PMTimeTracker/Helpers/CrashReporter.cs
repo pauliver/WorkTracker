@@ -66,6 +66,8 @@ namespace PMTimeTracker
       protected string repo = "Repo";
       protected string owner = "Owner";
 
+      public static string GITHUB_TOKEN = "GITHUB_TOKEN";
+
       bool gitHubStuff = false;
       private bool cleanlyLoggedIn = false;
       protected GitHubClient github = null;
@@ -129,7 +131,7 @@ namespace PMTimeTracker
          try
          {
             Console.WriteLine("Loading github...");
-            string secretkey = Environment.GetEnvironmentVariable("GITHUB_TOKEN");
+            string secretkey = Environment.GetEnvironmentVariable(GITHUB_TOKEN);
             if(secretkey == null)
             {
                cleanlyLoggedIn = false;

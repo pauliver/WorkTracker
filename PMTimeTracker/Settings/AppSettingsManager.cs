@@ -22,11 +22,11 @@ namespace PMTimeTracker
 
 
       [CategoryAttribute("Tasks"), DescriptionAttribute("lorem ipsum")]
-      public IndividualSettings< List<IndividualTaskSettings> >TrackerOptionsAndDescriptions { get; set; }
+      public IndividualSettings<List<IndividualTaskSettings>> TrackerOptionsAndDescriptions { get; set; }
 
       [CategoryAttribute("Time Spent"), DescriptionAttribute("lorem ipsum")]
-      public IndividualSettingsDictionary< Dictionary<string, int>, string,int> UserTimeSpent { get; set; }
-      
+      public IndividualSettingsDictionary<Dictionary<string, int>, string, int> UserTimeSpent { get; set; }
+
 
       public IndividualTaskSettings GetTrackerDescriptionbyTask(string task)
       {
@@ -75,7 +75,7 @@ namespace PMTimeTracker
       }
 
       public static string SaveFileFolder = "SaveFiles\\";
-      public AppSettingsManager():base()
+      public AppSettingsManager() : base()
       {
          UserTimeSpent = new IndividualSettingsDictionary<Dictionary<string, int>, string, int>(new System.IO.FileInfo(UserDataSave));
          TrackerOptionsAndDescriptions = new IndividualSettings<List<IndividualTaskSettings>>(new System.IO.FileInfo(AppConfiiguration));
@@ -117,7 +117,6 @@ namespace PMTimeTracker
             UserTimeSpent.SettingsObject[currentlytracking] = accumulated_seconds;
          }
       }
-
    }
 }
 
