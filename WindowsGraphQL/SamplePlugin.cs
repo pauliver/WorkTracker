@@ -7,18 +7,15 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Graph;
-using Microsoft.Kiota.Abstractions;
-using Microsoft.Kiota.Abstractions.Authentication;
 
-namespace WindowsGraphQL
+namespace SamplePluginNameSpace
 {
-    public class WindowsGraphQL : PluginArchitecture.SharedPluginCode, PluginArchitecture.PluginInterface
+    public class SamplePlugin : PluginArchitecture.SharedPluginCode, PluginArchitecture.PluginInterface
    {
       bool IsInitialized = false;
       bool IsRunning = false;
       bool IsRegistered = false;
-      public WindowsGraphQL()
+      public SamplePlugin()
       {
          bool IsInitialized = false;
          bool IsRunning = false;
