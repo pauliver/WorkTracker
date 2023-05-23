@@ -10,13 +10,13 @@ namespace PluginArchitecture
    {
       void Initialize();
 
-      void LoadSettings();
+      void LoadSettings(System.IO.FileInfo fi);
       void Register();
       void DeRegister();
 
       void Run();
-      void Pause();
-      void Tick();
+      void Pause(bool UnPause = false);
+      void Tick(int Seconds);
       void Stop();
    }
 }

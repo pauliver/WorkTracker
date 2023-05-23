@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PMTimeTracker\PMTimeTracker.csproj" />
+    <ProjectReference Include="..\PMTimeTracker\TimeManager.csproj" />
   </ItemGroup>
 
 </Project>

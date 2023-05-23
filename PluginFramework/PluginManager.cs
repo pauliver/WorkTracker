@@ -12,6 +12,7 @@ namespace PluginArchitecture
    {
       List<PluginInterface> FoundPlugins = new List<PluginInterface>();
       List<PluginInterface> ActivePlugins = new List<PluginInterface>();
+      List<PluginInterface> PausedPlugins = new List<PluginInterface>();
       public PluginManager()
       {
 
