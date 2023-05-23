@@ -191,8 +191,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthHandler.cs" />
-    <Compile Include="MsalAuthenticationProvider.cs" />
+    <Compile Include="GraphQLClient.cs" />
     <Compile Include="WindowsGraphQL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

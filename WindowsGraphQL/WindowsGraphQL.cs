@@ -8,49 +8,13 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Graph;
+using Microsoft.Kiota.Abstractions;
 using Microsoft.Kiota.Abstractions.Authentication;
 
 namespace WindowsGraphQL
 {
     public class WindowsGraphQL : PluginArchitecture.SharedPluginCode, PluginArchitecture.PluginInterface
    {
-
-      private static GraphServiceClient _graphServiceClient;
-      private static HttpClient _httpClient;
-
-      private static GraphServiceClient GetAuthenticatedGraphClient(IConfigurationRoot config)
-      {
-         var authenticationProvider = CreateAuthorizationProvider(config);
-         _graphServiceClient = new GraphServiceClient(authenticationProvider);
-         return _graphServiceClient;
-      }
-
-      private static HttpClient GetAuthenticatedHTTPClient(IConfigurationRoot config)
-      {
-         var authenticationProvider = CreateAuthorizationProvider(config);
-         _httpClient = new HttpClient(new AuthHandler(authenticationProvider, new HttpClientHandler()));
-         return _httpClient;
-      }
-
-      private static IAuthenticationProvider CreateAuthorizationProvider(IConfigurationRoot config)
-      {
-         var clientId = config["applicationId"];
-         var clientSecret = config["applicationSecret"];
-         var redirectUri = config["redirectUri"];
-         var authority = $"https://login.microsoftonline.com/{config["tenantId"]}/v2.0";
-
-         List<string> scopes = new List<string>();
-         scopes.Add("https://graph.microsoft.com/.default");
-
-         var cca = ConfidentialClientApplicationBuilder.Create(clientId)
-                                                 .WithAuthority(authority)
-                                                 .WithRedirectUri(redirectUri)
-                                                 .WithClientSecret(clientSecret)
-                                                 .Build();
-         return new MsalAuthenticationProvider(cca, scopes.ToArray());
-      }
-
-
       bool IsInitialized = false;
       bool IsRunning = false;
       bool IsRegistered = false;
@@ -59,6 +23,7 @@ namespace WindowsGraphQL
          bool IsInitialized = false;
          bool IsRunning = false;
          bool IsRegistered = false;
+
       }
 
       public override void Register()
@@ -89,6 +54,7 @@ namespace WindowsGraphQL
       public override void Run()
       {
          base.Run();
+
       }
 
       public override void Pause(bool UnPause = false)
