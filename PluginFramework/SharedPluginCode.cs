@@ -10,9 +10,9 @@ namespace PluginArchitecture
 {
    public abstract class SharedPluginCode : PluginInterface
    {
-      bool IsInitialized = false;
-      bool IsRunning = false;
-      bool IsRegistered = false;
+      protected bool IsInitialized = false;
+      protected bool IsRunning = false;
+      protected bool IsRegistered = false;
  
       public virtual void Register()
       {

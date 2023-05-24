@@ -9,14 +9,11 @@ namespace OutlookComsPlugin
 {
    public class OutlookComsPlugin : PluginArchitecture.SharedPluginCode, PluginArchitecture.PluginInterface
    {
-      bool IsInitialized = false;
-      bool IsRunning = false;
-      bool IsRegistered = false;
       public OutlookComsPlugin()
       {
-         bool IsInitialized = false;
-         bool IsRunning = false;
-         bool IsRegistered = false;
+         IsInitialized = false;
+         IsRunning = false;
+         IsRegistered = false;
 
       }
 

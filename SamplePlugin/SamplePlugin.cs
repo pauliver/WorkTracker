@@ -12,14 +12,11 @@ namespace SamplePluginNameSpace
 {
     public class SamplePlugin : PluginArchitecture.SharedPluginCode, PluginArchitecture.PluginInterface
    {
-      bool IsInitialized = false;
-      bool IsRunning = false;
-      bool IsRegistered = false;
       public SamplePlugin()
       {
-         bool IsInitialized = false;
-         bool IsRunning = false;
-         bool IsRegistered = false;
+         IsInitialized = false;
+         IsRunning = false;
+         IsRegistered = false;
 
       }
 

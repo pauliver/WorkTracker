@@ -2,6 +2,7 @@
 using System.IO;
 using System.IO.Pipes;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,12 @@ using System.Diagnostics;
 
 namespace OutlookComsPlugin
 {
+   //https://stackoverflow.com/questions/1053593/what-is-the-easiest-way-for-two-separate-c-sharp-net-apps-to-talk-to-each-other
+
+
+   //https://learn.microsoft.com/en-us/dotnet/standard/io/how-to-use-named-pipes-for-network-interprocess-communication?source=recommendations
+
+
    public class StreamString
    {
       private Stream ioStream;
@@ -49,22 +56,61 @@ namespace OutlookComsPlugin
       }
    }
 
-   // Contains the method executed in the context of the impersonated user
-   public class ReadFileToStream
-   {
-      private string fn;
-      private StreamString ss;
 
-      public ReadFileToStream(StreamString str, string filename)
+   public class NetworkBuffer
+   {
+      protected List<string> inbound_messages
       {
-         fn = filename;
-         ss = str;
+         get; set;
+      }
+      protected List<string> outbound_messages
+      {
+         get; set;
       }
 
-      public void Start()
+      public System.Threading.CancellationToken cancellationToken;
+
+      public NetworkBuffer()
       {
-         string contents = File.ReadAllText(fn);
-         ss.WriteString(contents);
+         inbound_messages = new List<string>();
+         outbound_messages = new List<string>();
+
+         cancellationToken = new System.Threading.CancellationToken();
+      }
+
+      public void AddInboundMessage(string message)
+      {
+         lock (inbound_messages)
+         {
+            inbound_messages.Add(message);
+         }
+      }
+      public string DequeueOutboundMessage()
+      {
+         var retstring = string.Empty;
+         lock (outbound_messages)
+         {
+            retstring = outbound_messages.FirstOrDefault();
+            outbound_messages.RemoveAt(0);
+         }
+         return retstring;
+      }
+      public void AddOutboundMessage(string message)
+      {
+         lock (outbound_messages)
+         {
+            outbound_messages.Add(message);
+         }
+      }
+      public string DequeueInboundMessage()
+      {
+         var retstring = string.Empty;
+         lock (inbound_messages)
+         {
+            retstring = inbound_messages.FirstOrDefault();
+            inbound_messages.RemoveAt(0);
+         }
+         return retstring;
       }
    }
 
@@ -73,14 +119,13 @@ namespace OutlookComsPlugin
       public static string NamedPipe = "OutlookComsPlugin";
       public static string ServerName = ".";
       protected bool Client = true;
-      //https://stackoverflow.com/questions/1053593/what-is-the-easiest-way-for-two-separate-c-sharp-net-apps-to-talk-to-each-other
 
       NamedPipeClientStream pipeClient;
       NamedPipeServerStream pipeServer;
 
       StreamString pipestream;
 
-      System.Threading.CancellationToken cancellationToken;
+      NetworkBuffer networkBuffer = new NetworkBuffer();
 
       public NetworkingSharedBase(bool isClient = true)
       {
@@ -106,12 +151,14 @@ namespace OutlookComsPlugin
          }
          return true;
       }
-      public async void Listen(int TickFrequency = 5)//every 5 seconds
-      {
-         
-         cancellationToken = new CancellationToken();
-         pipeServer.WaitForConnection(cancellationToken);
 
+      public void StartListen(int TickFrequency = 5)
+      {
+         System.Threading.Tasks.Task.Run(() => Listen(TickFrequency));
+      }
+      async protected void Listen(int TickFrequency = 5)//every 5 seconds
+      {
+         await pipeServer.WaitForConnectionAsync(networkBuffer.cancellationToken);
 
          pipestream = new StreamString(pipeServer);
 
