@@ -32,7 +32,7 @@ namespace OutlookComsPlugin
       // in seconds
       public override int GetDesiredTickFrequency()
       {
-         return 60;
+         return 1; //network should tick 1x a second
       }
 
       public override void Initialize()

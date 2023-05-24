@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OutlookComsPlugin
 {
-   class Client
+   class Client : NetworkingSharedBase
    {
       public Client() 
       {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OutlookComsPlugin
 {
-   class ListenServer
+   class ListenServer : NetworkingSharedBase
    {
       public bool Listen()
       {
