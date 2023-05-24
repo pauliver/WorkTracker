@@ -15,6 +15,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeManagerOutlookPlugin", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OutlookComsPlugin", "OutlookComsPlugin\OutlookComsPlugin.csproj", "{F562CBA5-0324-460D-815D-E5EA3409B0DD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{80B72542-4587-45C5-B42A-79AE34969D06}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{A976E68D-8672-4806-950A-E1E57B76517B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integrations", "Integrations", "{4C77633D-EE87-4D22-B755-6A156CB5D726}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,6 +80,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{248516CC-25F7-4C00-AAA2-8E2C01FAB734} = {A976E68D-8672-4806-950A-E1E57B76517B}
+		{56978AFD-73E7-4A6B-8911-15086FBAAEB2} = {80B72542-4587-45C5-B42A-79AE34969D06}
+		{9717E93E-DAB1-4D19-BA54-A3BBEAB862CD} = {4C77633D-EE87-4D22-B755-6A156CB5D726}
+		{F562CBA5-0324-460D-815D-E5EA3409B0DD} = {80B72542-4587-45C5-B42A-79AE34969D06}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C73FB983-30A3-46F3-9C4D-D1A15F466D63}
