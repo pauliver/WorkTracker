@@ -38,7 +38,6 @@ namespace PMTimeTracker
             bool PATSet = asm.AttemptToSetProcessGitHubPat(CrashReporter.GITHUB_TOKEN);
             if(PATSet)
             {
-
                CR = new CrashReporter();
             }
             else
@@ -51,7 +50,9 @@ namespace PMTimeTracker
                }
             }
 
-            var form1 = new TimeTracking(asm);
+            PM.LoadPluginSettings();
+
+            var form1 = new TimeTracking(asm, PM);
 
             Application.Run(form1);
 
