@@ -10,6 +10,8 @@ namespace PluginArchitecture
 {
    public class PluginManager
    {
+      public static string PluginFolder = "Plugins";
+
       List<PluginInterface> FoundPlugins = new List<PluginInterface>();
       List<PluginInterface> ActivePlugins = new List<PluginInterface>();
       List<PluginInterface> PausedPlugins = new List<PluginInterface>();
@@ -18,34 +20,57 @@ namespace PluginArchitecture
 
       }
 
-      public List<FileInfo> FindPlugins(FileInfo Folder)
+      public DirectoryInfo[] FindPlugins(DirectoryInfo Folder)
       {
-         //var files = Folder.GetFiles("*.dll");
-         //return files.ToList();
-         return null;
+         var directories = Folder.GetDirectories();
+         return directories;
       }  
 
-      public void LoadPluginSettings()
+      public void InitialLoadPlugins()
       {
-
+         System.IO.DirectoryInfo di = new DirectoryInfo(PluginFolder);
+         if (!di.Exists)
+         {
+            di.Create();
+         }
+         var folders = FindPlugins(di);
+         LoadPlugins(folders);
       }
 
-      public void LoadPlugins(List<FileInfo> files)
+      protected void InitialLoadPlugins(DirectoryInfo[] folders)
       {
-         foreach (var file in files)
+         foreach (var item in folders)
          {
-            var assembly = Assembly.LoadFile(file.FullName);
-            var types = assembly.GetTypes();
-            foreach (var type in types)
+            string FolderName = item.Name;
+            System.IO.FileInfo fi = new FileInfo(FolderName + ".json");
+            if(fi.Exists)
             {
-               if (type.GetInterfaces().Contains(typeof(PluginInterface)))
+               fi.Create();
+            }
+            var files = item.GetFiles();
+            foreach (var file in files)
+            {
+               if (file.Extension == ".dll")
                {
-                  var plugin = Activator.CreateInstance(type);
-                  var pluginInterface = plugin as PluginInterface;
-                  pluginInterface.Register();
+                  var assembly = Assembly.LoadFile(file.FullName);
+                  var types = assembly.GetTypes();
+                  foreach (var type in types)
+                  {
+                     if (type.GetInterfaces().Contains(typeof(PluginInterface)))
+                     {
+                        var plugin = Activator.CreateInstance(type);
+                        var pluginInterface = plugin as PluginInterface;
+                        pluginInterface.Register();
+                     }
+                  }
                }
             }
          }
+      }
+
+      public void LoadPlugins(DirectoryInfo[] folders)
+      {
+
       }
 
    }

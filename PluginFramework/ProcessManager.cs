@@ -107,7 +107,14 @@ namespace PluginArchitecture
             }
          }catch(Exception ex)
          {
-            Debugger.Break();
+            if (ex.Message == "Access is denied")
+            {
+               //This is blocked by your admin, so we can't do anything about it.
+            }
+            else
+            {
+               Debugger.Break();
+            }
          }
          return false;
       }

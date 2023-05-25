@@ -50,7 +50,7 @@ namespace TimeTracker
                }
             }
 
-            PM.LoadPluginSettings();
+            PM.InitialLoadPlugins();
 
             var form1 = new TimeTracking(asm, PM);
 

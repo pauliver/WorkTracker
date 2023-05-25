@@ -30,6 +30,12 @@ namespace OutlookPlugin
          {
 
          }
+
+         Outlook.AppointmentItem appointmentItem = Inspector.CurrentItem as Outlook.AppointmentItem;
+         if(appointmentItem != null)
+         {
+
+         }
       }
 
 
