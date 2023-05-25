@@ -114,8 +114,18 @@ namespace OutlookComsPlugin
       }
    }
 
-   abstract class NetworkingSharedBase
+   public abstract class NetworkingSharedBase
    {
+      public static string ShowApp = "ShowApp";
+      public static string HideApp = "HideApp";
+      public static string StartTracking = "StartTracking";
+      public static string StopTracking = "StopTracking";
+      public static string UpdatePlease = "Refresh";
+
+      public static string SendData = "SendData-Calendar";
+      public static string MeetingStarted = "MeetingStarted";
+
+
       public static string NamedPipe = "OutlookComsPlugin";
       public static string ServerName = ".";
       protected bool Client = true;
@@ -134,7 +144,7 @@ namespace OutlookComsPlugin
          if (Client)
          {
             pipeClient = new NamedPipeClientStream(ServerName, NamedPipe, PipeDirection.InOut, PipeOptions.Asynchronous);
-            pipeClient.ReadMode = PipeTransmissionMode.Message;
+            //pipeClient.ReadMode = PipeTransmissionMode.Message;
          }
          else
          {

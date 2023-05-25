@@ -41,9 +41,10 @@
          this.StartBtn = this.Factory.CreateRibbonButton();
          this.StopBtn = this.Factory.CreateRibbonButton();
          this.Settings = this.Factory.CreateRibbonGroup();
-         this.toggleButton1 = this.Factory.CreateRibbonToggleButton();
+         this.StatusLbl = this.Factory.CreateRibbonLabel();
+         this.ToggleShowHide = this.Factory.CreateRibbonToggleButton();
          this.DataDisplay = this.Factory.CreateRibbonGroup();
-         this.timer1 = new System.Windows.Forms.Timer(this.components);
+         this.TimingTimer = new System.Windows.Forms.Timer(this.components);
          this.TaskTrackingInfo.SuspendLayout();
          this.Core.SuspendLayout();
          this.Settings.SuspendLayout();
@@ -68,34 +69,47 @@
          // 
          // ConnectionLbl
          // 
-         this.ConnectionLbl.Label = "Is Connected";
+         this.ConnectionLbl.Label = "Not Connected";
          this.ConnectionLbl.Name = "ConnectionLbl";
          // 
          // StartBtn
          // 
          this.StartBtn.Label = "Start Tracking";
          this.StartBtn.Name = "StartBtn";
+         this.StartBtn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.StartBtn_Click);
          // 
          // StopBtn
          // 
          this.StopBtn.Label = "Stop Tracking";
          this.StopBtn.Name = "StopBtn";
+         this.StopBtn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.StopBtn_Click);
          // 
          // Settings
          // 
-         this.Settings.Items.Add(this.toggleButton1);
+         this.Settings.Items.Add(this.StatusLbl);
+         this.Settings.Items.Add(this.ToggleShowHide);
          this.Settings.Label = "Settings";
          this.Settings.Name = "Settings";
          // 
-         // toggleButton1
+         // StatusLbl
          // 
-         this.toggleButton1.Label = "toggleButton1";
-         this.toggleButton1.Name = "toggleButton1";
+         this.StatusLbl.Label = "Status:";
+         this.StatusLbl.Name = "StatusLbl";
+         // 
+         // ToggleShowHide
+         // 
+         this.ToggleShowHide.Label = "Show Tracking App";
+         this.ToggleShowHide.Name = "ToggleShowHide";
+         this.ToggleShowHide.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.ToggleShowHide_Click);
          // 
          // DataDisplay
          // 
          this.DataDisplay.Label = "Data Display";
          this.DataDisplay.Name = "DataDisplay";
+         // 
+         // TimingTimer
+         // 
+         this.TimingTimer.Tick += new System.EventHandler(this.timer1_Tick);
          // 
          // TimeManagerRibbon
          // 
@@ -122,8 +136,9 @@
       internal Microsoft.Office.Tools.Ribbon.RibbonLabel ConnectionLbl;
       internal Microsoft.Office.Tools.Ribbon.RibbonGroup Settings;
       internal Microsoft.Office.Tools.Ribbon.RibbonGroup DataDisplay;
-      internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton toggleButton1;
-      private System.Windows.Forms.Timer timer1;
+      internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton ToggleShowHide;
+      private System.Windows.Forms.Timer TimingTimer;
+      internal Microsoft.Office.Tools.Ribbon.RibbonLabel StatusLbl;
    }
 
    partial class ThisRibbonCollection

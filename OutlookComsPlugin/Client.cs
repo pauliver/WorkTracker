@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace OutlookComsPlugin
 {
-   class Client : NetworkingSharedBase
+   public delegate void TimeTrackingCallback(String status, bool Shown, bool running);
+   public class Client : NetworkingSharedBase
    {
+      TimeTrackingCallback theCallback;
       public Client() 
       {
 
@@ -20,13 +23,24 @@ namespace OutlookComsPlugin
       {
          return true;
       }
-      public bool Send()
+      public bool Send(string message)
+      {
+
+         return true;
+      }
+      public bool Receive(string message, string extradata)
       {
          return true;
       }
-      public bool Receive()
+
+      public void RegisterCallback(TimeTrackingCallback callback)
       {
-         return true;
+         theCallback = callback;
+      }
+
+      public void RequestUpdateStatus(string status, bool Shown = true, bool running = false)
+      {
+         theCallback.Invoke(status, Shown, running);
       }
    }
 }
