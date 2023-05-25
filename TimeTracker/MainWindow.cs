@@ -1,5 +1,5 @@
 ﻿using PluginArchitecture;
-using PMTimeTracker.Properties;
+using TimeTracker.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,7 +15,7 @@ using System.Web.Script.Serialization;
 #endif
 using System.Windows.Forms;
 
-namespace PMTimeTracker
+namespace TimeTracker
 {
    public partial class TimeTracking : Form
    {

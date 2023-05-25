@@ -1,4 +1,4 @@
-﻿namespace PMTimeTracker
+﻿namespace TimeTracker
 {
    partial class TimeTracking
    {

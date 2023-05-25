@@ -9,7 +9,7 @@ using System.Globalization;
 using System.Diagnostics;
 using PluginArchitecture;
 
-namespace PMTimeTracker
+namespace TimeTracker
 {
    internal static class Program
    {

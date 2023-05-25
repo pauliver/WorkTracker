@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PMTimeTracker
+namespace TimeTracker
 {
    partial class AboutAndSettings : Form
    {

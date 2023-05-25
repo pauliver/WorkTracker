@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 
-namespace PMTimeTracker
+namespace TimeTracker
 {
    public class UserSettingsFile
    {

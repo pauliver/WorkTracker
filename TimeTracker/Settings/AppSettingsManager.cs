@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.Windows.Forms.VisualStyles;
 
-namespace PMTimeTracker
+namespace TimeTracker
 {
 
    public class AppSettingsManager : SettingsManager

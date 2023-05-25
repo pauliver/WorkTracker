@@ -9,7 +9,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 #endif
 
-namespace PMTimeTracker
+namespace TimeTracker
 {
 
 

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.Collections.Generic;
 
-namespace PMTimeTracker
+namespace TimeTracker
 {
    class CrashReporter : OKWrapper
    {

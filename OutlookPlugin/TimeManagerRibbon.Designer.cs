@@ -41,6 +41,7 @@
          this.StartBtn = this.Factory.CreateRibbonButton();
          this.StopBtn = this.Factory.CreateRibbonButton();
          this.Settings = this.Factory.CreateRibbonGroup();
+         this.LaunchButton = this.Factory.CreateRibbonToggleButton();
          this.StatusLbl = this.Factory.CreateRibbonLabel();
          this.ToggleShowHide = this.Factory.CreateRibbonToggleButton();
          this.DataDisplay = this.Factory.CreateRibbonGroup();
@@ -86,10 +87,17 @@
          // 
          // Settings
          // 
+         this.Settings.Items.Add(this.LaunchButton);
          this.Settings.Items.Add(this.StatusLbl);
          this.Settings.Items.Add(this.ToggleShowHide);
          this.Settings.Label = "Settings";
          this.Settings.Name = "Settings";
+         // 
+         // LaunchButton
+         // 
+         this.LaunchButton.Label = "Launch Tracker";
+         this.LaunchButton.Name = "LaunchButton";
+         this.LaunchButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.LaunchButton_Click);
          // 
          // StatusLbl
          // 
@@ -139,6 +147,7 @@
       internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton ToggleShowHide;
       private System.Windows.Forms.Timer TimingTimer;
       internal Microsoft.Office.Tools.Ribbon.RibbonLabel StatusLbl;
+      internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton LaunchButton;
    }
 
    partial class ThisRibbonCollection

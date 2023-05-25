@@ -205,6 +205,10 @@
       <Project>{f562cba5-0324-460d-815d-e5ea3409b0dd}</Project>
       <Name>OutlookComsPlugin</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PluginFramework\PluginFramework.csproj">
+      <Project>{8a1b426e-dd15-4c6d-8244-89e75e8b8cad}</Project>
+      <Name>PluginFramework</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
