@@ -13,14 +13,23 @@ namespace PluginArchitecture
       bool IsRunning = false;
       Process[] pname;
       string ProcessName = "TimeTracker";
+      string fullfilepath = string.Empty;
       System.IO.FileInfo ProcessPath;
-      string ProcessID = string.Empty;
+      //string ProcessID = string.Empty;
       ProcessExited ExitDelegate = null;
       public ProcessManager(string processName = "TimeTracker", System.IO.FileInfo ProcessNamePath = null)
       {
          this.ProcessName = processName;
          ProcessPath = ProcessNamePath;
          CheckIsRunning();
+      }
+
+      protected bool FullPathFound = false;
+      protected bool FindFilePathOnce()
+      {
+         Process proc = GetFirstProcessWithDebugging();
+         try { fullfilepath = proc.MainModule.FileName; FullPathFound = true; } catch { return false; }
+         return true;
       }
 
       protected Process GetFirstProcessWithDebugging()
@@ -47,7 +56,11 @@ namespace PluginArchitecture
          else
          {
             IsRunning = true;
-            ProcessID = GetFirstProcessWithDebugging().Id.ToString();
+            if(!FullPathFound)
+            {
+               FindFilePathOnce();
+               //ProcessID = GetFirstProcessWithDebugging().Id.ToString();
+            }
          }
          return IsRunning;
       }
@@ -83,6 +96,12 @@ namespace PluginArchitecture
             if (ProcessPath != null)
             {
                Process.Start(ProcessPath.FullName);
+               if (CheckIsRunning())
+                  return true;
+            }
+            if(FullPathFound && fullfilepath != string.Empty)
+            {
+               Process.Start(fullfilepath);
                if (CheckIsRunning())
                   return true;
             }

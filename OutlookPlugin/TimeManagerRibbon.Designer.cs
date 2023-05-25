@@ -122,7 +122,7 @@
          // TimeManagerRibbon
          // 
          this.Name = "TimeManagerRibbon";
-         this.RibbonType = "Microsoft.Outlook.Appointment, Microsoft.Outlook.Explorer";
+         this.RibbonType = "Microsoft.Outlook.Explorer";
          this.Tabs.Add(this.TaskTrackingInfo);
          this.Load += new Microsoft.Office.Tools.Ribbon.RibbonUIEventHandler(this.TaskTrackingRibbon_Load);
          this.TaskTrackingInfo.ResumeLayout(false);
