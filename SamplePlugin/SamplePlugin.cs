@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PluginArchitecture;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -40,9 +41,9 @@ namespace SamplePluginNameSpace
          base.Initialize();
       }
 
-      public override void LoadSettings(FileInfo fi)
+      public override void LoadSettings(System.IO.DirectoryInfo fi, PluginConfig config)
       {
-         base.LoadSettings(fi);
+         base.LoadSettings(fi, config);
       }
 
       public override void Run()

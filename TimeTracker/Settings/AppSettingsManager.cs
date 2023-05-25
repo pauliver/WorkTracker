@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.Windows.Forms.VisualStyles;
+using TimeTracker;
 
 namespace TimeTracker
 {
@@ -22,7 +23,7 @@ namespace TimeTracker
 
 
       [CategoryAttribute("Tasks"), DescriptionAttribute("lorem ipsum")]
-      public IndividualSettings<List<IndividualTaskSettings>> TrackerOptionsAndDescriptions { get; set; }
+      public TimeTracker.IndividualSettings<List<IndividualTaskSettings>> TrackerOptionsAndDescriptions { get; set; }
 
       [CategoryAttribute("Time Spent"), DescriptionAttribute("lorem ipsum")]
       public IndividualSettingsDictionary<Dictionary<string, int>, string, int> UserTimeSpent { get; set; }

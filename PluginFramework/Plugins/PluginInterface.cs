@@ -10,7 +10,7 @@ namespace PluginArchitecture
    {
       void Initialize();
 
-      void LoadSettings(System.IO.FileInfo fi);
+      void LoadSettings(System.IO.DirectoryInfo fi, PluginConfig config);
       void Register();
       void DeRegister();
 

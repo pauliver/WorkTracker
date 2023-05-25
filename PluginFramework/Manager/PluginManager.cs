@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
+using TimeTracker;
+using System.Diagnostics;
 
 namespace PluginArchitecture
 {
@@ -26,41 +28,56 @@ namespace PluginArchitecture
          return directories;
       }  
 
-      public void InitialLoadPlugins()
+      public void LoadPlugins(DirectoryInfo directory = null)
       {
          System.IO.DirectoryInfo di = new DirectoryInfo(PluginFolder);
+         if (directory != null)
+         {
+            di = directory;
+         }
          if (!di.Exists)
          {
             di.Create();
          }
-         var folders = FindPlugins(di);
+         DirectoryInfo[] folders = FindPlugins(di);
          LoadPlugins(folders);
       }
 
-      protected void InitialLoadPlugins(DirectoryInfo[] folders)
+      protected void LoadPlugins(DirectoryInfo[] folders)
       {
          foreach (var item in folders)
          {
             string FolderName = item.Name;
             System.IO.FileInfo fi = new FileInfo(FolderName + ".json");
-            if(fi.Exists)
+            IndividualSettings<PluginConfig> PluginSettings = null;
+            if (fi.Exists)
             {
-               fi.Create();
+               PluginSettings = new IndividualSettings<PluginConfig>(fi);
+               if(PluginSettings.SettingsObject.FolderName != FolderName)
+               {
+                  Debugger.Break();
+               }
             }
             var files = item.GetFiles();
             foreach (var file in files)
             {
-               if (file.Extension == ".dll")
+               if (file.Extension == ".dll" && file.Name == PluginSettings.SettingsObject.EntrypointDLL)
                {
                   var assembly = Assembly.LoadFile(file.FullName);
                   var types = assembly.GetTypes();
                   foreach (var type in types)
                   {
-                     if (type.GetInterfaces().Contains(typeof(PluginInterface)))
+                     if (type.GetInterfaces().Contains(typeof(PluginInterface)) && type.Name == PluginSettings.SettingsObject.EntryClass)
                      {
                         var plugin = Activator.CreateInstance(type);
                         var pluginInterface = plugin as PluginInterface;
+                        pluginInterface.LoadSettings(item, PluginSettings.SettingsObject);
                         pluginInterface.Register();
+                        FoundPlugins.Add(pluginInterface);
+                     }
+                     else
+                     {
+                        Debugger.Break();
                      }
                   }
                }
@@ -68,10 +85,24 @@ namespace PluginArchitecture
          }
       }
 
-      public void LoadPlugins(DirectoryInfo[] folders)
+      public void Run()
+      {
+         // Yes
+      }
+
+      public void Pause(bool UnPause = false)
       {
 
       }
+      public void Tick(int Seconds)
+      {
+         // Yes
+      }
+      public void Stop()
+      {
 
+      }
    }
+
 }
+

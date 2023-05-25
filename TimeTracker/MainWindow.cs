@@ -110,6 +110,7 @@ namespace TimeTracker
 
          chart = new PieChart();
          chart.Hide();
+         pluginManager.Run();
       }
       private void ShowAbout_Click(object sender, EventArgs e)
       {
@@ -157,6 +158,8 @@ namespace TimeTracker
       bool showtoggle = true;
       private void Timer_Tick(object sender, EventArgs e)
       {
+         pluginManager.Tick(1);
+
          if (TimerActive)
          {
             accumulated_seconds += 1;
@@ -214,6 +217,7 @@ namespace TimeTracker
             StartTracking.Text = "Start Tracking";
             //CompletePreviousTimeTracking();
          }
+
       }
    
 

@@ -13,7 +13,8 @@ namespace PluginArchitecture
       protected bool IsInitialized = false;
       protected bool IsRunning = false;
       protected bool IsRegistered = false;
- 
+      protected PluginConfig configFile = null;
+      protected DirectoryInfo MyDirectory = null;
       public virtual void Register()
       {
          if (!IsInitialized)
@@ -37,9 +38,10 @@ namespace PluginArchitecture
          IsInitialized = true;
       }
 
-      public virtual void LoadSettings(FileInfo fi)
+      public virtual void LoadSettings(System.IO.DirectoryInfo fi, PluginConfig config)
       {
-
+         MyDirectory= fi;
+         configFile = config;
       }
 
       public virtual void Run()
