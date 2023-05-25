@@ -48,11 +48,12 @@ namespace PluginArchitecture
          foreach (var item in folders)
          {
             string FolderName = item.Name;
-            System.IO.FileInfo fi = new FileInfo(FolderName + ".json");
+            System.IO.FileInfo fi = new FileInfo(item.FullName + "\\plugin.json");
             IndividualSettings<PluginConfig> PluginSettings = null;
             if (fi.Exists)
             {
                PluginSettings = new IndividualSettings<PluginConfig>(fi);
+               PluginSettings.Load();
                if(PluginSettings.SettingsObject.FolderName != FolderName)
                {
                   Debugger.Break();

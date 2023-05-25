@@ -158,7 +158,6 @@ namespace TimeTracker
       bool showtoggle = true;
       private void Timer_Tick(object sender, EventArgs e)
       {
-         pluginManager.Tick(1);
 
          if (TimerActive)
          {

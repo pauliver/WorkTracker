@@ -1,7 +1,7 @@
 ﻿{
    "APIVersion": "0",
-   "EntrypointDLL": "OutloookComsPlugin",
-   "FolderName": "OutloookComsPlugin",
-   "EntryClass": "OutloookComsPlugin",
+   "EntrypointDLL": "OutlookComsPlugin",
+   "FolderName": "OutlookComsPlugin",
+   "EntryClass": "OutlookComsPlugin",
    "DesiredTickFrequency": "1"
 }
