@@ -60,6 +60,7 @@ namespace PluginArchitecture
                }
             }
             var files = item.GetFiles();
+            bool LoadedAPlugin = false;
             foreach (var file in files)
             {
                if (file.Extension == ".dll" && file.Name == PluginSettings.SettingsObject.EntrypointDLL)
@@ -73,15 +74,17 @@ namespace PluginArchitecture
                         var plugin = Activator.CreateInstance(type);
                         var pluginInterface = plugin as PluginInterface;
                         pluginInterface.LoadSettings(item, PluginSettings.SettingsObject);
-                        pluginInterface.Register();
+                        pluginInterface.Initialize();
                         FoundPlugins.Add(pluginInterface);
-                     }
-                     else
-                     {
-                        Debugger.Break();
+                        pluginInterface.Register();
+                        LoadedAPlugin = true;
                      }
                   }
                }
+            }
+            if(!LoadedAPlugin)
+            {
+               Debugger.Break();
             }
          }
       }

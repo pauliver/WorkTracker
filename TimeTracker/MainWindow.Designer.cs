@@ -119,6 +119,7 @@
          // 
          // pluginTimer
          // 
+         this.pluginTimer.Enabled = true;
          this.pluginTimer.Tick += new System.EventHandler(this.pluginTimer_Tick);
          // 
          // TimeTracking
