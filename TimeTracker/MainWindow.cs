@@ -316,5 +316,14 @@ namespace TimeTracker
          currentlytracking = "nothing";
       }
 
+      int PluginTicks = 0;
+      private void pluginTimer_Tick(object sender, EventArgs e)
+      {
+         if(++PluginTicks >= 10)
+         {
+            PluginTicks = 0;
+            pluginManager.Tick(1);
+         }
+      }
    }
 }

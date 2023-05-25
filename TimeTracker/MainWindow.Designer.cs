@@ -36,6 +36,7 @@
          this.StartTracking = new System.Windows.Forms.Button();
          this.StopTracking = new System.Windows.Forms.Button();
          this.OptionsView = new System.Windows.Forms.ListView();
+         this.pluginTimer = new System.Windows.Forms.Timer(this.components);
          this.SuspendLayout();
          // 
          // HideBtn
@@ -116,6 +117,10 @@
          this.OptionsView.View = System.Windows.Forms.View.List;
          this.OptionsView.SelectedIndexChanged += new System.EventHandler(this.OptionsView_SelectedIndexChanged);
          // 
+         // pluginTimer
+         // 
+         this.pluginTimer.Tick += new System.EventHandler(this.pluginTimer_Tick);
+         // 
          // TimeTracking
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -148,6 +153,7 @@
       private System.Windows.Forms.Button StartTracking;
       private System.Windows.Forms.Button StopTracking;
       private System.Windows.Forms.ListView OptionsView;
+      private System.Windows.Forms.Timer pluginTimer;
    }
 }
 
