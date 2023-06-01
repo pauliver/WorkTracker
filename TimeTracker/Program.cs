@@ -27,8 +27,11 @@ namespace TimeTracker
 #endif
          CrashReporter CR = null;
          AppSettingsManager asm = null;
-         PluginArchitecture.PluginManager PM = new PluginManager();
+
          System.IO.FileInfo LogFile = new System.IO.FileInfo("Settings\\Crash.log");
+
+         PluginArchitecture.PluginManager PM = new PluginManager(LogFile);
+
          try
          {
 

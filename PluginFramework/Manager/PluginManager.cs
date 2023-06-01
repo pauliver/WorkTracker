@@ -14,12 +14,14 @@ namespace PluginArchitecture
    {
       public static string PluginFolder = "Plugins";
 
+      protected FileInfo errorfilelog = null;
+
       List<PluginInterface> FoundPlugins = new List<PluginInterface>();
       List<PluginInterface> ActivePlugins = new List<PluginInterface>();
       List<PluginInterface> PausedPlugins = new List<PluginInterface>();
-      public PluginManager()
+      public PluginManager(FileInfo logfile = null)
       {
-
+         errorfilelog = logfile;
       }
 
       public DirectoryInfo[] FindPlugins(DirectoryInfo Folder)
@@ -47,44 +49,78 @@ namespace PluginArchitecture
       {
          foreach (var item in folders)
          {
-            string FolderName = item.Name;
-            System.IO.FileInfo fi = new FileInfo(item.FullName + "\\plugin.json");
-            IndividualSettings<PluginConfig> PluginSettings = null;
-            if (fi.Exists)
+            try
             {
-               PluginSettings = new IndividualSettings<PluginConfig>(fi);
-               PluginSettings.Load();
-               if(PluginSettings.SettingsObject.FolderName != FolderName)
+               string FolderName = item.Name;
+               System.IO.FileInfo fi = new FileInfo(item.FullName + "\\plugin.json");
+               IndividualSettings<PluginConfig> PluginSettings = null;
+               if (fi.Exists)
+               {
+                  PluginSettings = new IndividualSettings<PluginConfig>(fi);
+                  PluginSettings.Load();
+                  if (PluginSettings.SettingsObject.FolderName != FolderName)
+                  {
+                     Debugger.Break();
+                  }
+               }
+               var files = item.GetFiles();
+               bool LoadedAPlugin = false;
+               foreach (var file in files)
+               {
+                  if (file.Extension == ".dll" && file.Name == PluginSettings.SettingsObject.EntrypointDLL)
+                  {
+                     var assembly = Assembly.LoadFile(file.FullName);
+                     var types = assembly.GetTypes();
+                     foreach (var type in types)
+                     {
+                        if (type.GetInterfaces().Contains(typeof(PluginInterface)) && type.Name == PluginSettings.SettingsObject.EntryClass)
+                        {
+                           var plugin = Activator.CreateInstance(type);
+                           var pluginInterface = plugin as PluginInterface;
+                           pluginInterface.LoadSettings(item, PluginSettings.SettingsObject);
+                           pluginInterface.Initialize();
+                           FoundPlugins.Add(pluginInterface);
+                           pluginInterface.Register();
+                           LoadedAPlugin = true;
+                        }
+                     }
+                  }
+               }
+               if (!LoadedAPlugin)
                {
                   Debugger.Break();
                }
             }
-            var files = item.GetFiles();
-            bool LoadedAPlugin = false;
-            foreach (var file in files)
+            catch (System.NotSupportedException nse)
             {
-               if (file.Extension == ".dll" && file.Name == PluginSettings.SettingsObject.EntrypointDLL)
+               Debugger.Break();
+               if (errorfilelog != null && errorfilelog.Exists)
                {
-                  var assembly = Assembly.LoadFile(file.FullName);
-                  var types = assembly.GetTypes();
-                  foreach (var type in types)
+                  try
                   {
-                     if (type.GetInterfaces().Contains(typeof(PluginInterface)) && type.Name == PluginSettings.SettingsObject.EntryClass)
-                     {
-                        var plugin = Activator.CreateInstance(type);
-                        var pluginInterface = plugin as PluginInterface;
-                        pluginInterface.LoadSettings(item, PluginSettings.SettingsObject);
-                        pluginInterface.Initialize();
-                        FoundPlugins.Add(pluginInterface);
-                        pluginInterface.Register();
-                        LoadedAPlugin = true;
-                     }
+                     // http://go.microsoft.com/fwlink/?LinkId=155569 
+                     System.IO.File.AppendAllText(errorfilelog.FullName, "Security Exception: " + Environment.NewLine + nse.ToString() + Environment.NewLine);
+                  }
+                  catch (Exception ex2)
+                  {
+                     Console.WriteLine(ex2.Message);
                   }
                }
             }
-            if(!LoadedAPlugin)
+            catch (Exception ex)
             {
                Debugger.Break();
+               if (errorfilelog != null && errorfilelog.Exists)
+               {
+                  try
+                  {
+                     System.IO.File.AppendAllText(errorfilelog.FullName, ex.ToString());
+                  }
+                  catch (Exception ex2)
+                  {
+                     Console.WriteLine(ex2.Message);
+                  }
+               }
             }
          }
       }
