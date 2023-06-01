@@ -15,6 +15,8 @@ using System.Web.Script.Serialization;
 #endif
 using System.Windows.Forms;
 
+
+
 namespace TimeTracker
 {
    public partial class TimeTracking : Form
@@ -271,6 +273,16 @@ namespace TimeTracker
          LastLogFileApp = "";
          LogFileTemp = "";
 #endif
+#if LOGGING
+         try
+         {
+            System.IO.File.AppendAllText(LogFile.Name, Environment.NewLine + "Start:" + currentlytracking + " : " + System.DateTime.Now + " for " + CurrentUser);
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine(ex.Message);
+         }
+#endif
          //name == OptionsView.SelectedItems[0].Text;
          LastHourTimedOut = false;
          accumulated_seconds = 0;
@@ -304,6 +316,18 @@ namespace TimeTracker
       }
       private void CompletePreviousTimeTracking()
       {
+
+#if LOGGING
+         try
+         {
+            System.IO.File.AppendAllText(LogFile.Name, Environment.NewLine + System.DateTime.Now + "End : " + currentlytracking + " : " + accumulated_seconds.ToString());
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine(ex.Message);
+         }
+#endif
+
          StartTracking.Text = "Start Tracking";
          this.Text = "Time Tracking ";
          Timer.Enabled = false;
