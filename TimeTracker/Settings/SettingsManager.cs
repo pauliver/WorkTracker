@@ -142,6 +142,7 @@ namespace TimeTracker
             LogFileTemp.item = currentlytracking;
             LogFileTemp.TimeSpent = accumulated_seconds;
             EnahncedLog.SettingsObject.Add(LogFileTemp);
+            EnahncedLog.RefreshSave();
          }
       }
 
