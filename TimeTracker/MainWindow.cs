@@ -29,6 +29,11 @@ namespace TimeTracker
       bool ThirtyMinuteShow = false;
       private System.Windows.Forms.NotifyIcon notifyIcon1;
 
+
+      float LastLogNum = 0;
+      private string CurrentUser = "Not Defined";
+      protected EnhancedLogging LogFileTemp;
+
       PieChart chart;
 
       System.IO.FileInfo LogFile = new System.IO.FileInfo("Settings\\PMTimeTracker.log");
@@ -90,6 +95,26 @@ namespace TimeTracker
          {
             Console.WriteLine(ex.Message);
          }
+
+         try
+         {
+            CurrentUser = System.Security.Principal.WindowsIdentity.GetCurrent().Name; 
+         }catch(Exception ex)
+         {
+            Console.WriteLine(ex.Message);
+         }
+
+      }
+
+      EnhancedLogging GetNextLog(string currently_tracking)
+      {
+         EnhancedLogging el = new EnhancedLogging();
+         el.item = currently_tracking;
+         el.Id = LastLogNum++;
+         el.UserName = CurrentUser;
+         el.StartTime = DateTime.Now;
+         //LogFileTemp = el;
+         return el;
       }
 
       private void Form1_Load(object sender, EventArgs e)
@@ -130,6 +155,7 @@ namespace TimeTracker
          {
             CompletePreviousTimeTracking();
          }
+         tracker.UserSettings.LastID = LastLogNum;
          tracker.UpdateUserSave();
          Application.Exit();
       }
@@ -273,6 +299,8 @@ namespace TimeTracker
          {
             MessageBox.Show("Error: could not find task " + name);
          }
+
+         LogFileTemp = GetNextLog(name);
       }
       private void CompletePreviousTimeTracking()
       {
@@ -281,12 +309,12 @@ namespace TimeTracker
          Timer.Enabled = false;
          if (LastHourTimedOut)  // if we timed out, we need to complete the previous task
          {
-            tracker.UpdateTracker(currentlytracking, accumulated_seconds);
+            tracker.UpdateTracker(currentlytracking, accumulated_seconds, LogFileTemp);
 
          }
          else if (TimerActive) //&& currentlytracking != "nothing" 
          {
-            tracker.UpdateTracker(currentlytracking, accumulated_seconds);
+            tracker.UpdateTracker(currentlytracking, accumulated_seconds, LogFileTemp);
 
          }
          accumulated_seconds = 0;
@@ -314,6 +342,7 @@ namespace TimeTracker
          GC.Collect();
 #endif
          currentlytracking = "nothing";
+         LogFileTemp = null;
       }
 
       int PluginTicks = 0;

@@ -15,5 +15,7 @@
    "AlternativeBackgroundFile": "background.jpg",
    "UseAlternativeSize": "false",
    "Height": "1024",
-   "Width":"768"
+   "Width": "768",
+   "UserName": "",
+   "EnahncedLogging": "true"
 }

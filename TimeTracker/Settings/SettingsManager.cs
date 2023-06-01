@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
@@ -11,28 +12,7 @@ using System.Web.Script.Serialization;
 
 namespace TimeTracker
 {
-   public class UserSettingsFile
-   {
-      public string GitHubPAT;
-      public string GitHubUser;
-      public string GitHubRepo;
-      public bool WeeklySaveFiles = true;
-      public bool SaveImagesOnExit = false;
 
-      public string AppSettings = "AppSettings.json";
-      public string AppConfiguration = "AppConfig.json";
-      public string UserSettings = "UserSettings.json";
-      public string UserDataStorage = "UserData.json";
-
-      public bool UseWeeklySaves = false;
-      public string WeeklySaveFolder = "WeeklySaves\\";
-      public bool UseAlternativeBacgkround = false;
-      public string AlternativeBackgroundFile = "background.jpg";
-      public bool UseAlternativeSize = false;
-      public int Height = 1024;
-      public int Width = 768;
-
-   }
 
    // This presumes that weeks start with Monday.
    // Week 1 is the 1st week of the year with a Thursday in it.
@@ -44,9 +24,15 @@ namespace TimeTracker
       protected string AppConfiiguration;
       protected string UserDataSave;
       protected string UserConfig;
+      protected string WeeklyLogFileName;
 
       public int Week;
 
+
+      [CategoryAttribute("Time Spent"), DescriptionAttribute("more detailed log")]
+      public TimeTracker.IndividualSettingsList<List<EnhancedLogging>, EnhancedLogging> EnahncedLog { get; set; }
+
+      [CategoryAttribute("UserSettings"), DescriptionAttribute("")]
       protected SettingsFile UserSettingFile;
 
       public UserSettingsFile UserSettings
@@ -71,11 +57,16 @@ namespace TimeTracker
 
          UserConfig = this.SettingsFolder + "UserConfig.json";
 
+         WeeklyLogFileName = this.SettingsFiles + Week.ToString() + "Log.json";
+
          SettingsFiles = new List<SettingsFile>();
 
          UserSettingFile = new IndividualSettings<UserSettingsFile>(new System.IO.FileInfo(UserConfig));
          UserSettingFile.Load();
          RegisterSettingsFile(UserSettingFile);
+
+         EnahncedLog = new IndividualSettingsList<List<EnhancedLogging>, EnhancedLogging>(new System.IO.FileInfo(WeeklyLogFileName));
+         RegisterSettingsFile(EnahncedLog);
 
       }
 
@@ -109,6 +100,7 @@ namespace TimeTracker
 
       public virtual void UpdateUserSave()
       {
+         EnahncedLog.RefreshSave();
       }
 
       public virtual void Load()
@@ -123,8 +115,17 @@ namespace TimeTracker
       {
       }
 
-      public virtual void UpdateTracker(string currentlytracking, int accumulated_seconds)
+      public virtual void UpdateTracker(string currentlytracking, int accumulated_seconds, EnhancedLogging LogFileTemp)
       {
+         if (LogFileTemp == null)
+            Debugger.Break();
+
+         {
+            LogFileTemp.EndTime = DateTime.Now;
+            LogFileTemp.item = currentlytracking;
+            LogFileTemp.TimeSpent = accumulated_seconds;
+            EnahncedLog.SettingsObject.Add(LogFileTemp);
+         }
       }
 
       internal void SetLocalProcessVariable(string EnvVariable, string value)

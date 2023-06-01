@@ -21,6 +21,12 @@ namespace TimeTracker
       Object SettingsObjectAsObject { get; }
    }
 
+   public interface GetID
+   {
+      float GetID { get; set; }
+   }
+
+
    public class IndividualSettings<T> : SettingsFile 
       where T :  new()
    {
@@ -73,6 +79,7 @@ namespace TimeTracker
             var fi = SettingsFile;
             if (!fi.Exists)
             {
+               SettingsObject = new T();
                return;
             }
             var searilizationstring = System.IO.File.ReadAllText(fi.FullName);
@@ -107,10 +114,59 @@ namespace TimeTracker
 
    }
 
+   public class IndividualSettingsList<T, V> : IndividualSettings<T>, SettingsFile
+   where T : IList<V>, IEnumerable, new()
+   where V : GetID
+   {
+      public IndividualSettingsList(FileInfo settingsFile) : base(settingsFile)
+      {
+      }
+
+      virtual public void RefreshSave()
+      {
+         var serializer = new JavaScriptSerializer();
+         T UpdateObject = new T();
+         try
+         {
+            var fi = base.SettingsFile;
+            if (fi.Exists)
+            {
+               var searilizationstring = System.IO.File.ReadAllText(fi.FullName);
+               UpdateObject = serializer.Deserialize<T>(searilizationstring);
+            }
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine(ex.Message);
+         }
+         {
+            foreach (var item in SettingsObject)
+            {
+               if (UpdateObject.Contains(item))
+               {
+                  UpdateObject.Remove(item);
+               }
+               UpdateObject.Add(item);
+            }
+         }
+         try
+         {
+            var fi = base.SettingsFile;
+
+            var serializedResult = serializer.Serialize(UpdateObject);
+            System.IO.File.WriteAllText(fi.FullName, serializedResult);
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine(ex.Message);
+         }
+      }
+   }
+
    public class IndividualSettingsDictionary<T,X,Y> :   IndividualSettings<T>, SettingsFile
-      where T : IDictionary<X,Y>,  IEnumerable, new()
-      //where X : new()
-      //where Y : new()
+   where T : IDictionary<X,Y>,  IEnumerable, new()
+   //where X : new(
+   //where Y : new()
    {
       public IndividualSettingsDictionary(FileInfo settingsFile):base
          (settingsFile)

@@ -29,6 +29,7 @@ namespace TimeTracker
       public IndividualSettingsDictionary<Dictionary<string, int>, string, int> UserTimeSpent { get; set; }
 
 
+
       public IndividualTaskSettings GetTrackerDescriptionbyTask(string task)
       {
          foreach (IndividualTaskSettings tracker in TrackerOptionsAndDescriptions.SettingsObject)
@@ -78,8 +79,11 @@ namespace TimeTracker
       public static string SaveFileFolder = "SaveFiles\\";
       public AppSettingsManager() : base()
       {
+
          UserTimeSpent = new IndividualSettingsDictionary<Dictionary<string, int>, string, int>(new System.IO.FileInfo(UserDataSave));
          TrackerOptionsAndDescriptions = new IndividualSettings<List<IndividualTaskSettings>>(new System.IO.FileInfo(AppConfiiguration));
+  
+
 
          RegisterSettingsFile(UserTimeSpent);
          RegisterSettingsFile(TrackerOptionsAndDescriptions);
@@ -89,6 +93,7 @@ namespace TimeTracker
 
       public override void UpdateUserSave()
       {
+         base.UpdateUserSave();
          UserTimeSpent.RefreshSave();
       }
 
@@ -107,8 +112,10 @@ namespace TimeTracker
          //don't save out the time spent
       }
 
-      public override void UpdateTracker(string currentlytracking, int accumulated_seconds)
+      public override void UpdateTracker(string currentlytracking, int accumulated_seconds,EnhancedLogging LogFileTemp)
       {
+         base.UpdateTracker(currentlytracking, accumulated_seconds, LogFileTemp);
+
          if (UserTimeSpent.SettingsObject.ContainsKey(currentlytracking))
          {
             UserTimeSpent.SettingsObject[currentlytracking] += accumulated_seconds;
