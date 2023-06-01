@@ -33,8 +33,8 @@ namespace TimeTracker
       public string AlternativeBackgroundFile = "background.jpg"; 
 
       public bool UseAlternativeSize = false;
-      public int Height = 1024;
-      public int Width = 768;
+      public int Height = 687;
+      public int Width = 529;
 
 
       public float LastID = 0;

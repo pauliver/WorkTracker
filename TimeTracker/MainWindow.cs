@@ -91,113 +91,12 @@ namespace TimeTracker
          }
 #endif
 
-         try{
-            bool NewBackground = false;
-            bool AlternativeSize = false;
-
-            if(asm.UserSettings.UseAlternativeBacgkround)
-            {
-               NewBackground = true;
-            }
-            if(asm.UserSettings.UseAlternativeSize)
-            {
-               AlternativeSize = true;
-            }
-
-            string BackgroundFile = "";
-            int NewWidth = 0;
-            int NewHeight = 0;
-            int MinWidth = 400;
-            int MinHeight = 400;
-            int MaxWidth = 2048;
-            int MaxHeight = 2048;
-
-            if (NewBackground && asm.UserSettings.UseAlternativeBacgkround)
-            {
-               BackgroundFile = asm.UserSettings.AlternativeBackgroundFile;
-            }
-
-            if(AlternativeSize && asm.UserSettings.UseAlternativeSize)
-            {
-               NewWidth = asm.UserSettings.Width;
-               NewHeight = asm.UserSettings.Height;
-            }
-
-
-
-
-            System.IO.FileInfo backgroundfi = new FileInfo(BackgroundFile);
-
-            if (NewBackground && backgroundfi.Exists)
-            {
-               Bitmap BackImg = new Bitmap(backgroundfi.FullName);
-               if (!AlternativeSize)
-               {
-                  NewWidth = BackImg.Width;
-                  NewHeight = BackImg.Height;
-               }
-               this.BackgroundImage = BackImg;
-            }
-
-            if (NewWidth < MinWidth)
-            {
-               NewWidth = MinWidth;
-            }
-            if( NewWidth> MaxWidth)
-            {
-               NewWidth = MaxWidth;
-            }
-            if (NewHeight < MinHeight)
-            {
-               NewHeight = MinHeight;
-            }
-            if (NewHeight > MaxHeight)
-            {
-               NewHeight = MaxHeight;
-            }
-
-            if(AlternativeSize || NewBackground)
-            {
-               this.MaximumSize = this.MinimumSize = new Size(NewWidth, NewHeight);
-               this.Height = NewHeight;
-               this.Width = NewWidth;
-            }
-            
-         }catch(Exception ex)
-         {
-            LogException(ex);
-         }
-
-         try
-         {
-            {
-               Rectangle screenRectangle = this.RectangleToScreen(this.ClientRectangle);
-               int titleHeight = screenRectangle.Top - this.Top;
-            }
-            //Firefly in image of a clock screaming at the sky while the world burns around it 26800
-            // image from Adobe Firefly
-            var bmp = new Bitmap(this.BackgroundImage);
-
-            var WidthRatio = bmp.Size.Width / this.Width;
-            var HeightRatio = bmp.Size.Width / this.Height;
-
-            var scope = new Rectangle( OptionsView.Location.X * WidthRatio, OptionsView.Location.Y  * HeightRatio, OptionsView.Width * WidthRatio, OptionsView.Height * HeightRatio);
-            var BackgroundBitmap = new Bitmap(OptionsView.Width, OptionsView.Height);
-            Graphics bg = Graphics.FromImage(BackgroundBitmap);
-
-            bg.DrawImage(bmp, new Rectangle(0, 0, OptionsView.Width, OptionsView.Height), scope, GraphicsUnit.Pixel);
-
-            OptionsView.BackgroundImageTiled = false;
-            OptionsView.BackgroundImage = BackgroundBitmap;
-         }catch(Exception ex)
-         {
-            LogException(ex);
-         }
+         ReloadBackgroundSizing();
 
          try
          {
             CurrentUser = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-            string tmpuser = asm.UserSettings.UserName;
+            string tmpuser = tracker.UserSettings.UserName;
             if(tmpuser != null && tmpuser.Length > 0)
             {
                CurrentUser = tmpuser;
@@ -244,6 +143,130 @@ namespace TimeTracker
          chart = new PieChart();
          chart.Hide();
          pluginManager.Run();
+
+
+         try
+         {
+            bool NewBackground = false;
+            bool AlternativeSize = false;
+
+            if (tracker.UserSettings.UseAlternativeBacgkround)
+            {
+               NewBackground = true;
+            }
+            if (tracker.UserSettings.UseAlternativeSize)
+            {
+               AlternativeSize = true;
+            }
+
+            string BackgroundFile = "";
+            int NewWidth = 0;
+            int NewHeight = 0;
+            int MinWidth = 400;
+            int MinHeight = 400;
+            int MaxWidth = 2048;
+            int MaxHeight = 2048;
+
+            if (NewBackground && tracker.UserSettings.UseAlternativeBacgkround)
+            {
+               BackgroundFile = tracker.UserSettings.AlternativeBackgroundFile;
+            }
+
+            if (AlternativeSize && tracker.UserSettings.UseAlternativeSize)
+            {
+               NewWidth = tracker.UserSettings.Width;
+               NewHeight = tracker.UserSettings.Height;
+            }
+
+
+
+
+            System.IO.FileInfo backgroundfi;
+
+            if (NewBackground && BackgroundFile.Length > 0)
+            {
+               backgroundfi = new FileInfo(BackgroundFile);
+               if (backgroundfi.Exists)
+               {
+                  Bitmap BackImg = new Bitmap(backgroundfi.FullName);
+                  if (!AlternativeSize)
+                  {
+                     NewWidth = BackImg.Width;
+                     NewHeight = BackImg.Height;
+                  }
+                  this.BackgroundImage = BackImg;
+               }
+            }
+
+            if (NewWidth < MinWidth)
+            {
+               NewWidth = MinWidth;
+            }
+            if (NewWidth > MaxWidth)
+            {
+               NewWidth = MaxWidth;
+            }
+            if (NewHeight < MinHeight)
+            {
+               NewHeight = MinHeight;
+            }
+            if (NewHeight > MaxHeight)
+            {
+               NewHeight = MaxHeight;
+            }
+
+            if (AlternativeSize || NewBackground)
+            {
+               this.MaximumSize = this.MinimumSize = new Size(NewWidth, NewHeight);
+               this.Height = NewHeight;
+               this.Width = NewWidth;
+               this.OnSizeChanged(new EventArgs());
+               this.Refresh();
+               {
+                  this.OptionsView.Refresh();
+                  this.HideBtn.Refresh();
+                  this.StartTracking.Refresh();
+                  this.StopTracking.Refresh();
+                  this.ExpectedTime.Refresh();
+               }
+            }
+
+         }
+         catch (Exception ex)
+         {
+            LogException(ex);
+         }
+         ReloadBackgroundSizing();
+      }
+
+      private void ReloadBackgroundSizing()
+      {
+         try
+         {
+            {
+               Rectangle screenRectangle = this.RectangleToScreen(this.ClientRectangle);
+               int titleHeight = screenRectangle.Top - this.Top;
+            }
+            //Firefly in image of a clock screaming at the sky while the world burns around it 26800
+            // image from Adobe Firefly
+            var bmp = new Bitmap(this.BackgroundImage);
+
+            var WidthRatio = bmp.Size.Width / this.Width;
+            var HeightRatio = bmp.Size.Width / this.Height;
+
+            var scope = new Rectangle(OptionsView.Location.X * WidthRatio, OptionsView.Location.Y * HeightRatio, OptionsView.Width * WidthRatio, OptionsView.Height * HeightRatio);
+            var BackgroundBitmap = new Bitmap(OptionsView.Width, OptionsView.Height);
+            Graphics bg = Graphics.FromImage(BackgroundBitmap);
+
+            bg.DrawImage(bmp, new Rectangle(0, 0, OptionsView.Width, OptionsView.Height), scope, GraphicsUnit.Pixel);
+
+            OptionsView.BackgroundImageTiled = false;
+            OptionsView.BackgroundImage = BackgroundBitmap;
+         }
+         catch (Exception ex)
+         {
+            LogException(ex);
+         }
       }
       private void ShowAbout_Click(object sender, EventArgs e)
       {
