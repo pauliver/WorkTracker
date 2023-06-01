@@ -9,6 +9,7 @@ using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 #if ATTEMPING_WINDOW_DETECTION
 using System.Threading.Tasks;
 using System.Web.Script.Serialization; 
@@ -29,6 +30,7 @@ namespace TimeTracker
       int timeout = 60 * 60; // 1 hour
       bool LastHourTimedOut = false;
       bool ThirtyMinuteShow = false;
+      bool EnhancedLogging = false;
       private System.Windows.Forms.NotifyIcon notifyIcon1;
 
 
@@ -40,9 +42,25 @@ namespace TimeTracker
 
       System.IO.FileInfo LogFile = new System.IO.FileInfo("Settings\\PMTimeTracker.log");
 
+      protected void LogException(Exception ex)
+      {
+         Debugger.Break();
+         try
+         {
+            if(EnhancedLogging)
+               System.IO.File.AppendAllText(LogFile.FullName, ex.ToString());
+         }
+         catch (Exception ex2)
+         {
+            Console.WriteLine(ex2.Message);
+         }
+         Console.WriteLine(ex.Message);
+      }
+
       public TimeTracking(AppSettingsManager asm, PluginManager PM)//FileInfo new_logfile,AppSettingsManager tsl)
       {
          tracker = asm;
+         EnahncedLogging = tracker.UserSettings.EnahncedLogging;
          pluginManager = PM;
          //tracker.CreateOptions();
 
@@ -72,6 +90,84 @@ namespace TimeTracker
             Console.WriteLine(ex.Message);
          }
 #endif
+
+         try{
+            bool NewBackground = false;
+            bool AlternativeSize = false;
+
+            if(asm.UserSettings.UseAlternativeBacgkround)
+            {
+               NewBackground = true;
+            }
+            if(asm.UserSettings.UseAlternativeSize)
+            {
+               AlternativeSize = true;
+            }
+
+            string BackgroundFile = "";
+            int NewWidth = 0;
+            int NewHeight = 0;
+            int MinWidth = 400;
+            int MinHeight = 400;
+            int MaxWidth = 2048;
+            int MaxHeight = 2048;
+
+            if (NewBackground && asm.UserSettings.UseAlternativeBacgkround)
+            {
+               BackgroundFile = asm.UserSettings.AlternativeBackgroundFile;
+            }
+
+            if(AlternativeSize && asm.UserSettings.UseAlternativeSize)
+            {
+               NewWidth = asm.UserSettings.Width;
+               NewHeight = asm.UserSettings.Height;
+            }
+
+
+
+
+            System.IO.FileInfo backgroundfi = new FileInfo(BackgroundFile);
+
+            if (NewBackground && backgroundfi.Exists)
+            {
+               Bitmap BackImg = new Bitmap(backgroundfi.FullName);
+               if (!AlternativeSize)
+               {
+                  NewWidth = BackImg.Width;
+                  NewHeight = BackImg.Height;
+               }
+               this.BackgroundImage = BackImg;
+            }
+
+            if (NewWidth < MinWidth)
+            {
+               NewWidth = MinWidth;
+            }
+            if( NewWidth> MaxWidth)
+            {
+               NewWidth = MaxWidth;
+            }
+            if (NewHeight < MinHeight)
+            {
+               NewHeight = MinHeight;
+            }
+            if (NewHeight > MaxHeight)
+            {
+               NewHeight = MaxHeight;
+            }
+
+            if(AlternativeSize || NewBackground)
+            {
+               this.MaximumSize = this.MinimumSize = new Size(NewWidth, NewHeight);
+               this.Height = NewHeight;
+               this.Width = NewWidth;
+            }
+            
+         }catch(Exception ex)
+         {
+            LogException(ex);
+         }
+
          try
          {
             {
@@ -95,15 +191,20 @@ namespace TimeTracker
             OptionsView.BackgroundImage = BackgroundBitmap;
          }catch(Exception ex)
          {
-            Console.WriteLine(ex.Message);
+            LogException(ex);
          }
 
          try
          {
-            CurrentUser = System.Security.Principal.WindowsIdentity.GetCurrent().Name; 
+            CurrentUser = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+            string tmpuser = asm.UserSettings.UserName;
+            if(tmpuser != null && tmpuser.Length > 0)
+            {
+               CurrentUser = tmpuser;
+            }
          }catch(Exception ex)
          {
-            Console.WriteLine(ex.Message);
+            LogException(ex);
          }
          LastLogNum = tracker.UserSettings.LastID;
       }
@@ -176,7 +277,7 @@ namespace TimeTracker
          }
          catch (Exception ex)
          {
-           Console.WriteLine(ex.Message);
+            LogException(ex);
          }
       }
       private void Hide_Click(object sender, EventArgs e)
@@ -278,16 +379,17 @@ namespace TimeTracker
          LastLogFileApp = "";
          LogFileTemp = "";
 #endif
-#if LOGGING
-         try
+         if (EnhancedLogging)
          {
-            System.IO.File.AppendAllText(LogFile.FullName, Environment.NewLine + " - Start:" + currentlytracking + " : " + System.DateTime.Now + " for " + CurrentUser);
+            try
+            {
+               System.IO.File.AppendAllText(LogFile.FullName, Environment.NewLine + " - Start:" + currentlytracking + " : " + System.DateTime.Now + " for " + CurrentUser);
+            }
+            catch (Exception ex)
+            {
+               LogException(ex);
+            }
          }
-         catch (Exception ex)
-         {
-            Console.WriteLine(ex.Message);
-         }
-#endif
          //name == OptionsView.SelectedItems[0].Text;
          LastHourTimedOut = false;
          accumulated_seconds = 0;
@@ -322,19 +424,20 @@ namespace TimeTracker
       private void CompletePreviousTimeTracking()
       {
 
-#if LOGGING
-         try
+         if (EnhancedLogging)
          {
-            if (accumulated_seconds != 0)
+            try
             {
-               System.IO.File.AppendAllText(LogFile.FullName, Environment.NewLine + System.DateTime.Now + " - End : " + currentlytracking + " : " + accumulated_seconds.ToString());
+               if (accumulated_seconds != 0)
+               {
+                  System.IO.File.AppendAllText(LogFile.FullName, Environment.NewLine + System.DateTime.Now + " - End : " + currentlytracking + " : " + accumulated_seconds.ToString());
+               }
+            }
+            catch (Exception ex)
+            {
+               LogException(ex);
             }
          }
-         catch (Exception ex)
-         {
-            Console.WriteLine(ex.Message);
-         }
-#endif
 
          StartTracking.Text = "Start Tracking";
          this.Text = "Time Tracking ";

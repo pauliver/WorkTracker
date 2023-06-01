@@ -8,6 +8,8 @@ namespace TimeTracker
 {
    public class UserSettingsFile
    {
+      //Not Implimented
+
       public string GitHubPAT;
       public string GitHubUser;
       public string GitHubRepo;
@@ -19,16 +21,21 @@ namespace TimeTracker
       public string UserSettings = "UserSettings.json";
       public string UserDataStorage = "UserData.json";
 
-      public bool UseWeeklySaves = false;
+      public bool UseWeeklySaves = false; 
       public string WeeklySaveFolder = "WeeklySaves\\";
-      public bool UseAlternativeBacgkround = false;
-      public string AlternativeBackgroundFile = "background.jpg";
+
+      //Implimented:
+
+      public string UserName = "";
+      public bool EnahncedLogging = true;
+
+      public bool UseAlternativeBacgkround = false; 
+      public string AlternativeBackgroundFile = "background.jpg"; 
+
       public bool UseAlternativeSize = false;
       public int Height = 1024;
       public int Width = 768;
 
-      public string UserName = "";
-      public bool EnahncedLogging = true;
 
       public float LastID = 0;
    }
