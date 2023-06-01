@@ -74,7 +74,7 @@ namespace TimeTracker
 
          UserConfig = this.SettingsFolder + "UserConfig.json";
 
-         WeeklyLogFileName = this.SettingsFiles + Week.ToString() + "Log.json";
+         WeeklyLogFileName = this.SettingsFolder + "Week " + Week.ToString() + " Log.json";
 
          SettingsFiles = new List<SettingsFile>();
 

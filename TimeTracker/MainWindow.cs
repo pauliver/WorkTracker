@@ -281,7 +281,7 @@ namespace TimeTracker
 #if LOGGING
          try
          {
-            System.IO.File.AppendAllText(LogFile.Name, Environment.NewLine + " - Start:" + currentlytracking + " : " + System.DateTime.Now + " for " + CurrentUser);
+            System.IO.File.AppendAllText(LogFile.FullName, Environment.NewLine + " - Start:" + currentlytracking + " : " + System.DateTime.Now + " for " + CurrentUser);
          }
          catch (Exception ex)
          {
@@ -327,7 +327,7 @@ namespace TimeTracker
          {
             if (accumulated_seconds != 0)
             {
-               System.IO.File.AppendAllText(LogFile.Name, Environment.NewLine + System.DateTime.Now + " - End : " + currentlytracking + " : " + accumulated_seconds.ToString());
+               System.IO.File.AppendAllText(LogFile.FullName, Environment.NewLine + System.DateTime.Now + " - End : " + currentlytracking + " : " + accumulated_seconds.ToString());
             }
          }
          catch (Exception ex)
