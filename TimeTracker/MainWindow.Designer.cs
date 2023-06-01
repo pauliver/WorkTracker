@@ -41,6 +41,7 @@
          // 
          // HideBtn
          // 
+         this.HideBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
          this.HideBtn.BackColor = System.Drawing.Color.Transparent;
          this.HideBtn.FlatAppearance.BorderColor = System.Drawing.Color.Yellow;
          this.HideBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
@@ -61,6 +62,8 @@
          // 
          // ExpectedTime
          // 
+         this.ExpectedTime.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
          this.ExpectedTime.Location = new System.Drawing.Point(12, 458);
          this.ExpectedTime.Name = "ExpectedTime";
          this.ExpectedTime.Size = new System.Drawing.Size(654, 21);
@@ -69,6 +72,8 @@
          // 
          // StartTracking
          // 
+         this.StartTracking.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
          this.StartTracking.BackColor = System.Drawing.Color.Transparent;
          this.StartTracking.FlatAppearance.BorderColor = System.Drawing.Color.White;
          this.StartTracking.FlatAppearance.BorderSize = 2;
@@ -85,6 +90,7 @@
          // 
          // StopTracking
          // 
+         this.StopTracking.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
          this.StopTracking.BackColor = System.Drawing.Color.Transparent;
          this.StopTracking.Enabled = false;
          this.StopTracking.FlatAppearance.BorderColor = System.Drawing.Color.White;
@@ -103,6 +109,8 @@
          // 
          // OptionsView
          // 
+         this.OptionsView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
          this.OptionsView.BackColor = System.Drawing.SystemColors.Window;
          this.OptionsView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
          this.OptionsView.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));

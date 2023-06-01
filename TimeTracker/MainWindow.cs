@@ -217,18 +217,8 @@ namespace TimeTracker
 
             if (AlternativeSize || NewBackground)
             {
-               this.MaximumSize = this.MinimumSize = new Size(NewWidth, NewHeight);
-               this.Height = NewHeight;
-               this.Width = NewWidth;
-               this.OnSizeChanged(new EventArgs());
-               this.Refresh();
-               {
-                  this.OptionsView.Refresh();
-                  this.HideBtn.Refresh();
-                  this.StartTracking.Refresh();
-                  this.StopTracking.Refresh();
-                  this.ExpectedTime.Refresh();
-               }
+               this.ResizeRedraw = true;
+               this.MaximumSize = this.MinimumSize = this.Size = new Size(NewWidth, NewHeight);
             }
 
          }
