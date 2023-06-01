@@ -28,6 +28,7 @@ namespace TimeTracker
          CrashReporter CR = null;
          AppSettingsManager asm = null;
          PluginArchitecture.PluginManager PM = new PluginManager();
+         System.IO.FileInfo LogFile = new System.IO.FileInfo("Settings\\Crash.log");
          try
          {
 
@@ -58,6 +59,17 @@ namespace TimeTracker
 
          }catch (Exception ex)
          {
+            Debugger.Break();
+            try 
+            {    
+               System.IO.File.AppendAllText(LogFile.FullName, ex.ToString());
+            }
+            catch (Exception ex2)
+            {
+               Console.WriteLine(ex2.Message);
+            }
+            Console.WriteLine(ex.Message);
+            
             if (!CR.CleanlyLoggedIn)
             {
                MessageBox.Show("We can log crashes if you have a GitHub PAT (Personal Access Token) and a GitHub account.  Please create an Envornment Variable named GITHUB_TOKEN with a PAT scoped to create new issues." + Environment.NewLine + Environment.NewLine + "If you don't have a GitHub account, you can create one for free at");
