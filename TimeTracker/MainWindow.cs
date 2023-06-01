@@ -105,7 +105,7 @@ namespace TimeTracker
          {
             Console.WriteLine(ex.Message);
          }
-
+         LastLogNum = tracker.UserSettings.LastID;
       }
 
       EnhancedLogging GetNextLog(string currently_tracking)
@@ -116,6 +116,11 @@ namespace TimeTracker
          el.UserName = CurrentUser;
          el.StartTime = DateTime.Now;
          //LogFileTemp = el;
+
+         {
+            tracker.SaveUserSettings(LastLogNum);
+         }
+
          return el;
       }
 
@@ -276,7 +281,7 @@ namespace TimeTracker
 #if LOGGING
          try
          {
-            System.IO.File.AppendAllText(LogFile.Name, Environment.NewLine + "Start:" + currentlytracking + " : " + System.DateTime.Now + " for " + CurrentUser);
+            System.IO.File.AppendAllText(LogFile.Name, Environment.NewLine + " - Start:" + currentlytracking + " : " + System.DateTime.Now + " for " + CurrentUser);
          }
          catch (Exception ex)
          {
@@ -320,7 +325,10 @@ namespace TimeTracker
 #if LOGGING
          try
          {
-            System.IO.File.AppendAllText(LogFile.Name, Environment.NewLine + System.DateTime.Now + "End : " + currentlytracking + " : " + accumulated_seconds.ToString());
+            if (accumulated_seconds != 0)
+            {
+               System.IO.File.AppendAllText(LogFile.Name, Environment.NewLine + System.DateTime.Now + " - End : " + currentlytracking + " : " + accumulated_seconds.ToString());
+            }
          }
          catch (Exception ex)
          {

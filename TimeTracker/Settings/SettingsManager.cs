@@ -43,6 +43,23 @@ namespace TimeTracker
          }
       }
 
+      public bool SaveUserSettings(float latestId = 0)
+      {
+         if(latestId != 0)
+            this.UserSettings.LastID = latestId;
+   
+         try
+         {
+            this.UserSettingFile.Save();
+            return true;
+
+         }catch(Exception ex)
+         {
+            Debugger.Break();
+         }
+         return false;
+      }
+
       List<SettingsFile> SettingsFiles;
 
       public SettingsManager()
