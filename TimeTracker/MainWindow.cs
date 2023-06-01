@@ -60,7 +60,7 @@ namespace TimeTracker
       public TimeTracking(AppSettingsManager asm, PluginManager PM)//FileInfo new_logfile,AppSettingsManager tsl)
       {
          tracker = asm;
-         EnahncedLogging = tracker.UserSettings.EnahncedLogging;
+         EnhancedLogging = tracker.UserSettings.EnahncedLogging;
          pluginManager = PM;
          //tracker.CreateOptions();
 
