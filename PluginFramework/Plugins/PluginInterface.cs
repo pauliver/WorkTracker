@@ -8,6 +8,7 @@ namespace PluginArchitecture
 {
    public interface PluginInterface
    {
+      string Name { get; }
       void Initialize();
 
       void LoadSettings(System.IO.DirectoryInfo fi, PluginConfig config);

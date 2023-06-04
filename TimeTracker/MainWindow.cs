@@ -69,11 +69,12 @@ namespace TimeTracker
          notifyIcon1.Text = "PM Time Tracker";
          notifyIcon1.Visible = true;
          notifyIcon1.ContextMenuStrip = new ContextMenuStrip();
-         notifyIcon1.ContextMenuStrip.Items.Add("Exit", null, Exit_Click);
-         notifyIcon1.ContextMenuStrip.Items.Add("Hide", null, Hide_Click);
-         notifyIcon1.ContextMenuStrip.Items.Add("Show", null, Show_Click);
-         notifyIcon1.ContextMenuStrip.Items.Add("View &Data and Settings", null, ShowPieChart_Click);
-         notifyIcon1.ContextMenuStrip.Items.Add("About", null, ShowAbout_Click);
+         notifyIcon1.ContextMenuStrip.Items.Add("&Exit", null, Exit_Click);
+         notifyIcon1.ContextMenuStrip.Items.Add("&Hide", null, Hide_Click);
+         notifyIcon1.ContextMenuStrip.Items.Add("&Show", null, Show_Click);
+         notifyIcon1.ContextMenuStrip.Items.Add("&Data", null, ShowPieChart_Click);
+         notifyIcon1.ContextMenuStrip.Items.Add("S&ettings", null, ShowPieChart_Click);
+         notifyIcon1.ContextMenuStrip.Items.Add("&About", null, ShowAbout_Click);
          notifyIcon1.Click += Show_Click;
 
          InitializeComponent();
@@ -143,6 +144,7 @@ namespace TimeTracker
          chart = new PieChart();
          chart.Hide();
          pluginManager.Run();
+         chart.SetPluginManager(pluginManager);
 
 
          try

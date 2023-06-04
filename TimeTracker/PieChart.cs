@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PluginArchitecture;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -22,7 +23,10 @@ namespace TimeTracker
 
          InitializeComponent();
       }
-
+      public void SetPluginManager(PluginManager pluginmanager)
+      {
+         this.PluginPanel.SetPluginManager(pluginmanager);
+      }
 #if false
       int[] myPiePercent = { 10, 20, 25, 5, 40 };
       Color[] myPieColors = { Color.Red, Color.Black, Color.Blue, Color.Green, Color.Maroon };
@@ -274,5 +278,10 @@ namespace TimeTracker
             TDPropertyGrid.SelectedObjects = selected_objects.ToArray();
          }
       }
-    }
+
+      private void PluginPanel_Load(object sender, EventArgs e)
+      {
+
+      }
+   }
 }

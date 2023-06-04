@@ -12,6 +12,7 @@ namespace PluginArchitecture
       public string EntrypointDLL = "";
       public string FolderName = "";
       public string EntryClass = "";
+      public string FullName = "";
       public int DesiredTickFrequency = 1;
    }
 

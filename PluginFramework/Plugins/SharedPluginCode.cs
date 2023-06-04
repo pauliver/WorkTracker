@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,6 +22,64 @@ namespace PluginArchitecture
             Debugger.Break();
 
          IsRegistered = true;
+      }
+
+      public string Name
+      {
+         get
+         {
+            if(configFile == null)
+               return "Unknown";
+            if (configFile.FullName == null)
+            {
+               return configFile.EntryClass;
+            }
+            if(configFile.FullName.Length == 0)
+            {
+               return configFile.EntryClass;
+            }
+            return configFile.FullName; //this is ideally what we return
+         }
+      }
+      public int APIVersion
+      {
+         get { return configFile.APIVersion; }
+      }
+      public bool Initialized
+      {
+         get { return IsInitialized; }
+      }
+      public bool Running
+      {
+         get { return IsRunning; }
+      }
+      public bool Registered
+      {
+         get { return IsRegistered; }
+      }
+      public int DesiredTickFrequency
+      { 
+         get { return configFile.DesiredTickFrequency; }
+      }
+      public string EntryClass
+      {
+         get { return configFile.EntryClass; }
+      }
+      public string EntrypointDLL
+      {
+         get { return configFile.EntrypointDLL; }
+      }
+      public string FullName
+      {
+         get { return configFile.FullName; }
+      }
+      public string FolderName
+      {
+         get { return configFile.FolderName; }
+      }
+      public String Directory
+      {
+         get { return MyDirectory.Name; }
       }
 
       public virtual void DeRegister()

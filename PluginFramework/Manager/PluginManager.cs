@@ -16,6 +16,12 @@ namespace PluginArchitecture
 
       protected FileInfo errorfilelog = null;
 
+      public List<PluginInterface> Plugins
+      {
+         get { return FoundPlugins; }
+      }
+
+
       List<PluginInterface> FoundPlugins = new List<PluginInterface>();
       List<PluginInterface> ActivePlugins = new List<PluginInterface>();
       List<PluginInterface> PausedPlugins = new List<PluginInterface>();
@@ -123,6 +129,18 @@ namespace PluginArchitecture
                }
             }
          }
+      }
+
+      public PluginInterface GetPluginByName(string name)
+      {
+         foreach (var plugin in FoundPlugins)
+         {
+            if (plugin.Name == name)
+            {
+               return plugin;
+            }
+         }
+         return null;
       }
 
       public void Run()
