@@ -6,6 +6,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
@@ -245,6 +246,30 @@ namespace TimeTracker
             OptionsView.Items[0].Selected = true; 
          }
 
+      }
+
+      public void SwitchTab(string name)
+      {
+         TabPage selected = null;
+         foreach (var control in this.TabControl.TabPages)
+         {
+            if (control != null && control is TabPage && (control as TabPage).Text != null && (control as TabPage).Text.Length > 0) 
+            {
+               TabPage page = control as TabPage;
+               if (page.Text == name)
+               {
+                  selected = page;
+                  break;
+               }
+            }
+         }
+
+         if (selected != null)
+         {
+            this.TabControl.SelectedTab = selected;
+            this.TabControl.SelectTab(this.TabControl.TabPages.IndexOf(selected));
+            this.TabControl.SelectedTab.Focus();
+         }
       }
 
       private void button6_Click(object sender, EventArgs e)

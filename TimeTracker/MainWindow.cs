@@ -72,8 +72,8 @@ namespace TimeTracker
          notifyIcon1.ContextMenuStrip.Items.Add("&Exit", null, Exit_Click);
          notifyIcon1.ContextMenuStrip.Items.Add("&Hide", null, Hide_Click);
          notifyIcon1.ContextMenuStrip.Items.Add("&Show", null, Show_Click);
-         notifyIcon1.ContextMenuStrip.Items.Add("&Data", null, ShowPieChart_Click);
-         notifyIcon1.ContextMenuStrip.Items.Add("S&ettings", null, ShowPieChart_Click);
+         notifyIcon1.ContextMenuStrip.Items.Add("Data", null, ShowPieChart_Click);
+         notifyIcon1.ContextMenuStrip.Items.Add("Settings", null, ShowPieChart_Click);
          notifyIcon1.ContextMenuStrip.Items.Add("&About", null, ShowAbout_Click);
          notifyIcon1.Click += Show_Click;
 
@@ -289,6 +289,14 @@ namespace TimeTracker
             chart.Show();
             chart.TransferTracker(tracker);
             chart.DrawPieChart(tracker.TrackerOptionsAndDescriptions.SettingsObject, tracker.UserTimeSpent.SettingsObject);
+            if (sender != null && sender.GetType() == typeof(ToolStripMenuItem))
+            {
+               var tsmi = (ToolStripMenuItem)sender;
+               if (tsmi.Text!= null &&tsmi.Text.Length > 0)
+               {
+                     chart.SwitchTab(tsmi.Text);
+               }
+            }
          }
          catch (Exception ex)
          {

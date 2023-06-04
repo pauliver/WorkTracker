@@ -28,13 +28,13 @@
       /// </summary>
       private void InitializeComponent()
       {
-         System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-         System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-         System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-         System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-         System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-         System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
-         this.tabControl1 = new System.Windows.Forms.TabControl();
+         System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+         System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+         System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+         System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+         System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+         System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+         this.TabControl = new System.Windows.Forms.TabControl();
          this.PieChartPage = new System.Windows.Forms.TabPage();
          this.ApieChartPlease = new System.Windows.Forms.DataVisualization.Charting.Chart();
          this.BarGraphPage = new System.Windows.Forms.TabPage();
@@ -50,7 +50,7 @@
          this.button1 = new System.Windows.Forms.Button();
          this.PluginPage = new System.Windows.Forms.TabPage();
          this.PluginPanel = new PluginArchitecture.PluginPanel();
-         this.tabControl1.SuspendLayout();
+         this.TabControl.SuspendLayout();
          this.PieChartPage.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.ApieChartPlease)).BeginInit();
          this.BarGraphPage.SuspendLayout();
@@ -59,20 +59,20 @@
          this.PluginPage.SuspendLayout();
          this.SuspendLayout();
          // 
-         // tabControl1
+         // TabControl
          // 
-         this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+         this.TabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-         this.tabControl1.Controls.Add(this.PieChartPage);
-         this.tabControl1.Controls.Add(this.BarGraphPage);
-         this.tabControl1.Controls.Add(this.SettingsPage);
-         this.tabControl1.Controls.Add(this.PluginPage);
-         this.tabControl1.Location = new System.Drawing.Point(0, 1);
-         this.tabControl1.Name = "tabControl1";
-         this.tabControl1.SelectedIndex = 0;
-         this.tabControl1.Size = new System.Drawing.Size(676, 680);
-         this.tabControl1.TabIndex = 0;
+         this.TabControl.Controls.Add(this.BarGraphPage);
+         this.TabControl.Controls.Add(this.PieChartPage);
+         this.TabControl.Controls.Add(this.SettingsPage);
+         this.TabControl.Controls.Add(this.PluginPage);
+         this.TabControl.Location = new System.Drawing.Point(0, 1);
+         this.TabControl.Name = "TabControl";
+         this.TabControl.SelectedIndex = 0;
+         this.TabControl.Size = new System.Drawing.Size(676, 680);
+         this.TabControl.TabIndex = 0;
          // 
          // PieChartPage
          // 
@@ -82,7 +82,7 @@
          this.PieChartPage.Padding = new System.Windows.Forms.Padding(3);
          this.PieChartPage.Size = new System.Drawing.Size(668, 651);
          this.PieChartPage.TabIndex = 0;
-         this.PieChartPage.Text = "PieChart";
+         this.PieChartPage.Text = "Data";
          this.PieChartPage.UseVisualStyleBackColor = true;
          // 
          // ApieChartPlease
@@ -90,16 +90,16 @@
          this.ApieChartPlease.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-         chartArea5.Name = "ChartArea1";
-         this.ApieChartPlease.ChartAreas.Add(chartArea5);
-         legend5.Name = "Legend1";
-         this.ApieChartPlease.Legends.Add(legend5);
+         chartArea2.Name = "ChartArea1";
+         this.ApieChartPlease.ChartAreas.Add(chartArea2);
+         legend2.Name = "Legend1";
+         this.ApieChartPlease.Legends.Add(legend2);
          this.ApieChartPlease.Location = new System.Drawing.Point(3, 3);
          this.ApieChartPlease.Name = "ApieChartPlease";
-         series5.ChartArea = "ChartArea1";
-         series5.Legend = "Legend1";
-         series5.Name = "Series1";
-         this.ApieChartPlease.Series.Add(series5);
+         series2.ChartArea = "ChartArea1";
+         series2.Legend = "Legend1";
+         series2.Name = "Series1";
+         this.ApieChartPlease.Series.Add(series2);
          this.ApieChartPlease.Size = new System.Drawing.Size(691, 646);
          this.ApieChartPlease.TabIndex = 1;
          this.ApieChartPlease.Text = "chart1";
@@ -111,7 +111,7 @@
          this.BarGraphPage.Name = "BarGraphPage";
          this.BarGraphPage.Size = new System.Drawing.Size(668, 651);
          this.BarGraphPage.TabIndex = 2;
-         this.BarGraphPage.Text = "Second Data Visualization";
+         this.BarGraphPage.Text = "Bar Graph";
          this.BarGraphPage.UseVisualStyleBackColor = true;
          // 
          // BarChart
@@ -119,16 +119,16 @@
          this.BarChart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-         chartArea6.Name = "ChartArea1";
-         this.BarChart.ChartAreas.Add(chartArea6);
-         legend6.Name = "Legend1";
-         this.BarChart.Legends.Add(legend6);
+         chartArea1.Name = "ChartArea1";
+         this.BarChart.ChartAreas.Add(chartArea1);
+         legend1.Name = "Legend1";
+         this.BarChart.Legends.Add(legend1);
          this.BarChart.Location = new System.Drawing.Point(3, 3);
          this.BarChart.Name = "BarChart";
-         series6.ChartArea = "ChartArea1";
-         series6.Legend = "Legend1";
-         series6.Name = "Series1";
-         this.BarChart.Series.Add(series6);
+         series1.ChartArea = "ChartArea1";
+         series1.Legend = "Legend1";
+         series1.Name = "Series1";
+         this.BarChart.Series.Add(series1);
          this.BarChart.Size = new System.Drawing.Size(691, 646);
          this.BarChart.TabIndex = 2;
          this.BarChart.Text = "chart1";
@@ -272,14 +272,14 @@
          this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
          this.ClientSize = new System.Drawing.Size(676, 688);
-         this.Controls.Add(this.tabControl1);
+         this.Controls.Add(this.TabControl);
          this.Margin = new System.Windows.Forms.Padding(4);
          this.MaximizeBox = false;
          this.MinimizeBox = false;
          this.Name = "PieChart";
          this.Text = "PieChart";
          this.Load += new System.EventHandler(this.PieChart_Load);
-         this.tabControl1.ResumeLayout(false);
+         this.TabControl.ResumeLayout(false);
          this.PieChartPage.ResumeLayout(false);
          ((System.ComponentModel.ISupportInitialize)(this.ApieChartPlease)).EndInit();
          this.BarGraphPage.ResumeLayout(false);
@@ -292,7 +292,7 @@
 
       #endregion
 
-      private System.Windows.Forms.TabControl tabControl1;
+      private System.Windows.Forms.TabControl TabControl;
       private System.Windows.Forms.TabPage PieChartPage;
       private System.Windows.Forms.DataVisualization.Charting.Chart ApieChartPlease;
       private System.Windows.Forms.TabPage SettingsPage;
