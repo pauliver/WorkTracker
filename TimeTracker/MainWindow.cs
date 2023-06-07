@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Diagnostics;
+using System.Xml.Linq;
 #if ATTEMPING_WINDOW_DETECTION
 using System.Threading.Tasks;
 using System.Web.Script.Serialization; 
@@ -63,6 +64,7 @@ namespace TimeTracker
          EnhancedLogging = tracker.UserSettings.EnahncedLogging;
          pluginManager = PM;
          //tracker.CreateOptions();
+
 
          notifyIcon1 = new System.Windows.Forms.NotifyIcon();
          notifyIcon1.Icon = Resources.PMTracker;
@@ -129,10 +131,13 @@ namespace TimeTracker
       {
          OptionsView.Alignment = ListViewAlignment.SnapToGrid;
          OptionsView.AutoArrange = true;
+         OptionsView.ShowItemToolTips = true;
          OptionsView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
          foreach (var item in tracker.TrackerOptionsAndDescriptions.SettingsObject)
          {
-            OptionsView.Items.Add(item.Task);
+            ListViewItem lvi = OptionsView.Items.Add(item.Task);
+            if(item.Task_LongDescription != null && item.Task_LongDescription.Length > 0)
+               lvi.ToolTipText = item.Task_LongDescription;
          }
          OptionsView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
          if (OptionsView.Items.Count > 0)
@@ -383,6 +388,20 @@ namespace TimeTracker
          currentlytracking = OptionsView.SelectedItems[0].Text;
          BeginCurrentTimeTracking(currentlytracking);
          StopTracking.Enabled = true;
+      }
+
+      private void OptionsView_ItemMouseHover(object sender, EventArgs e)
+      {
+         IndividualTaskSettings td = tracker.GetTrackerDescriptionbyTask(sender.ToString());
+         if (td != null)
+         {
+            var desc = td.Task_LongDescription;
+            if (desc != null && desc.Length > 0)
+            {
+               OptionsView.ShowItemToolTips = true;
+               //OptionsView.= desc;
+            }
+         }
       }
 
       private void OptionsView_SelectedIndexChanged(object sender, EventArgs e)
