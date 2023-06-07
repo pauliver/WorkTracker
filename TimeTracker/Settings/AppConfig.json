@@ -46,8 +46,8 @@
       "WindowAppMatch": null
    },
    {
-      "Task": "Strategic Thinking",
-      "Task_LongDescription": null,
+      "Task": "Strategic Work",
+      "Task_LongDescription": "Work on strategy, strategic thinking, meetings or development",
       "Color": {
          "R": 0,
          "G": 0,
@@ -92,8 +92,31 @@
       "WindowAppMatch": null
    },
    {
+      "Task": "Organizational Alignment",
+      "Task_LongDescription": "1:1s with partners, larger alignment meetings",
+      "Color": {
+         "R": 0,
+         "G": 0,
+         "B": 0,
+         "A": 0,
+         "IsKnownColor": false,
+         "IsEmpty": true,
+         "IsNamedColor": false,
+         "IsSystemColor": false,
+         "Name": "0"
+      },
+      "ExpectedSeconds": 1800,
+      "MaxSeconds": 7200,
+      "ThirtyMinHardStop": true,
+      "ImagePath": null,
+      "AutoMatchBasedOnWindowTitle": false,
+      "WindowTitleMatch": null,
+      "AutoMatchBasedOnApplication": false,
+      "WindowAppMatch": null
+   },
+   {
       "Task": "Contributing to Others",
-      "Task_LongDescription": null,
+      "Task_LongDescription": "mentoring, coaching",
       "Color": {
          "R": 0,
          "G": 0,
