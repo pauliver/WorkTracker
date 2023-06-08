@@ -45,6 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppSpecific\Message_Document.cs" />
+    <Compile Include="AppSpecific\Message_Email.cs" />
+    <Compile Include="AppSpecific\Message_Meeting.cs" />
+    <Compile Include="AppSpecific\Message_Teams.cs" />
+    <Compile Include="AppSpecific\PluginMessage.cs" />
+    <Compile Include="AppSpecific\IPluginMessage.cs" />
     <Compile Include="PluginPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>

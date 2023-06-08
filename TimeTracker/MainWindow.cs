@@ -27,6 +27,7 @@ namespace TimeTracker
       PluginManager pluginManager;
       string currentlytracking = "nothing";
       bool TimerActive = false;
+      bool CompleteAndShowOnTimeOut = true;
       int accumulated_seconds = 0;
       int timeout = 60 * 60; // 1 hour
       bool LastHourTimedOut = false;
@@ -376,7 +377,10 @@ namespace TimeTracker
             accumulated_seconds = 0;
             LastHourTimedOut = true;
             StartTracking.Text = "Start Tracking";
-            //CompletePreviousTimeTracking();
+            if(CompleteAndShowOnTimeOut){
+               CompletePreviousTimeTracking();
+               this.Show();
+            }
          }
 
       }
