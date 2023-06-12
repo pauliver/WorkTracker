@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static TimeTracker.PluginMessage;
 
 namespace TimeTracker
 {
@@ -23,5 +24,12 @@ namespace TimeTracker
       DateTime Happening { get; set; }
       TimeSpan Extent { get; set; }
 
+      bool HasProcessed { get; }
+
+      bool CanShowWindow(ShowWindowDelegate swDelegate);
+
+      bool CanSwitchTracking(SwitchTrackingDelegate stDelegate);
+
+      bool Process();
    }
 }

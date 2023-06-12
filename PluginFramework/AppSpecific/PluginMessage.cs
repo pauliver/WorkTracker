@@ -121,14 +121,37 @@ namespace TimeTracker
 
       public delegate string SwitchTrackingDelegate(bool Is_tracking, string current_task, AbortDelegate NotNow);
 
-      public virtual bool MightRequest_ShowWindow()
+      protected ShowWindowDelegate showWindowDelegate = null;
+      public virtual bool CanShowWindow(ShowWindowDelegate swDelegate)
       {
+         if (swDelegate != null)
+            showWindowDelegate = swDelegate;
+
          return false;
       }
 
-      public virtual bool MightRequest_SwitchTracking()
+      protected SwitchTrackingDelegate showTrackingDelegate = null;
+      public virtual bool CanSwitchTracking(SwitchTrackingDelegate stDelegate)
       {
+         if (stDelegate != null)
+            showTrackingDelegate = stDelegate;
+
          return false;
+      }
+
+      protected bool hasProcessed = false;
+      public  bool HasProcessed
+      {
+         get
+         {
+            return hasProcessed;
+         }
+      }
+
+      public virtual bool Process()
+      {
+         hasProcessed = true;
+         return true;
       }
    }
 }
