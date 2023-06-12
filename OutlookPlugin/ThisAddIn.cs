@@ -14,13 +14,30 @@ namespace OutlookPlugin
       public static Microsoft.Office.Interop.Outlook.Application OA;
 
       Outlook.Inspectors inspectors;
+      Outlook.Reminders reminders;
       private void ThisAddIn_Startup(object sender, System.EventArgs e)
       {
 
          OA = this.Application;
          inspectors = OA.Inspectors;
+         reminders = OA.Reminders;
          inspectors.NewInspector += new Microsoft.Office.Interop.Outlook.InspectorsEvents_NewInspectorEventHandler(Inspectors_NewInspector);
+         reminders.ReminderFire += Reminders_ReminderFire;
+      }
 
+      private void Reminders_ReminderFire(Reminder ReminderObject)
+      {
+         if (ReminderObject == null)
+         {
+            return;
+         }else if (ReminderObject is Outlook.AppointmentItem)
+         {
+            Outlook.AppointmentItem RAI = (Outlook.AppointmentItem)ReminderObject;
+     
+         }else if(ReminderObject is Outlook.TaskItem)
+         {
+            Outlook.TaskItem RAI = (Outlook.TaskItem)ReminderObject;
+         }
       }
 
       void Inspectors_NewInspector(Microsoft.Office.Interop.Outlook.Inspector Inspector)
