@@ -15,14 +15,18 @@ namespace OutlookPlugin
 
       Outlook.Inspectors inspectors;
       Outlook.Reminders reminders;
+
+      OutlookComsPlugin.Client client;
+
       private void ThisAddIn_Startup(object sender, System.EventArgs e)
       {
+         client = new OutlookComsPlugin.Client();
 
          OA = this.Application;
          inspectors = OA.Inspectors;
          reminders = OA.Reminders;
          inspectors.NewInspector += new Microsoft.Office.Interop.Outlook.InspectorsEvents_NewInspectorEventHandler(Inspectors_NewInspector);
-         reminders.ReminderFire += Reminders_ReminderFire;
+         reminders.ReminderFire += new Microsoft.Office.Interop.Outlook.ReminderCollectionEvents_ReminderFireEventHandler( Reminders_ReminderFire);
       }
 
       private void Reminders_ReminderFire(Reminder ReminderObject)
@@ -37,6 +41,11 @@ namespace OutlookPlugin
          }else if(ReminderObject is Outlook.TaskItem)
          {
             Outlook.TaskItem RAI = (Outlook.TaskItem)ReminderObject;
+         }
+         else if(ReminderObject is Outlook.Reminder)
+         {
+            Outlook.Reminder RAI = (Outlook.Reminder) ReminderObject;
+            
          }
       }
 
@@ -55,12 +64,11 @@ namespace OutlookPlugin
          }
       }
 
-
       private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
-        {
-            // Note: Outlook no longer raises this event. If you have code that 
-            //    must run when Outlook shuts down, see https://go.microsoft.com/fwlink/?LinkId=506785
-        }
+      {
+         // Note: Outlook no longer raises this event. If you have code that 
+         //    must run when Outlook shuts down, see https://go.microsoft.com/fwlink/?LinkId=506785
+      }
 
         #region VSTO generated code
 

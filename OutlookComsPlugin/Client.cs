@@ -18,6 +18,7 @@ namespace OutlookComsPlugin
       public bool Connect()
       {
          return true;
+         //return base.Connect();
       }
       public bool Disconnect()
       {
@@ -25,7 +26,6 @@ namespace OutlookComsPlugin
       }
       public bool Send(string message)
       {
-
          return true;
       }
       public bool Receive(string message, string extradata)

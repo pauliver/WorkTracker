@@ -162,7 +162,8 @@ namespace OutlookPlugin {
         protected override void OnShutdown() {
             this.CustomTaskPanes.Dispose();
             base.OnShutdown();
-        }
+            client.Disconnect();
+      }
     }
     
     /// 
