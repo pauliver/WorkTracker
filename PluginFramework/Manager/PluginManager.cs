@@ -68,33 +68,34 @@ namespace PluginArchitecture
                   {
                      Debugger.Break();
                   }
-               }
-               var files = item.GetFiles();
-               bool LoadedAPlugin = false;
-               foreach (var file in files)
-               {
-                  if (file.Extension == ".dll" && file.Name == PluginSettings.SettingsObject.EntrypointDLL)
+                  var files = item.GetFiles();
+                  bool LoadedAPlugin = false;
+                  foreach (var file in files)
                   {
-                     var assembly = Assembly.LoadFile(file.FullName);
-                     var types = assembly.GetTypes();
-                     foreach (var type in types)
+                     if (file.Extension == ".dll" && file.Name == PluginSettings.SettingsObject.EntrypointDLL)
                      {
-                        if (type.GetInterfaces().Contains(typeof(PluginInterface)) && type.Name == PluginSettings.SettingsObject.EntryClass)
+                        var assembly = Assembly.LoadFile(file.FullName);
+                        var types = assembly.GetTypes();
+                        foreach (var type in types)
                         {
-                           var plugin = Activator.CreateInstance(type);
-                           var pluginInterface = plugin as PluginInterface;
-                           pluginInterface.LoadSettings(item, PluginSettings.SettingsObject);
-                           pluginInterface.Initialize();
-                           FoundPlugins.Add(pluginInterface);
-                           pluginInterface.Register();
-                           LoadedAPlugin = true;
+                           if (type.GetInterfaces().Contains(typeof(PluginInterface)) && type.Name == PluginSettings.SettingsObject.EntryClass)
+                           {
+                              var plugin = Activator.CreateInstance(type);
+                              var pluginInterface = plugin as PluginInterface;
+                              pluginInterface.LoadSettings(item, PluginSettings.SettingsObject);
+                              pluginInterface.Initialize();
+                              FoundPlugins.Add(pluginInterface);
+                              pluginInterface.Register();
+                              LoadedAPlugin = true;
+                           }
                         }
                      }
                   }
-               }
-               if (!LoadedAPlugin)
-               {
-                  Debugger.Break();
+                  if (!LoadedAPlugin)
+                  {
+                     Debugger.Break();
+                  }
+
                }
             }
             catch (System.NotSupportedException nse)
